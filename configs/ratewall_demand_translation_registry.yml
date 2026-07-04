@@ -1,0 +1,58 @@
+demand_translation_strength: base
+
+families:
+  - family_id: direct_private_cash_income
+    family_label: Direct private cash income
+    demand_translation_low: 0.05
+    demand_translation_base: 0.12
+    demand_translation_high: 0.25
+    selected_use_rule: public-interest cash income only after block/non-overlap gates
+    blocked_use: generic_mpc_scalar;independent_headline_slider
+
+  - family_id: intermediated_financial_income
+    family_label: Intermediated financial income
+    demand_translation_low: 0.00
+    demand_translation_base: 0.03
+    demand_translation_high: 0.10
+    selected_use_rule: financial-recipient income only with explicit recipient basis
+    blocked_use: generic_mpc_scalar;independent_headline_slider
+
+  - family_id: market_safe_yield_income
+    family_label: Market safe-yield income
+    demand_translation_low: 0.02
+    demand_translation_base: 0.06
+    demand_translation_high: 0.12
+    selected_use_rule: noncentral market-yield diagnostics unless recipient and overlap gates pass
+    blocked_use: realized_household_safe_yield_shortcut;stock_only_support
+
+  - family_id: spendable_liquidity_inflow
+    family_label: Spendable liquidity inflow
+    demand_translation_low: 0.03
+    demand_translation_base: 0.07
+    demand_translation_high: 0.12
+    selected_use_rule: selected forecast TDC ex-overlap beta-chi route only
+    blocked_use: tdc_full_value_support;current_or_historical_tdc_promotion
+
+  - family_id: realized_household_safe_yield_income
+    family_label: Realized household safe-yield income
+    demand_translation_low: 0.04
+    demand_translation_base: 0.08
+    demand_translation_high: 0.13
+    selected_use_rule: requires payer-flow, recipient, tax, demand, denominator, overlap, replacement, and owner gates
+    blocked_use: stock_rate_fallback_headline;bea_personal_interest_substitution
+
+  - family_id: wealth_revaluation
+    family_label: Wealth revaluation
+    demand_translation_low:
+    demand_translation_base:
+    demand_translation_high:
+    selected_use_rule: unsupported for v1 demand support
+    blocked_use: any_nonzero_demand_support
+
+  - family_id: firm_liquidity_cushion
+    family_label: Firm liquidity cushion
+    demand_translation_low: 0.03
+    demand_translation_base: 0.10
+    demand_translation_high: 0.20
+    selected_use_rule: sensitivity or replacement only
+    blocked_use: selected_current_n;selected_forecast_n;firm_cash_stack

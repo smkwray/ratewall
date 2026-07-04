@@ -1,0 +1,6 @@
+check,result,detail
+parameters_schema_columns,pass,"parameter_id,cell_or_sector,instrument_family,low,base,high,units,source_id,input_basis_label,rationale"
+parameters_low_base_high_monotonic,pass,[]
+source_ids_present,pass,25 source rows; semicolon-separated IDs used per parameter row
+scf_reconciliation_flags_retained,pass,Mismatch flags kept in account_wrapper_splits.csv and reconciliation_vs_scf_pack.csv.
+treasury_clawback_holder_share_sum,warn,Holder shares sum to 1.001000; project matrix rounded shares not renormalized.

@@ -1,0 +1,4 @@
+scenario_id,implied_beta,year1_tdc_N_bil,cumulative_2026_2035_tdc_N_bil,basis
+all_A_domestic_nonbank_swap,0,0,0,mode_mix_sensitivity_not_headline_calibration
+all_B_bank_expansion,1,0,0,mode_mix_sensitivity_not_headline_calibration
+base_mix,0,0,0,mode_mix_sensitivity_not_headline_calibration

@@ -1,0 +1,7 @@
+dose_mode,tenor,delta_tp_low_bp,delta_tp_base_bp,delta_tp_high_bp,expectations_leg_bp_per_100bp_stance,all_in_yield_change_low_bp,all_in_yield_change_base_bp,all_in_yield_change_high_bp,application_horizon,decay_guidance
+transient_12m,2y,0,2,7,50.0,50.0,52.0,57.0,first-year-average; use decay if engine supports monthly TP dynamics,transient: fade with 6-12m half-life; persistent: hold while persistent stance and fade after exit
+transient_12m,10y,0,6,18,10.0,10.0,16.0,28.0,first-year-average; use decay if engine supports monthly TP dynamics,transient: fade with 6-12m half-life; persistent: hold while persistent stance and fade after exit
+transient_12m,30y,0,8,20,3.33,3.33,11.33,23.33,first-year-average; use decay if engine supports monthly TP dynamics,transient: fade with 6-12m half-life; persistent: hold while persistent stance and fade after exit
+persistent_level,2y,0,1,5,100.0,100.0,101.0,105.0,first-year-average; use decay if engine supports monthly TP dynamics,transient: fade with 6-12m half-life; persistent: hold while persistent stance and fade after exit
+persistent_level,10y,0,15,35,100.0,100.0,115.0,135.0,first-year-average; use decay if engine supports monthly TP dynamics,transient: fade with 6-12m half-life; persistent: hold while persistent stance and fade after exit
+persistent_level,30y,0,20,45,100.0,100.0,120.0,145.0,first-year-average; use decay if engine supports monthly TP dynamics,transient: fade with 6-12m half-life; persistent: hold while persistent stance and fade after exit

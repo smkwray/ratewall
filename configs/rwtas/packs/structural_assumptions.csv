@@ -1,0 +1,37 @@
+assumption_id,low,base,high,units,input_basis_label,rationale
+coupon_roll_rate,0.08,0.10,0.12,annual_share,blended_fallback_sensitivity,Former blended Treasury coupon ladder share retained as low/base/high sensitivity; base Treasury-coupon roll now uses measured MSPD monthly schedule when TDCSim export pack is present.
+mortgage_turnover_share,0.04,0.07,0.10,annual_share,owner_assumption_mode,Existing fixed mortgages stay locked; only turnover/new-originations enter cashflow repricing.
+ci_floating_share,0.60,0.70,0.80,share,owner_assumption_mode,C&I loan share treated as floating for V1 monthly cashflow.
+fed_deferred_asset_open_bil,0,190,380,$bn,OWNER_PLACEHOLDER,Opening Fed deferred asset; replace with current H.4.1 value before claim language.
+nominal_gdp_bil,31000,31866,32500,$bn,owner_assumption_mode,Comparator denominator and percent-GDP scale; updated to current-dollar 2026Q1 SAAR calibration authority.
+marginal_issuance_bill_share,0.20,0.30,0.40,share,owner_assumption_mode,Share of deficit-financed incremental interest issued as bills; remainder issued as coupons. TDCSim export bill share 0.198 is carried as source-backed policy sensitivity, not promoted to core mapping in this wave.
+marginal_issuance_allocation,1,1,1,flag,owner_assumption_mode,Default allocation is pro_rata_ex_fed over existing non-Fed Treasury holders.
+payer_loss_asymmetry_multiplier,1.00,1.00,1.30,multiplier,owner_assumption_mode,Flagged non-default sensitivity; base remains symmetric conversion per cell.
+wealth_mpc_overlay,0.02,0.03,0.05,demand_$/$wealth,OWNER_ASSUMPTION,Optional Phase 6 valuation overlay input; off headline.
+soma_avg_yield,0.025,0.030,0.035,annual_yield,owner_assumption_mode,Fed SOMA baseline yield used only for deferred-asset/remittance-loop level diagnostics.
+currency_outstanding_bil,2300,2400,2500,$bn,owner_assumption_mode,Zero-rate Fed liability used to close the Fed balance-sheet diagnostic.
+consumer_installment_new_flow_share,0.08,0.10,0.12,annual_share,owner_assumption_mode,Autos and personal installment debt use new-flow repricing only; existing balances are fixed in the cashflow row.
+student_private_new_flow_share,0.00,0.02,0.05,annual_share,owner_assumption_mode,Existing student debt is not full-stock repriced; private new-flow sensitivity is retained only as a small flagged input.
+auto_installment_term_months,60,68,76,months,owner_assumption_convention,Straight-line amortizing cohort survival term for auto installment new-flow repricing; audit-4 mechanics correction.
+personal_installment_term_months,36,48,60,months,owner_assumption_convention,Straight-line amortizing cohort survival term for personal installment new-flow repricing; audit-4 mechanics correction.
+student_private_term_months,96,120,144,months,owner_assumption_convention,Straight-line amortizing cohort survival term for private student-loan new-flow repricing; audit-4 mechanics correction.
+corporate_bond_new_issue_beta,0.25,0.35,0.55,rate_beta,owner_assumption_mode,Corporate bonds reprice through fixed-ladder roll at the investment-grade new-issue beta.
+municipal_bond_new_issue_beta,0.13,0.25,0.35,rate_beta,owner_assumption_mode,Municipal securities reprice through fixed-ladder roll at the municipal new-issue beta.
+cre_floating_rate_beta,0.85,1.25,1.75,rate_beta,owner_assumption_mode,CRE floating-rate mortgages reset monthly at cre.floating_rate beta from the rate module.
+cre_fixed_refi_coupon_beta,0.20,0.55,1.20,rate_beta,owner_assumption_mode,CRE fixed mortgages reprice only through maturity and refi ladder at cre.fixed_refi_coupon beta.
+cre_fixed_roll_rate,0.08,0.10,0.12,annual_share,owner_assumption_mode,CRE fixed mortgage ladder share rolling or refinancing each year.
+cre_payer_small_share,0.60,0.60,0.60,share,owner_assumption_mode,CRE owner payer mix small and large firms with small share 0.6 and residual large share 0.4.
+household_consumption_bil,18500,19000,19500,$bn_annual,owner_assumption_mode,BNPL demonstration channel purchase base.
+bnpl_share_of_purchases,0.005,0.01,0.02,share,owner_assumption_mode,BNPL share of household purchases.
+bnpl_avg_duration_months,6,8,10,months,owner_assumption_mode,BNPL average installment duration.
+bnpl_incremental_float_months,5,7,9,months,owner_assumption_mode,Incremental household liquid float duration used to derive BNPL deposit/MMF stocks from named parameters; equals average installment duration less one month of removed card float.
+bnpl_delinquent_roll_share,0.05,0.10,0.15,share,owner_assumption_mode,BNPL delinquent roll share repricing at the card-driver delta; same-state constant spreads difference out.
+bnpl_penalty_spread_bp,150,200,300,basis_points,owner_assumption_mode,BNPL constant penalty spread level for baseline/shock state description only; spread_delta is zero in pair deltas.
+rewards_policy_beta,0,0,0,rate_beta,owner_assumption_mode,BNPL card-counterfactual rewards term is rate-insensitive by construction.
+bnpl_funding_incidence_margin,0.75,0.75,0.75,share,owner_assumption_mode,Provider margin incidence for BNPL funding cost with no direct final-demand conversion.
+bnpl_funding_incidence_merchant_fee,0.15,0.15,0.15,share,owner_assumption_mode,Merchant-fee incidence of BNPL funding cost routed to firm cells.
+bnpl_funding_incidence_other,0.10,0.10,0.10,share,owner_assumption_mode,Other BNPL funding-cost incidence routed to no-conversion residual.
+tdc_created_deposit_full_level_rate,0.030,0.035,0.040,annual_rate_level,owner_assumption_mode,Full deposit-rate level earned by deposits created only in the shock twin; this is not the 100bp increment.
+mmf_expense_ratio,0.0013,0.0022,0.0022,annual_share,sourced_ici_waiver_unwind_path,Mechanical gross-to-net MMF shareholder-income wedge for backcast diagnostics; backcast uses sourced year-varying path 2022=0.13%, 2023-2024=0.22%, not behavioral tuning.
+mmf_yield_lag_months,0,1,2,months,owner_assumption_mode,Mechanical MMF portfolio-yield lag for backcast diagnostics only; gross income uses lagged realized-minus-baseline fed-funds deltas and is not fitted to realized targets.
+curve_beta_under_persistent_stance,0,0,0,diagnostic_flag,tracked_limitation_no_value_change,Flagged limitation only: persistent multi-year stance still uses impulse-calibrated curve betas at coupon and bond rolls; future curve-beta wave must adjudicate expectations-consistent term-rate paths before changing values.

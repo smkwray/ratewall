@@ -1,0 +1,86 @@
+object_id: RW_M_PLUS_100BP_YEAR
+channels:
+  - channel_id: public_interest_net_block
+    period_scope: [historical, current, forecast]
+    selected_role: selected_central_or_assumptive
+    selected_slot: Delta_N_selected
+    formula_id: pi_net_block_v1
+    overlap_policy: singleton_public_interest_block_only
+  - channel_id: direct_treasury_interest
+    period_scope: [historical, current, forecast]
+    selected_role: selected_input_inside_public_interest
+    selected_slot: public_interest_net_block_only
+    formula_id: pi_direct_treasury_repricing_v1
+    overlap_policy: never_standalone
+  - channel_id: bank_treasury_interest
+    period_scope: [historical, current, forecast]
+    selected_role: selected_input_inside_public_interest
+    selected_slot: public_interest_net_block_only
+    formula_id: pi_bank_treasury_repricing_v1
+    overlap_policy: never_standalone
+  - channel_id: iorb_ioer_reserves
+    period_scope: [historical, current, forecast]
+    selected_role: selected_input_inside_public_interest
+    selected_slot: public_interest_net_block_only
+    formula_id: pi_iorb_reserve_flow_v1
+    overlap_policy: never_standalone
+  - channel_id: on_rrp
+    period_scope: [historical, current, forecast]
+    selected_role: selected_input_inside_public_interest
+    selected_slot: public_interest_net_block_only
+    formula_id: pi_on_rrp_flow_v1
+    overlap_policy: never_standalone
+  - channel_id: remittances_deferred_asset
+    period_scope: [historical, current, forecast]
+    selected_role: selected_absorber_inside_public_interest
+    selected_slot: public_interest_net_block_only
+    formula_id: pi_remittance_deferred_asset_v1
+    overlap_policy: never_standalone
+  - channel_id: taxes
+    period_scope: [historical, current, forecast]
+    selected_role: selected_absorber_inside_public_interest
+    selected_slot: public_interest_net_block_only
+    formula_id: pi_tax_timing_absorber_v1
+    overlap_policy: never_standalone
+  - channel_id: tga_liquidity_absorbers
+    period_scope: [historical, current, forecast]
+    selected_role: selected_absorber_inside_public_interest
+    selected_slot: public_interest_net_block_only
+    formula_id: pi_tga_liquidity_absorber_v1
+    overlap_policy: never_standalone
+  - channel_id: foreign_leakage
+    period_scope: [historical, current, forecast]
+    selected_role: selected_leakage_inside_public_interest
+    selected_slot: public_interest_net_block_only
+    formula_id: pi_foreign_leakage_v1
+    overlap_policy: never_domestic_support
+  - channel_id: tdc_ex_overlap_beta_chi
+    period_scope: [historical, current, forecast]
+    selected_role: selected_central_after_same_state_pair_gate
+    selected_slot: Delta_N_selected
+    formula_id: tdc_ex_overlap_beta_chi_v1
+    overlap_policy: subtract_overlap_before_beta_and_chi
+  - channel_id: d1_safe_yield_payer_flow
+    period_scope: [historical, current, forecast]
+    selected_role: selected_candidate_fail_closed_zero_in_v1
+    selected_slot: Delta_N_selected
+    formula_id: d1_safe_yield_payer_flow_v1
+    overlap_policy: all_gates_required
+  - channel_id: residual_mmf_tbill_sidecars
+    period_scope: [historical, current, forecast]
+    selected_role: sidecar_or_admitted_disjoint_fail_closed_zero_in_v1
+    selected_slot: Delta_N_selected_only_if_admitted_disjoint
+    formula_id: residual_safe_yield_sidecar_v1
+    overlap_policy: disjointness_gate_required
+  - channel_id: credit_zero_low_apr_insulation
+    period_scope: [historical, current, forecast]
+    selected_role: diagnostic_only
+    selected_slot: none_in_v1
+    formula_id: credit_insulation_sidecar_v1
+    overlap_policy: possible_future_denominator_state_model_only
+  - channel_id: denominator_conventional_drag
+    period_scope: [historical, current, forecast]
+    selected_role: selected_central
+    selected_slot: Delta_D_conv
+    formula_id: denominator_neutral_drag_v1
+    overlap_policy: denominator_only

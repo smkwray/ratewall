@@ -1,0 +1,11 @@
+channel_id,verdict,sign_in_ledger,lag_window,headline_status,build_rule,overturn_condition
+D_PHILLIPS_WALL,ACCEPT,lowering,6-18m,headline,"Use existing M5 net demand gap with demand wall propagation; demand/slack slope only; report slack state","If only all-in monetary-policy-to-CPI slope is available, do not sum with separate cost/shelter channels"
+FX_IMPORT,ACCEPT_NARROW,lowering,0-12m,headline_if_calibrated,"Use exogenous/scenario FX path and import-to-CPI pass-through; no endogenous FX from internal flow accounting","If pass-through to CPI/PCE target is near zero or coefficient not supplied"
+FIRM_WORKING_CAPITAL_COST,ACCEPT_NARROW,raising,0-12m,headline_if_keyed,"Only working-capital/inventory/operating finance; require source-cashflow allocation shares","If interest expense is inframarginal finance cost or pass-through absent after margins/demand controls"
+REGULATED_RATEBASE_FINANCE,ACCEPT_SUBCHANNEL,raising,6-36m,diagnostic_until_calibrated,"Admit regulated utility/rate-base financing costs with regulatory lag and component weights","If no coefficient/lag rule or small index exposure"
+HOUSING_SUPPLY_RENT,ACCEPT,raising,12-36m,headline_if_slope_clean,"Starts/completions/units shortfall to market rents and CPI rent/OER; no direct mortgage payment channel","If starts/completions shortfall fails out-of-sample rent/OER timing or slope"
+CARRY_COSTS,ACCEPT_VERY_NARROW,raising,0-6m,diagnostic_until_calibrated,"Inventory/distribution carry only; subchannel of cost; exclude household and housing purchase carry","If not tied to inventory/distribution coefficient"
+INTEREST_INCOME_SPENDING,ACCEPT_THROUGH_DEMAND_WALL,lowering_attenuation,6-18m,already_in_D,"Do not add separate price channel; N attenuates demand disinflation via Phillips leg","If project expands to full income-driven inflation model"
+EXPECTATIONS,EXCLUDE,none,none,excluded,"Outside mechanical incidence boundary","Only if project opens a separate macro expectations lane"
+WAGE_PRICE_DYNAMICS,EXCLUDE,none,none,excluded,"Outside mechanical incidence boundary","Only if project scope becomes full inflation model"
+DIRECT_MORTGAGE_INTEREST_CPI,REJECT,none,none,excluded,"CPI-U OER/rental equivalence excludes direct mortgage interest costs","Only if target index is changed to a user-cost housing index"

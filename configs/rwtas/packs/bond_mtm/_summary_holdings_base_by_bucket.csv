@@ -1,0 +1,5 @@
+bucket,agency_mbs_direct,bond_fund_lookthrough_agency_mbs,bond_fund_lookthrough_corporate,bond_fund_lookthrough_muni,bond_fund_lookthrough_treasury,corporate_direct,muni_direct,treasuries_direct,fund_lookthrough_total,direct_total,grand_total
+0-2y,41.2,34.0,113.3,42.5,281.6,8.0,113.8,924.9,471.5,1087.9,1559.4
+2-5y,247.1,204.2,425.0,169.9,607.5,28.1,455.2,809.3,1406.7,1539.7,2946.3
+5-10y,411.8,340.4,595.0,339.8,708.7,28.1,720.7,693.7,1984.0,1854.3,3838.3
+10y+,123.5,102.1,283.4,297.4,506.2,16.1,606.9,462.5,1189.1,1208.9,2398.0

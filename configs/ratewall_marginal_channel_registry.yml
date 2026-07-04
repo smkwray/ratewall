@@ -1,0 +1,183 @@
+marginal_channel_registry_id: ratewall_marginal_channel_registry_v1
+required_delta_basis: same_state_shock_minus_baseline
+
+channels:
+  - channel_id: public_interest_net_block
+    channel_family: public_interest
+    period_scope: historical,current,forecast
+    final_role: candidate_marginal_replacement
+    numerator_formula: delta_public_interest_net_block_bil
+    marginal_delta_required: true
+    same_state_pair_required: true
+    source_status: existing_public_interest_inputs_reusable_as_block_inputs
+    viability_status: viable_after_delta_builder
+    promotion_status: blocked_until_same_state_delta
+    fail_closed_label: fail_closed_block_input_used_as_standalone_n
+    allowed_use: marginal_n_candidate_after_delta_gate
+    blocked_use: direct_treasury_or_iorb_or_on_rrp_standalone_level_addition;legacy_level_public_interest_selection
+    claim_boundary: public_interest_inputs_are_inputs_not_standalone_marginal_rw_m
+
+  - channel_id: tdc_ex_overlap_beta_chi
+    channel_family: tdc
+    period_scope: historical,current,forecast
+    final_role: candidate_marginal_replacement
+    numerator_formula: delta_tdc_ex_overlap_bil * beta * chi
+    marginal_delta_required: true
+    same_state_pair_required: true
+    source_status: requires_tdcsim_paired_baseline_shock_output;historical_blocked_until_same_state_replay_pair
+    viability_status: viable_after_tdcsim_agent_pair_assembler
+    promotion_status: blocked_until_tdcsim_marginal_pair
+    fail_closed_label: fail_closed_non_marginal_selected_n
+    allowed_use: marginal_tdc_support_after_beta_chi_overlap_controls
+    blocked_use: full_tdc_level;observed_tdc_level;legacy_runtime_tdc_component;tdc_without_same_state_pair
+    claim_boundary: tdc_counts_only_as_extra_support_created_by_standardized_rate_shock
+
+  - channel_id: conventional_demand_drag
+    channel_family: denominator
+    period_scope: historical,current,forecast
+    final_role: selected_marginal_d
+    numerator_formula: not_applicable_denominator
+    marginal_delta_required: true
+    same_state_pair_required: true
+    source_status: marginal_denominator_owner_band
+    viability_status: viable_now_for_marginal_D_shell
+    promotion_status: selected_marginal_D_only
+    fail_closed_label: fail_closed_denominator_drag_booked_as_n
+    allowed_use: selected_marginal_denominator_surface
+    blocked_use: numerator_support;old_path_D_scaled_by_current_rate;forecast_moving_D_promoted_as_rw_m
+    claim_boundary: denominator_is_threshold_scale_not_support_channel
+
+  - channel_id: deposit_safe_yield_payer_flow
+    channel_family: private_safe_yield
+    period_scope: historical,current,forecast
+    final_role: candidate_marginal_replacement
+    numerator_formula: delta_payer_flow_to_recipients_after_tax_timing_overlap_controls
+    marginal_delta_required: true
+    same_state_pair_required: true
+    source_status: fallback_basis_exists_but_marginal_payer_flow_gate_not_passed
+    viability_status: viable_if_payer_flow_recipient_tax_timing_overlap_and_D_gates_pass
+    promotion_status: blocked_until_full_gate
+    fail_closed_label: fail_closed_non_marginal_selected_n
+    allowed_use: noncentral_candidate_until_full_marginal_gate
+    blocked_use: stock_rate_fallback;level_safe_yield_income;deposit_rate_level_times_stock
+    claim_boundary: safe_yield_counts_only_if_extra_payer_flow_from_shock_is_identified
+
+  - channel_id: legacy_current_benchmark
+    channel_family: legacy_exposure_ratio
+    period_scope: current
+    final_role: diagnostic_exposure_only
+    numerator_formula: frozen_runtime_benchmark_n_level
+    marginal_delta_required: true
+    same_state_pair_required: true
+    source_status: existing_old_current_benchmark
+    viability_status: nonviable_as_final_marginal_object
+    promotion_status: blocked_old_exposure_ratio
+    fail_closed_label: fail_closed_previous_current_benchmark_selected_as_rw_m
+    allowed_use: comparison_context_only
+    blocked_use: selected_rw_m;selected_marginal_n;selected_marginal_d
+    claim_boundary: frozen_current_level_ratio_is_not_marginal_threshold
+
+  - channel_id: legacy_forecast_ratio
+    channel_family: legacy_exposure_ratio
+    period_scope: forecast
+    final_role: diagnostic_exposure_only
+    numerator_formula: forecast_level_or_scenario_ratio
+    marginal_delta_required: true
+    same_state_pair_required: true
+    source_status: existing_old_forecast_surface
+    viability_status: nonviable_as_final_marginal_object
+    promotion_status: blocked_old_exposure_ratio
+    fail_closed_label: fail_closed_forecast_v1_ratio_selected_as_rw_m
+    allowed_use: comparison_context_only
+    blocked_use: selected_rw_m;selected_marginal_n;selected_marginal_d
+    claim_boundary: old_forecast_ratio_is_not_same_state_plus_100bp_marginal_object
+
+  - channel_id: historical_classifier
+    channel_family: legacy_classifier
+    period_scope: historical
+    final_role: diagnostic_exposure_only
+    numerator_formula: historical_public_interest_level_or_classifier_context
+    marginal_delta_required: true
+    same_state_pair_required: true
+    source_status: historical_public_interest_inputs_exist_but_delta_n_missing
+    viability_status: viable_after_historical_delta_builder
+    promotion_status: blocked_until_historical_marginal_n
+    fail_closed_label: fail_closed_historical_classifier_without_marginal_n
+    allowed_use: historical_context_and_input_inventory
+    blocked_use: selected_rw_m_without_delta_n;classifier_as_final_ratio
+    claim_boundary: historical_rows_need_delta_n_before_any_final_marginal_ratio
+
+  - channel_id: old_historical_path_d
+    channel_family: legacy_denominator_exposure
+    period_scope: historical
+    final_role: diagnostic_exposure_only
+    numerator_formula: not_applicable_denominator
+    marginal_delta_required: true
+    same_state_pair_required: true
+    source_status: historical_path_d_exists_as_old_rate_scaled_exposure
+    viability_status: nonviable_as_selected_marginal_d
+    promotion_status: blocked_old_denominator_exposure
+    fail_closed_label: fail_closed_non_marginal_selected_d
+    allowed_use: rate_environment_exposure_diagnostic
+    blocked_use: selected_marginal_d;selected_rw_m
+    claim_boundary: historical_path_d_is_rate_environment_exposure_not_final_marginal_D
+
+  - channel_id: old_exposure_ratio_generic
+    channel_family: legacy_exposure_ratio
+    period_scope: historical,current,forecast
+    final_role: diagnostic_exposure_only
+    numerator_formula: old_selected_or_exposure_ratio
+    marginal_delta_required: true
+    same_state_pair_required: true
+    source_status: old_exposure_ratio_outputs_exist
+    viability_status: nonviable_as_final_marginal_ratio
+    promotion_status: blocked_old_exposure_ratio
+    fail_closed_label: fail_closed_old_exposure_ratio_promoted
+    allowed_use: comparison_context_only
+    blocked_use: selected_rw_m;canonical_headline_promotion
+    claim_boundary: old_ratios_do_not_enter_final_marginal_object
+
+  - channel_id: remittance_state
+    channel_family: public_interest
+    period_scope: historical,current,forecast
+    final_role: selected_marginal_block_input
+    numerator_formula: input_inside_delta_public_interest_net_block
+    marginal_delta_required: true
+    same_state_pair_required: true
+    source_status: remittance_state_reusable_as_public_interest_block_input
+    viability_status: viable_as_block_input_after_delta_builder
+    promotion_status: blocked_as_standalone_n
+    fail_closed_label: fail_closed_block_input_used_as_standalone_n
+    allowed_use: public_interest_block_input
+    blocked_use: standalone_selected_marginal_n
+    claim_boundary: remittance_state_enters_only_inside_disjoint_public_interest_delta
+
+  - channel_id: firm_cash_liquidity
+    channel_family: denominator_credit
+    period_scope: current,forecast
+    final_role: denominator_only
+    numerator_formula: not_applicable_denominator_or_credit_sidecar
+    marginal_delta_required: true
+    same_state_pair_required: true
+    source_status: existing_diagnostic_sidecar
+    viability_status: viable_as_denominator_or_credit_diagnostic
+    promotion_status: blocked_as_selected_n
+    fail_closed_label: fail_closed_denominator_drag_booked_as_n
+    allowed_use: denominator_credit_diagnostic
+    blocked_use: selected_marginal_n;stock_only_support
+    claim_boundary: firm_cash_channel_not_cut_but_not_selected_n_without_marginal_flow
+
+  - channel_id: zero_low_apr_credit
+    channel_family: denominator_credit
+    period_scope: current,forecast
+    final_role: denominator_only
+    numerator_formula: not_applicable_denominator_or_credit_sidecar
+    marginal_delta_required: true
+    same_state_pair_required: true
+    source_status: existing_diagnostic_sidecar
+    viability_status: viable_as_denominator_or_credit_diagnostic
+    promotion_status: blocked_as_selected_n
+    fail_closed_label: fail_closed_denominator_drag_booked_as_n
+    allowed_use: denominator_credit_diagnostic
+    blocked_use: selected_marginal_n;stock_only_support
+    claim_boundary: zero_low_apr_channel_not_cut_but_not_selected_n_without_marginal_flow

@@ -1,0 +1,9 @@
+instrument,instrument_class,reference_rate_id,description
+treasury_debt,treasury_debt,treasury_safe,Treasury debt claim
+central_bank_reserve_claim,central_bank_reserve_claim,reserve_admin,central bank reserve claim
+household_credit,household_credit,household_credit_ref,household credit claim
+firm_credit,firm_credit,firm_credit_ref,firm credit claim
+deposit_claim,deposit_claim,deposit_admin,deposit claim
+fixed_test_claim,other_claim,fixed_contract,fixed-rate non-resetting test claim
+zero_test_claim,other_claim,zero,zero-rate test claim
+rest_of_world_claim,rest_of_world_claim,treasury_safe,rest-of-world incidence test claim

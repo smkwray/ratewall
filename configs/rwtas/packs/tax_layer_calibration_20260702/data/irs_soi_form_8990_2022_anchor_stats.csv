@@ -1,0 +1,19 @@
+statistic,value,units,source_id,notes
+total_form_8990_forms_filed_count,145974.0,count,IRS_SOI_CORP_FORM_8990_2022,"SOI Corporation Complete Report Publication 5108, 2022, Form 8990 line-item estimates."
+current_year_business_interest_expense_count,81029.0,count,IRS_SOI_CORP_FORM_8990_2022,"SOI Corporation Complete Report Publication 5108, 2022, Form 8990 line-item estimates."
+total_business_interest_expense_count,87222.0,count,IRS_SOI_CORP_FORM_8990_2022,"SOI Corporation Complete Report Publication 5108, 2022, Form 8990 line-item estimates."
+disallowed_business_interest_expense_count,30708.0,count,IRS_SOI_CORP_FORM_8990_2022,"SOI Corporation Complete Report Publication 5108, 2022, Form 8990 line-item estimates."
+adjusted_taxable_income_count,96797.0,count,IRS_SOI_CORP_FORM_8990_2022,"SOI Corporation Complete Report Publication 5108, 2022, Form 8990 line-item estimates."
+current_year_business_interest_expense_thousand_dollars,748577110.0,thousand_dollars,IRS_SOI_CORP_FORM_8990_2022,"SOI Corporation Complete Report Publication 5108, 2022, Form 8990 line-item estimates."
+business_interest_expense_carryforwards_thousand_dollars,211462115.0,thousand_dollars,IRS_SOI_CORP_FORM_8990_2022,"SOI Corporation Complete Report Publication 5108, 2022, Form 8990 line-item estimates."
+total_business_interest_expense_thousand_dollars,964474302.0,thousand_dollars,IRS_SOI_CORP_FORM_8990_2022,"SOI Corporation Complete Report Publication 5108, 2022, Form 8990 line-item estimates."
+adjusted_taxable_income_thousand_dollars,3098509391.0,thousand_dollars,IRS_SOI_CORP_FORM_8990_2022,"SOI Corporation Complete Report Publication 5108, 2022, Form 8990 line-item estimates."
+business_interest_income_thousand_dollars,1361467022.0,thousand_dollars,IRS_SOI_CORP_FORM_8990_2022,"SOI Corporation Complete Report Publication 5108, 2022, Form 8990 line-item estimates."
+thirty_percent_ati_thousand_dollars,936192644.0,thousand_dollars,IRS_SOI_CORP_FORM_8990_2022,"SOI Corporation Complete Report Publication 5108, 2022, Form 8990 line-item estimates."
+business_interest_expense_limitation_thousand_dollars,2146255747.0,thousand_dollars,IRS_SOI_CORP_FORM_8990_2022,"SOI Corporation Complete Report Publication 5108, 2022, Form 8990 line-item estimates."
+allowable_current_year_business_interest_deduction_thousand_dollars,648709599.0,thousand_dollars,IRS_SOI_CORP_FORM_8990_2022,"SOI Corporation Complete Report Publication 5108, 2022, Form 8990 line-item estimates."
+disallowed_business_interest_expense_thousand_dollars,318790101.0,thousand_dollars,IRS_SOI_CORP_FORM_8990_2022,"SOI Corporation Complete Report Publication 5108, 2022, Form 8990 line-item estimates."
+s_corp_excess_business_interest_income_thousand_dollars,28327114.0,thousand_dollars,IRS_SOI_CORP_FORM_8990_2022,"SOI Corporation Complete Report Publication 5108, 2022, Form 8990 line-item estimates."
+disallowed_amount_share_of_total_business_interest_expense_on_form_8990,0.330532498729033,share,IRS_SOI_CORP_FORM_8990_2022,Derived stress anchor: disallowed current/carryforward BIE over total BIE reported on Form 8990.
+disallowed_count_share_of_total_business_interest_expense_count,0.35206713902455805,share,IRS_SOI_CORP_FORM_8990_2022,Derived stress anchor: count with disallowed BIE / count with total BIE line.
+disallowed_count_share_of_total_forms_filed,0.21036622960253196,share,IRS_SOI_CORP_FORM_8990_2022,Derived stress anchor: count with disallowed BIE / total Form 8990 forms filed.

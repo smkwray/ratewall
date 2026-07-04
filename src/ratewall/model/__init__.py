@@ -1,0 +1,2 @@
+"""Scenario model scaffolding."""
+

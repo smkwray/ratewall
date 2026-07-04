@@ -1,0 +1,4 @@
+calendar_year,paid_dividends_total_mil,reinvested_dividends_total_mil,paid_dividends_total_bil,reinvested_dividends_total_bil,cash_only_paid_minus_reinvested_bil,incorrect_paid_plus_reinvested_double_count_bil,identity_applied
+2022,26573,13873,26.573000,13.873000,12.700000,40.446000,paid total = cash distributions + reinvested dividends; paid + reinvested double-counts reinvestment
+2023,235525,161905,235.525000,161.905000,73.620000,397.430000,paid total = cash distributions + reinvested dividends; paid + reinvested double-counts reinvestment
+2024,297242,216708,297.242000,216.708000,80.534000,513.950000,paid total = cash distributions + reinvested dividends; paid + reinvested double-counts reinvestment

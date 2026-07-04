@@ -1,0 +1,2874 @@
+version: 1
+
+timestamp_policy:
+  retrieval_timezone: UTC
+  retrieval_timestamp_field: retrieved_at
+  retrieval_timestamp_format: iso8601_utc_z
+  source_release_timestamp_field: source_release_at
+  source_release_timestamp_rule: >
+    Use the source-provided release date, observation date, as-of date, or
+    publication timestamp when available. If the source does not publish one,
+    store null and preserve the retrieval timestamp.
+  required_snapshot_fields:
+    - source_id
+    - series_id
+    - source_url
+    - units
+    - frequency
+    - transform
+    - retrieved_at
+
+sources:
+  fred:
+    name: FRED
+    publisher: Federal Reserve Bank of St. Louis
+    role: Macro, rates, reserve balances, and public-sector time-series mirrors.
+    access: csv
+    base_url: https://fred.stlouisfed.org/graph/fredgraph.csv
+    documentation_url: https://fred.stlouisfed.org/docs/api/fred/
+    update_cadence: series_specific
+    timestamp_rule: Record retrieval UTC timestamp and FRED observation dates.
+
+  treasury_fiscaldata:
+    name: Treasury FiscalData
+    publisher: U.S. Department of the Treasury
+    role: Debt, auctions, monthly statements, and other Treasury operations data.
+    access: json_api
+    base_url: https://api.fiscaldata.treasury.gov/services/api/fiscal_service
+    documentation_url: https://fiscaldata.treasury.gov/api-documentation/
+    update_cadence: dataset_specific
+    timestamp_rule: Record retrieval UTC timestamp and API reporting/as-of fields.
+
+  treasury_direct:
+    name: TreasuryDirect
+    publisher: U.S. Department of the Treasury
+    role: TreasuryDirect marketable-security guidance, buyback announcements, and results.
+    access: public_page_json_api
+    base_url: https://www.treasurydirect.gov
+    documentation_url: https://www.treasurydirect.gov/auctions/announcements-data-results/buy-backs/
+    update_cadence: operation_specific
+    timestamp_rule: Record retrieval UTC timestamp and operation/settlement dates.
+
+  treasury_hqm:
+    name: Treasury HQM Corporate Bond Yield Curve
+    publisher: U.S. Department of the Treasury
+    role: High-quality-market corporate bond yield curve par and spot yield data.
+    access: public_xls_workbook
+    base_url: https://home.treasury.gov/system/files/226
+    documentation_url: https://home.treasury.gov/data/treasury-coupon-issues-and-corporate-bond-yield-curve/corporate-bond-yield-curve
+    update_cadence: monthly
+    timestamp_rule: Record retrieval UTC timestamp, workbook hash, and latest monthly HQM observation date.
+
+  treasury_tic:
+    name: Treasury International Capital
+    publisher: U.S. Department of the Treasury
+    role: Foreign Treasury transaction and holder context.
+    access: text_and_html_downloads
+    base_url: https://ticdata.treasury.gov
+    documentation_url: https://home.treasury.gov/data/treasury-international-capital-tic-system
+    update_cadence: monthly
+    timestamp_rule: Record retrieval UTC timestamp and TIC reporting month.
+
+  ofr_stfm:
+    name: OFR Short-Term Funding Monitor
+    publisher: Office of Financial Research
+    role: Money-market fund Treasury and Treasury-backed repo portfolio context.
+    access: json_api
+    base_url: https://data.financialresearch.gov
+    documentation_url: https://data.financialresearch.gov/
+    update_cadence: monthly
+    timestamp_rule: Record retrieval UTC timestamp and latest monthly OFR observation date.
+
+  ofr_research:
+    name: OFR Research Publications
+    publisher: Office of Financial Research
+    role: OFR research and brief context for financial-intermediation source gates.
+    access: public_html_and_pdf
+    base_url: https://www.financialresearch.gov
+    documentation_url: https://www.financialresearch.gov/briefs/
+    update_cadence: publication_specific
+    timestamp_rule: Record retrieval UTC timestamp, publication date, source page hash, and extracted context markers.
+
+  sec_nmfp:
+    name: SEC Form N-MFP Data Sets
+    publisher: U.S. Securities and Exchange Commission
+    role: Fund-level money-market fund portfolio and collateral detail for Treasury CUSIP context.
+    access: monthly_zip_flat_files
+    base_url: https://www.sec.gov
+    documentation_url: https://www.sec.gov/data-research/sec-markets-data/dera-form-n-mfp-data-sets
+    update_cadence: monthly
+    timestamp_rule: Record retrieval UTC timestamp and latest report date in the monthly flat file.
+
+  sec_statistics:
+    name: SEC Statistics and Data Visualizations
+    publisher: U.S. Securities and Exchange Commission
+    role: Public aggregate Form PF private-fund statistics for fail-closed NDFI/private-credit source gates.
+    access: public_json_statistics_download
+    base_url: https://www.sec.gov/data-research/statistics-data-visualizations
+    documentation_url: https://www.sec.gov/data-research/statistics-data-visualizations/private-fund-statistics
+    update_cadence: quarterly
+    timestamp_rule: Record retrieval UTC timestamp, SEC statistics release date, JSON hash, source-record hash, date bounds, and Form PF aggregate-only limitations.
+
+  sec_edgar:
+    name: SEC EDGAR company filings
+    publisher: U.S. Securities and Exchange Commission
+    role: Public BDC company-filing availability, portfolio-disclosure context, normalized filing-table investment-term panels, and ABS-EE asset-level CMBS panels for fail-closed NDFI/private-credit and CRE source gates.
+    access: submissions_json_and_archived_company_filings
+    base_url: https://data.sec.gov/submissions/
+    documentation_url: https://www.sec.gov/search-filings/edgar-application-programming-interfaces
+    update_cadence: filing_specific
+    timestamp_rule: Record retrieval UTC timestamp, submissions JSON hash, filing HTML hash, source-record hash, filing/report dates, and public-filing/normalization limitations.
+
+  atlanta_fed:
+    name: Federal Reserve Bank of Atlanta
+    publisher: Federal Reserve Bank of Atlanta
+    role: CREMI commercial real estate market-performance context for fail-closed CRE denominator source gates.
+    access: public_html_and_csv_download
+    base_url: https://www.atlantafed.org
+    documentation_url: https://www.atlantafed.org/research-and-data/data/commercial-real-estate-market-index
+    update_cadence: quarterly
+    timestamp_rule: Record retrieval UTC timestamp, source CSV/page hashes, row counts, schema review metadata, and raw-data sharing limitations.
+
+  cbo:
+    name: Congressional Budget Office
+    publisher: Congressional Budget Office
+    role: Budget and economic projections for baseline scenarios.
+    access: report_and_downloads
+    base_url: https://www.cbo.gov
+    documentation_url: https://www.cbo.gov/about/products/budget-economic-data
+    update_cadence: report_specific
+    timestamp_rule: Record retrieval UTC timestamp plus report publication date.
+
+  fed_h41:
+    name: Federal Reserve H.4.1
+    publisher: Board of Governors of the Federal Reserve System
+    role: Reserve balances, Federal Reserve balance sheet, remittances, and deferred asset context.
+    access: release_page
+    base_url: https://www.federalreserve.gov/releases/h41/
+    documentation_url: https://www.federalreserve.gov/releases/h41/
+    update_cadence: weekly
+    timestamp_rule: Record retrieval UTC timestamp and release date when parsed.
+
+  ny_fed:
+    name: Federal Reserve Bank of New York
+    publisher: Federal Reserve Bank of New York
+    role: Desk operations, SOMA holdings, secured reference rates, and ON RRP context.
+    access: json_api
+    base_url: https://markets.newyorkfed.org/api
+    documentation_url: https://markets.newyorkfed.org/
+    update_cadence: dataset_specific
+    timestamp_rule: Record retrieval UTC timestamp and API operation/as-of dates.
+
+  philadelphia_fed:
+    name: Federal Reserve Bank of Philadelphia
+    publisher: Federal Reserve Bank of Philadelphia
+    role: FR Y-14 consumer-credit and large-bank credit-card context for fail-closed denominator source gates.
+    access: csv_and_guidance_pages
+    base_url: https://www.philadelphiafed.org
+    documentation_url: https://www.philadelphiafed.org/surveys-and-data/large-bank-credit-card-and-mortgage-data
+    update_cadence: quarterly
+    timestamp_rule: Record retrieval UTC timestamp, release quarter, source-file hashes, and methodology/definition page hashes.
+
+  jec_treasury:
+    name: JEC Treasury Debt Update
+    publisher: U.S. Congress Joint Economic Committee / U.S. Treasury
+    role: Treasury maturity and near-term repricing anchors when CUSIP-level data are not yet available.
+    access: public_report
+    base_url: https://www.jec.senate.gov/public/vendor/_accounts/JEC-R/debt/Monthly%20Debt%20Update.html
+    documentation_url: https://www.jec.senate.gov/public/vendor/_accounts/JEC-R/debt/Monthly%20Debt%20Update.html
+    update_cadence: monthly
+    timestamp_rule: Record retrieval UTC timestamp and report as-of date when parsed.
+
+  fed_dfa:
+    name: Distributional Financial Accounts
+    publisher: Board of Governors of the Federal Reserve System
+    role: Distributional household balance-sheet exposure used to separate rate-income channels from representative-agent aggregates.
+    access: public_data_download
+    base_url: https://www.federalreserve.gov/releases/efa/efa-distributional-financial-accounts.htm
+    documentation_url: https://www.federalreserve.gov/releases/efa/efa-distributional-financial-accounts.htm
+    update_cadence: quarterly
+    timestamp_rule: Record retrieval UTC timestamp and release/as-of quarter when parsed.
+
+  fed_scf:
+    name: Survey of Consumer Finances
+    publisher: Board of Governors of the Federal Reserve System
+    role: Public household/family balance-sheet, debt, income, and payment-context microdata for fail-closed recipient and denominator gates.
+    access: public_zip_csv
+    base_url: https://www.federalreserve.gov/econres/scfindex.htm
+    documentation_url: https://www.federalreserve.gov/econres/scf-documentation.htm
+    update_cadence: triennial
+    timestamp_rule: Record retrieval UTC timestamp and official survey/data release date when parsed.
+
+  fed_shed:
+    name: Survey of Household Economics and Decisionmaking
+    publisher: Board of Governors of the Federal Reserve System
+    role: Public household financial-fragility, emergency-expense, and credit-payment behavior context for fail-closed consumer-credit denominator gates.
+    access: public_zip_csv
+    base_url: https://www.federalreserve.gov/consumerscommunities/shed_data.htm
+    documentation_url: https://www.federalreserve.gov/consumerscommunities/shed_data.htm
+    update_cadence: annual
+    timestamp_rule: Record retrieval UTC timestamp, source ZIP/codebook hashes, survey year, schema review metadata, and current-demand blocker.
+
+  sf_fed:
+    name: SF Fed Monetary Policy Surprises
+    publisher: Federal Reserve Bank of San Francisco
+    role: High-frequency monetary policy surprise measures for empirical identification.
+    access: csv_and_excel_download
+    base_url: https://www.frbsf.org/research-and-insights/data-and-indicators/monetary-policy-surprises/
+    documentation_url: https://www.frbsf.org/research-and-insights/data-and-indicators/monetary-policy-surprises/
+    update_cadence: periodic
+    timestamp_rule: Record retrieval UTC timestamp and latest FOMC-event date in the file.
+
+  fed_feds:
+    name: Federal Reserve FEDS Monetary Policy Shock Data
+    publisher: Board of Governors of the Federal Reserve System
+    role: Official Federal Reserve research-data monetary policy shock series used as an admissible external-proxy candidate.
+    access: csv_download
+    base_url: https://www.federalreserve.gov/econres/feds/a-unified-measure-of-fed-monetary-policy-shocks.htm
+    documentation_url: https://www.federalreserve.gov/econres/feds/a-unified-measure-of-fed-monetary-policy-shocks.htm
+    update_cadence: static_research_data
+    timestamp_rule: Record retrieval UTC timestamp and official source update date when parsed.
+
+  fed_feds_notes:
+    name: Federal Reserve FEDS Notes
+    publisher: Board of Governors of the Federal Reserve System
+    role: Federal Reserve research-note context for private-credit and nonbank monetary-transmission mechanisms.
+    access: public_html_note
+    base_url: https://www.federalreserve.gov/econres/notes/feds-notes/
+    documentation_url: https://www.federalreserve.gov/econres/notes/feds-notes/
+    update_cadence: note_specific
+    timestamp_rule: Record note URL, publication date, retrieval timestamp, source page hash, and extracted context markers.
+
+  boston_fed:
+    name: Federal Reserve Bank of Boston
+    publisher: Federal Reserve Bank of Boston
+    role: Federal Reserve Bank research context for consumer-credit rate transmission and fail-closed denominator gates.
+    access: public_html_article
+    base_url: https://www.bostonfed.org
+    documentation_url: https://www.bostonfed.org/publications/current-policy-perspectives.aspx
+    update_cadence: publication_specific
+    timestamp_rule: Record article URL, publication date, retrieval timestamp, source page hash, and extracted context markers.
+
+  fed_sloos:
+    name: Federal Reserve Senior Loan Officer Opinion Survey
+    publisher: Board of Governors of the Federal Reserve System
+    role: Bank lending-standard, demand, and credit-term context for denominator-drag candidates.
+    access: release_page_and_ddp
+    base_url: https://www.federalreserve.gov/data/sloos/
+    documentation_url: https://www.federalreserve.gov/data/sloos/about.htm
+    update_cadence: quarterly
+    timestamp_rule: Record release page URL, retrieval timestamp, source page hash, and survey period.
+
+  mba_newslink:
+    name: MBA Newslink
+    publisher: Mortgage Bankers Association
+    role: Public commercial/multifamily mortgage maturity and debt-outstanding context for CRE refinancing denominator candidates.
+    access: public_html_release
+    base_url: https://newslink.mba.org
+    documentation_url: https://newslink.mba.org
+    update_cadence: report_specific
+    timestamp_rule: Record release page URL, publication date, retrieval timestamp, source page hash, and extracted maturity-year context.
+
+  berkeley_romer_romer:
+    name: Berkeley Romer-Romer Monetary Shock Data Appendix
+    publisher: Christina D. Romer and David H. Romer
+    role: Static narrative monetary-shock appendix for denominator replication context.
+    access: reviewed_converted_csv_snapshot_from_legacy_xls
+    base_url: https://eml.berkeley.edu/~cromer/Data/Shocks/
+    documentation_url: https://eml.berkeley.edu/~cromer/Data/Shocks/RomerandRomerDataDescriptions.pdf
+    update_cadence: static_research_data
+    timestamp_rule: Record source workbook hash, data-description hash, converted CSV hash, conversion timestamp, and sample-alignment metadata.
+
+  irs_soi:
+    name: IRS Statistics of Income Individual Statistical Tables
+    publisher: Internal Revenue Service
+    role: Taxable-interest and tax-return context for fail-closed interest-income tax clawback leakage review.
+    access: reviewed_converted_csv_snapshot_from_public_xls
+    base_url: https://www.irs.gov/statistics/soi-tax-stats-individual-statistical-tables-by-size-of-adjusted-gross-income
+    documentation_url: https://www.irs.gov/statistics/soi-tax-stats-individual-statistical-tables-by-size-of-adjusted-gross-income
+    update_cadence: annual
+    timestamp_rule: Record source workbook hash, converted CSV hash, tax year, filing year, publication month, and schema review metadata.
+
+  irs_tax_guidance:
+    name: IRS Tax Payment Guidance
+    publisher: Internal Revenue Service
+    role: Tax-payment timing context for fail-closed interest-income tax clawback leakage review.
+    access: html_guidance_page
+    base_url: https://www.irs.gov/payments
+    documentation_url: https://www.irs.gov/payments
+    update_cadence: guidance_page_specific
+    timestamp_rule: Record guidance page URL, page-posted date when available, retrieval timestamp, source page hash, reviewed timing markers, and schema review metadata.
+
+  federation_of_tax_administrators:
+    name: Federation of Tax Administrators
+    publisher: Federation of Tax Administrators
+    role: State individual income-tax-rate table context for fail-closed interest-income tax clawback leakage review.
+    access: public_html_table
+    base_url: https://taxadmin.org
+    documentation_url: https://taxadmin.org/tax-rates-new/
+    update_cadence: annual
+    timestamp_rule: Record source page URL, as-of date, retrieval timestamp, source page hash, parsed table row count, and schema review metadata.
+
+  ea_tdc:
+    name: EA-TDC sibling project
+    publisher: Local sibling project
+    role: Canonical matched-deposit TDC pass-through estimate used only for Dynamic Assumption Mode liquidity/deposit-state scenarios.
+    access: local_artifact
+    base_url: https://local.invalid/ea-tdc
+    documentation_url: https://local.invalid/ea-tdc
+    update_cadence: sibling_project_snapshot
+    timestamp_rule: Record sibling artifact path, sample window, method label, and local snapshot timestamp.
+
+  cfpb:
+    name: Consumer Financial Protection Bureau
+    publisher: Consumer Financial Protection Bureau
+    role: BNPL market scale and consumer-credit context; not incidence, welfare, tax, or pricing evidence.
+    access: report_download
+    base_url: https://www.consumerfinance.gov
+    documentation_url: https://www.consumerfinance.gov/data-research/research-reports/
+    update_cadence: report_specific
+    timestamp_rule: Record retrieval UTC timestamp and report publication date.
+
+  bea:
+    name: Bureau of Economic Analysis
+    publisher: U.S. Bureau of Economic Analysis
+    role: NIPA net-interest accounting definitions and national-account context.
+    access: methodology_report
+    base_url: https://www.bea.gov
+    documentation_url: https://www.bea.gov/resources/methodologies/nipa-handbook
+    update_cadence: methodology_specific
+    timestamp_rule: Record report chapter/version date when used.
+
+  census_qfr:
+    name: Census Quarterly Financial Report
+    publisher: U.S. Census Bureau
+    role: Candidate firm interest expense and working-capital context.
+    access: report_or_table_download
+    base_url: https://www.census.gov/programs-surveys/qfr.html
+    documentation_url: https://www.census.gov/programs-surveys/qfr.html
+    update_cadence: quarterly
+    timestamp_rule: Record release quarter and retrieval timestamp when ingested.
+
+  ffiec_cdr:
+    name: FFIEC Central Data Repository
+    publisher: Federal Financial Institutions Examination Council
+    role: Public Call Report bulk-data context for deposit-rate pass-through, loan maturity/repricing exposure, and bank balance-sheet conditioning.
+    access: public_bulk_download
+    base_url: https://cdr.ffiec.gov/public/PWS/DownloadBulkData.aspx
+    documentation_url: https://cdr.ffiec.gov/public/PWS/DownloadBulkData.aspx
+    update_cadence: quarterly
+    timestamp_rule: Record retrieval UTC timestamp, report quarter, file hash, row count, and schedule/field coverage limitations before any materialized use.
+
+  fdic:
+    name: Federal Deposit Insurance Corporation
+    publisher: Federal Deposit Insurance Corporation
+    role: Public deposit-rate benchmark, Summary of Deposits, and BankFind financials context for bank distribution-route conditioning.
+    access: public_downloads_and_json_api
+    base_url: https://www.fdic.gov
+    documentation_url: https://api.fdic.gov/banks/docs/
+    update_cadence: dataset_specific
+    timestamp_rule: Record retrieval UTC timestamp, publication/as-of date, file hash, and product or market coverage limitations.
+
+  ici:
+    name: Investment Company Institute
+    publisher: Investment Company Institute
+    role: Public industry money-market-fund asset context for retail/institutional MMF substitution diagnostics.
+    access: public_report_download
+    base_url: https://www.ici.org
+    documentation_url: https://www.ici.org/research/stats/mmf
+    update_cadence: weekly
+    timestamp_rule: Record retrieval UTC timestamp, report week, source file hash, and retail/institutional/fund-type scope limitations.
+
+  compustat:
+    name: Compustat candidate firm panel
+    publisher: S&P Global
+    role: Candidate firm cash, debt maturity, and working-capital panel; not currently bundled.
+    access: licensed_candidate_not_bundled
+    base_url: https://www.spglobal.com/marketintelligence/en/solutions/products/compustat
+    documentation_url: https://www.spglobal.com/marketintelligence/en/solutions/products/compustat
+    update_cadence: licensed_dataset_specific
+    timestamp_rule: Do not treat as available unless a local licensed artifact is registered.
+
+  research_literature:
+    name: Research literature source notes
+    publisher: Mixed academic and policy sources
+    role: Literature-context source IDs for diagnostics that do not create source-backed priors.
+    access: citation_context
+    base_url: https://local.invalid/research-literature
+    documentation_url: https://local.invalid/research-literature
+    update_cadence: static_or_review_specific
+    timestamp_rule: Record citation, URL, and review date when moved beyond context.
+
+  mosler_economics:
+    name: Mosler Economics
+    publisher: Mosler Economics
+    role: Term-structure price-level theory context; not CPI or forward-price output evidence.
+    access: public_pdf
+    base_url: https://moslereconomics.com
+    documentation_url: https://moslereconomics.com
+    update_cadence: paper_specific
+    timestamp_rule: Record draft date and retrieval timestamp when used.
+
+  cme_group:
+    name: CME Group education/source notes
+    publisher: CME Group
+    role: Cost-of-carry formula context; not price forecast evidence.
+    access: public_education_note
+    base_url: https://www.cmegroup.com
+    documentation_url: https://www.cmegroup.com
+    update_cadence: note_specific
+    timestamp_rule: Record page date/retrieval timestamp when used.
+
+series:
+  WRESBAL:
+    source: fred
+    name: Reserve Balances with Federal Reserve Banks
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=WRESBAL
+    units: millions_of_dollars
+    frequency: weekly
+    transform: level
+    update_cadence: weekly
+    release: H.4.1
+    liability_channel: reserves
+
+  RRPONTSYD:
+    source: fred
+    name: Overnight Reverse Repurchase Agreements
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=RRPONTSYD
+    units: millions_of_dollars
+    frequency: daily
+    transform: level
+    update_cadence: daily
+    release: Temporary Open Market Operations
+    liability_channel: on_rrp
+
+  GDP:
+    source: fred
+    name: Gross Domestic Product
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=GDP
+    units: billions_of_dollars
+    frequency: quarterly
+    transform: level
+    update_cadence: quarterly
+    release: National Income and Product Accounts
+    liability_channel: scale
+
+  PCEC:
+    source: fred
+    name: Personal Consumption Expenditures
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=PCEC
+    units: billions_of_dollars_saar
+    frequency: monthly
+    transform: level
+    update_cadence: monthly
+    release: Personal Income and Outlays
+    liability_channel: tdsp_current_demand_refresh_contract
+
+  PCECC96:
+    source: fred
+    name: Real Personal Consumption Expenditures
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=PCECC96
+    units: billions_of_chained_2017_dollars_saar
+    frequency: monthly
+    transform: level
+    update_cadence: monthly
+    release: Personal Income and Outlays
+    liability_channel: tdsp_current_demand_refresh_contract
+
+  DSPI:
+    source: fred
+    name: Disposable Personal Income
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=DSPI
+    units: billions_of_dollars_saar
+    frequency: monthly
+    transform: level
+    update_cadence: monthly
+    release: Personal Income and Outlays
+    liability_channel: tdsp_current_demand_refresh_contract
+
+  PCEPILFE:
+    source: fred
+    name: "Personal Consumption Expenditures Excluding Food and Energy, Chain-Type Price Index"
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=PCEPILFE
+    units: index_2017_100
+    frequency: monthly
+    transform: level
+    update_cadence: monthly
+    release: Personal Income and Outlays
+    liability_channel: empirical_outcome
+
+  PII:
+    source: fred
+    name: Personal Interest Income
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=PII
+    units: billions_of_dollars_saar
+    frequency: monthly
+    transform: personal_interest_income_context
+    update_cadence: monthly
+    release: Personal Income and Outlays
+    liability_channel: recipient_tax_clawback_context
+
+  W055RC1:
+    source: fred
+    name: Personal Current Taxes
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=W055RC1
+    units: billions_of_dollars_saar
+    frequency: monthly
+    transform: personal_current_tax_context
+    update_cadence: monthly
+    release: Personal Income and Outlays
+    liability_channel: recipient_tax_clawback_context
+
+  irs_soi_taxable_interest:
+    source: irs_soi
+    name: IRS SOI Table 1.4 taxable interest by adjusted gross income
+    endpoint: https://www.irs.gov/pub/irs-soi/23in14ar.xls
+    units: return_counts_and_thousands_of_dollars
+    frequency: annual
+    transform: taxable_interest_tax_context_by_agi
+    update_cadence: annual
+    release: Individual Statistical Tables by Size of Adjusted Gross Income, Tax Year 2023
+    liability_channel: recipient_tax_clawback_context
+
+  irs_soi_ira_type_agi:
+    source: irs_soi
+    name: IRS SOI Table 3 IRA plans by type and adjusted gross income
+    endpoint: https://www.irs.gov/pub/irs-soi/22in03ira.xlsx
+    units: return_counts_and_thousands_of_dollars
+    frequency: annual
+    transform: ira_type_agi_account_type_context
+    update_cadence: annual
+    release: IRS SOI Individual Retirement Arrangements Study, Tax Year 2022
+    liability_channel: recipient_tax_clawback_account_type_context
+
+  irs_soi_average_tax_rate_percentile:
+    source: irs_soi
+    name: IRS SOI Table 4.1 average tax rates by income percentile
+    endpoint: https://www.irs.gov/pub/irs-soi/23in41ts.xlsx
+    units: return_counts_millions_of_dollars_and_percentages
+    frequency: annual
+    transform: average_tax_rate_percentile_context
+    update_cadence: annual
+    release: IRS SOI Table 4.1 all individual returns excluding dependents, Tax Years 2001-2023
+    liability_channel: recipient_tax_clawback_tax_rate_distribution_context
+
+  irs_estimated_tax_payment_timing:
+    source: irs_tax_guidance
+    name: IRS estimated tax payment timing guidance for interest income
+    endpoint: https://www.irs.gov/payments/pay-as-you-go-so-you-wont-owe-a-guide-to-withholding-estimated-taxes-and-ways-to-avoid-the-estimated-tax-penalty
+    units: recurring_due_date_context
+    frequency: annual_recurring_quarterly_schedule
+    transform: estimated_tax_payment_timing_context
+    update_cadence: guidance_page_specific
+    release: Pay as you go estimated tax guidance
+    liability_channel: recipient_tax_clawback_payment_timing_context
+
+  irs_soi_state_interest_agi:
+    source: irs_soi
+    name: IRS SOI Historic Table 2 taxable interest by state and adjusted gross income
+    endpoint: https://www.irs.gov/pub/irs-soi/22in55cmcsv.csv
+    units: return_counts_and_thousands_of_dollars
+    frequency: annual
+    transform: state_agi_interest_tax_context
+    update_cadence: annual
+    release: Historic Table 2 state data, Tax Year 2022
+    liability_channel: recipient_tax_clawback_state_agi_context
+
+  treasury_security_interest_tax_treatment:
+    source: treasury_direct
+    name: TreasuryDirect marketable securities tax forms and withholding guidance
+    endpoint: https://www.treasurydirect.gov/marketable-securities/tax-forms-and-withholding/
+    units: tax_treatment_context
+    frequency: guidance_page_specific
+    transform: treasury_interest_tax_treatment_context
+    update_cadence: guidance_page_specific
+    release: TreasuryDirect Tax Forms and Tax Withholding
+    liability_channel: recipient_tax_clawback_source_specific_tax_context
+
+  irs_interest_received_tax_topic_403:
+    source: irs_tax_guidance
+    name: IRS Topic 403 interest received tax treatment
+    endpoint: https://www.irs.gov/taxtopics/tc403
+    units: source_specific_interest_tax_treatment_context
+    frequency: guidance_page_specific
+    transform: source_specific_interest_tax_treatment_context
+    update_cadence: guidance_page_specific
+    release: IRS Topic No. 403 Interest Received
+    liability_channel: recipient_tax_clawback_source_specific_tax_context
+
+  irs_publication_550_interest_income_taxonomy:
+    source: irs_tax_guidance
+    name: IRS Publication 550 interest-income source taxonomy
+    endpoint: https://www.irs.gov/publications/p550
+    units: source_specific_interest_income_taxonomy_context
+    frequency: annual_guidance_publication
+    transform: publication_550_interest_income_taxonomy_context
+    update_cadence: guidance_page_specific
+    release: Publication 550 Investment Income and Expenses
+    liability_channel: recipient_tax_clawback_source_specific_tax_context
+
+  irs_1099_int_div_reporting_taxonomy:
+    source: irs_tax_guidance
+    name: IRS 1099-INT and 1099-DIV source-specific reporting taxonomy
+    endpoint: https://www.irs.gov/instructions/i1099int/
+    units: information_return_box_reporting_context
+    frequency: annual_guidance_publication
+    transform: form_1099_int_div_reporting_taxonomy_context
+    update_cadence: guidance_page_specific
+    release: IRS Forms 1099-INT/OID and 1099-DIV Instructions
+    liability_channel: recipient_tax_clawback_source_specific_reporting_context
+
+  fta_state_individual_income_tax_rates:
+    source: federation_of_tax_administrators
+    name: FTA state individual income tax rates
+    endpoint: https://taxadmin.org/2024-state-income-tax-rates/
+    units: state_individual_income_tax_rate_context
+    frequency: annual
+    transform: state_income_tax_rate_context
+    update_cadence: annual
+    release: 2024 State Individual Income Tax Rates as of January 1, 2025
+    liability_channel: recipient_tax_clawback_state_tax_rate_context
+
+  cbo_capital_tax_rates:
+    source: cbo
+    name: CBO capital-income effective tax-rate context
+    endpoint: https://www.cbo.gov/topics/taxes/tax-rates
+    units: capital_income_effective_tax_rate_context
+    frequency: topic_page_and_report_context
+    transform: capital_income_effective_tax_rate_context
+    update_cadence: guidance_page_specific
+    release: CBO Tax Rates topic page and Taxing Capital Income report context
+    liability_channel: recipient_tax_clawback_tax_rate_context
+
+  TOTALSL:
+    source: fred
+    name: Consumer Credit Outstanding
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=TOTALSL
+    units: billions_of_dollars
+    frequency: monthly
+    transform: consumer_credit_stock_context
+    update_cadence: monthly
+    release: Consumer Credit G.19
+    liability_channel: fast_repricing_consumer_credit_context
+
+  REVOLSL:
+    source: fred
+    name: Revolving Consumer Credit Outstanding
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=REVOLSL
+    units: billions_of_dollars
+    frequency: monthly
+    transform: revolving_consumer_credit_stock_context
+    update_cadence: monthly
+    release: Consumer Credit G.19
+    liability_channel: fast_repricing_consumer_credit_context
+
+  NONREVSL:
+    source: fred
+    name: Nonrevolving Consumer Credit Outstanding
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=NONREVSL
+    units: billions_of_dollars
+    frequency: monthly
+    transform: nonrevolving_consumer_credit_stock_context
+    update_cadence: monthly
+    release: Consumer Credit G.19
+    liability_channel: fast_repricing_consumer_credit_context
+
+  TERMCBCCALLNS:
+    source: fred
+    name: Commercial Bank Interest Rate on Credit Card Plans, All Accounts
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=TERMCBCCALLNS
+    units: percent
+    frequency: monthly
+    transform: credit_card_apr_context
+    update_cadence: quarterly
+    release: Consumer Credit G.19
+    liability_channel: fast_repricing_consumer_credit_context
+
+  cfpb_credit_card_market_figure_data_2025:
+    source: cfpb
+    name: Consumer Credit Card Market Figure Data 2025
+    endpoint: https://files.consumerfinance.gov/f/documents/cfpb_consumer-credit-card-market-report-figure-data_2025.xlsm
+    units: payment_balance_repricing_utilization_context
+    frequency: report_specific
+    transform: credit_card_payment_balance_repricing_utilization_context
+    update_cadence: biennial_report_specific
+    release: CFPB Consumer Credit Card Market Report 2025
+    liability_channel: fast_repricing_consumer_credit_context
+
+  cfpb_credit_card_market_report_2025:
+    source: cfpb
+    name: Consumer Credit Card Market Report 2025
+    endpoint: https://files.consumerfinance.gov/f/documents/cfpb_consumer-credit-card-market-report_2025.pdf
+    units: credit_card_apr_payment_report_context
+    frequency: biennial_report
+    transform: credit_card_apr_payment_transmission_limitations_context
+    update_cadence: biennial_report_specific
+    release: CFPB Consumer Credit Card Market Report 2025
+    liability_channel: fast_repricing_consumer_credit_context
+
+  cfpb_credit_card_interest_payment_mechanics_context:
+    source: cfpb
+    name: CFPB credit-card interest and payment-allocation mechanics context
+    endpoint: https://www.consumerfinance.gov/ask-cfpb/how-does-my-credit-card-company-calculate-the-amount-of-interest-i-owe-en-51/
+    units: credit_card_interest_payment_mechanics_context
+    frequency: consumer_guidance_and_regulation
+    transform: credit_card_interest_payment_allocation_mechanics_context
+    update_cadence: static_guidance_and_regulation
+    release: CFPB Ask CFPB credit-card interest guidance and Regulation Z 1026.53
+    liability_channel: fast_repricing_consumer_credit_context
+
+  cfpb_consumer_credit_trends_all_data:
+    source: cfpb
+    name: CFPB Consumer Credit Trends all data points
+    endpoint: https://files.consumerfinance.gov/data/consumer-credit-trends/all_data.csv
+    units: consumer_credit_trends_source_table_units
+    frequency: monthly
+    transform: consumer_credit_trends_product_score_income_age_context
+    update_cadence: monthly
+    release: CFPB Consumer Credit Trends
+    liability_channel: fast_repricing_consumer_credit_context
+
+  cfpb_consumer_credit_trends_codebook:
+    source: cfpb
+    name: CFPB Consumer Credit Trends codebook and data dictionary
+    endpoint: https://files.consumerfinance.gov/f/documents/CCT_dd_cb_all_files.xlsx
+    units: consumer_credit_trends_schema_context
+    frequency: codebook_specific
+    transform: consumer_credit_trends_schema_review_context
+    update_cadence: codebook_specific
+    release: CFPB Consumer Credit Trends
+    liability_channel: fast_repricing_consumer_credit_context
+
+  cfpb_terms_credit_card_plans_2025h1:
+    source: cfpb
+    name: CFPB Terms of Credit Card Plans Survey 2025 H1
+    endpoint: https://files.consumerfinance.gov/f/documents/cfpb_tccp-data_2025-06-30.xlsx
+    units: credit_card_plan_terms_context
+    frequency: semiannual_survey
+    transform: credit_card_plan_terms_repricing_context
+    update_cadence: semiannual
+    release: CFPB Terms of Credit Card Plans Survey January 1 2025 to June 30 2025
+    liability_channel: fast_repricing_consumer_credit_context
+
+  cfpb_payment_amount_furnishing_report:
+    source: cfpb
+    name: CFPB Payment Amount Furnishing and Consumer Reporting report
+    endpoint: https://files.consumerfinance.gov/f/documents/cfpb_quarterly-consumer-credit-trends_report_2020-11.pdf
+    units: actual_payment_furnishing_share_context
+    frequency: report_specific
+    transform: payment_amount_furnishing_credit_bureau_context
+    update_cadence: report_specific
+    release: CFPB Quarterly Consumer Credit Trends November 2020
+    liability_channel: fast_repricing_consumer_credit_context
+
+  cfpb_credit_card_revolvers_data_point:
+    source: cfpb
+    name: CFPB Data Point Credit Card Revolvers
+    endpoint: https://files.consumerfinance.gov/f/documents/bcfp_data-point_credit-card-revolvers.pdf
+    units: credit_card_revolver_duration_repayment_context
+    frequency: report_specific
+    transform: credit_card_revolver_duration_repayment_context
+    update_cadence: report_specific
+    release: CFPB Data Point Credit Card Revolvers July 2019
+    liability_channel: fast_repricing_consumer_credit_context
+
+  cfpb_making_ends_meet_sample1_public_use:
+    source: cfpb
+    name: CFPB Making Ends Meet public use data sample 1
+    endpoint: https://files.consumerfinance.gov/f/documents/cfpb_making-ends-meet_data-sample-1.zip
+    units: public_use_survey_credit_panel_context
+    frequency: survey_panel_waves
+    transform: mem_public_use_borrower_liquidity_payment_context
+    update_cadence: public_use_file_specific
+    release: CFPB Making Ends Meet public use file sample 1 waves 1 to 3
+    liability_channel: fast_repricing_consumer_credit_context
+
+  cfpb_making_ends_meet_samples_3_6_public_use:
+    source: cfpb
+    name: CFPB Making Ends Meet public use data samples 3 to 6
+    endpoint: https://www.consumerfinance.gov/data-research/making-ends-meet-survey-data/public-data/
+    units: public_use_multisample_schema_context
+    frequency: survey_panel_or_cross_section_waves
+    transform: mem_public_use_multisample_borrower_liquidity_payment_context
+    update_cadence: public_use_file_specific
+    release: CFPB Making Ends Meet public use files samples 3 to 6
+    liability_channel: fast_repricing_consumer_credit_context
+
+  philadelphia_fed_y14_large_bank_credit_card_context:
+    source: philadelphia_fed
+    name: Philadelphia Fed Large Bank Credit Card Data 2025 Q4
+    endpoint: https://www.philadelphiafed.org/surveys-and-data/large-bank-credit-card-and-mortgage-data
+    units: aggregate_large_bank_credit_card_context
+    frequency: quarterly
+    transform: y14m_credit_card_payment_purchase_apr_origination_context
+    update_cadence: quarterly
+    release: Philadelphia Fed Large Bank Credit Card and Mortgage Data 2025 Q4
+    liability_channel: fast_repricing_consumer_credit_context
+
+  nyfed_consumer_credit_panel_faq:
+    source: ny_fed
+    name: New York Fed Consumer Credit Panel FAQ
+    endpoint: https://www.newyorkfed.org/microeconomics/faq
+    units: consumer_credit_panel_access_scope_context
+    frequency: guidance_page_specific
+    transform: consumer_credit_panel_access_scope_context
+    update_cadence: guidance_page_specific
+    release: New York Fed Center for Microeconomic Data Consumer Credit Panel FAQ
+    liability_channel: fast_repricing_consumer_credit_context
+
+  nyfed_household_debt_credit_report_2026q1:
+    source: ny_fed
+    name: New York Fed Household Debt and Credit Report 2026 Q1 Data
+    endpoint: https://www.newyorkfed.org/medialibrary/interactives/householdcredit/data/xls/hhd_c_report_2026q1.xlsx?sc_lang=en
+    units: household_debt_credit_report_context
+    frequency: quarterly_report_specific
+    transform: household_debt_credit_product_age_state_delinquency_context
+    update_cadence: quarterly
+    release: New York Fed Household Debt and Credit Report 2026 Q1
+    liability_channel: fast_repricing_consumer_credit_context
+
+  CREACBM027NBOG:
+    source: fred
+    name: Commercial Real Estate Loans, All Commercial Banks
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=CREACBM027NBOG
+    units: billions_of_dollars
+    frequency: monthly
+    transform: commercial_real_estate_loan_stock_context
+    update_cadence: weekly
+    release: Assets and Liabilities of Commercial Banks in the United States
+    liability_channel: cre_refinancing_context
+
+  DRCRELEXFACBS:
+    source: fred
+    name: Delinquency Rate on Commercial Real Estate Loans, All Commercial Banks
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=DRCRELEXFACBS
+    units: percent
+    frequency: quarterly
+    transform: commercial_real_estate_delinquency_context
+    update_cadence: quarterly
+    release: Charge-Off and Delinquency Rates on Loans and Leases at Commercial Banks
+    liability_channel: cre_refinancing_context
+
+  CORCREXFACBS:
+    source: fred
+    name: Charge-Off Rate on Commercial Real Estate Loans, All Commercial Banks
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=CORCREXFACBS
+    units: percent
+    frequency: quarterly
+    transform: commercial_real_estate_chargeoff_context
+    update_cadence: quarterly
+    release: Charge-Off and Delinquency Rates on Loans and Leases at Commercial Banks
+    liability_channel: cre_refinancing_context
+
+  BOGZ1FL673065505Q:
+    source: fred
+    name: Issuers of Asset-Backed Securities; Commercial Mortgages; Asset
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=BOGZ1FL673065505Q
+    units: millions_of_dollars_eop
+    frequency: quarterly
+    transform: cmbs_abs_commercial_mortgage_stock_context
+    update_cadence: quarterly
+    release: Financial Accounts of the United States Z.1 L.220 Commercial Mortgages
+    liability_channel: cre_refinancing_context
+
+  ASCMA:
+    source: fred
+    name: All Sectors; Commercial Mortgages; Asset, Level
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=ASCMA
+    units: millions_of_dollars_eop
+    frequency: quarterly
+    transform: total_commercial_mortgage_stock_context
+    update_cadence: quarterly
+    release: Financial Accounts of the United States Z.1 L.220 Commercial Mortgages
+    liability_channel: cre_refinancing_context
+
+  TLNRESCONS:
+    source: fred
+    name: "Total Construction Spending: Nonresidential in the United States"
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=TLNRESCONS
+    units: millions_of_dollars_saar
+    frequency: monthly
+    transform: nonresidential_construction_spending_real_activity_context
+    update_cadence: monthly
+    release: Census Bureau Value of Construction Put in Place
+    liability_channel: cre_refinancing_context
+
+  PNRESCONS:
+    source: fred
+    name: "Total Private Construction Spending: Nonresidential in the United States"
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=PNRESCONS
+    units: millions_of_dollars_saar
+    frequency: monthly
+    transform: private_nonresidential_construction_spending_context
+    update_cadence: monthly
+    release: Census Bureau Value of Construction Put in Place
+    liability_channel: cre_refinancing_context
+
+  PBNRESCONS:
+    source: fred
+    name: "Total Public Construction Spending: Nonresidential in the United States"
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=PBNRESCONS
+    units: millions_of_dollars_saar
+    frequency: monthly
+    transform: public_nonresidential_construction_spending_context
+    update_cadence: monthly
+    release: Census Bureau Value of Construction Put in Place
+    liability_channel: cre_refinancing_context
+
+  PLODGCONS:
+    source: fred
+    name: "Total Private Construction Spending: Lodging in the United States"
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=PLODGCONS
+    units: millions_of_dollars_saar
+    frequency: monthly
+    transform: private_lodging_construction_spending_context
+    update_cadence: monthly
+    release: Census Bureau Value of Construction Put in Place
+    liability_channel: cre_refinancing_context
+
+  PROFCONS:
+    source: fred
+    name: "Total Private Construction Spending: Office in the United States"
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=PROFCONS
+    units: millions_of_dollars_saar
+    frequency: monthly
+    transform: private_office_construction_spending_context
+    update_cadence: monthly
+    release: Census Bureau Value of Construction Put in Place
+    liability_channel: cre_refinancing_context
+
+  PRCOMCONS:
+    source: fred
+    name: "Total Private Construction Spending: Commercial in the United States"
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=PRCOMCONS
+    units: millions_of_dollars_saar
+    frequency: monthly
+    transform: private_commercial_construction_spending_context
+    update_cadence: monthly
+    release: Census Bureau Value of Construction Put in Place
+    liability_channel: cre_refinancing_context
+
+  PRHLTHCONS:
+    source: fred
+    name: "Total Private Construction Spending: Health Care in the United States"
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=PRHLTHCONS
+    units: millions_of_dollars_saar
+    frequency: monthly
+    transform: private_health_care_construction_spending_context
+    update_cadence: monthly
+    release: Census Bureau Value of Construction Put in Place
+    liability_channel: cre_refinancing_context
+
+  PREDUCONS:
+    source: fred
+    name: "Total Private Construction Spending: Educational in the United States"
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=PREDUCONS
+    units: millions_of_dollars_saar
+    frequency: monthly
+    transform: private_educational_construction_spending_context
+    update_cadence: monthly
+    release: Census Bureau Value of Construction Put in Place
+    liability_channel: cre_refinancing_context
+
+  PRAMUSCONS:
+    source: fred
+    name: "Total Private Construction Spending: Amusement and Recreation in the United States"
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=PRAMUSCONS
+    units: millions_of_dollars_saar
+    frequency: monthly
+    transform: private_amusement_recreation_construction_spending_context
+    update_cadence: monthly
+    release: Census Bureau Value of Construction Put in Place
+    liability_channel: cre_refinancing_context
+
+  PRMFGCONS:
+    source: fred
+    name: "Total Private Construction Spending: Manufacturing in the United States"
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=PRMFGCONS
+    units: millions_of_dollars_saar
+    frequency: monthly
+    transform: private_manufacturing_construction_spending_context
+    update_cadence: monthly
+    release: Census Bureau Value of Construction Put in Place
+    liability_channel: cre_refinancing_context
+
+  MORTGAGE30US:
+    source: fred
+    name: 30-Year Fixed Rate Mortgage Average in the United States
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=MORTGAGE30US
+    units: percent
+    frequency: weekly
+    transform: mortgage_rate_context
+    update_cadence: weekly
+    release: Primary Mortgage Market Survey
+    liability_channel: mortgage_lockin_context
+
+  B112RC1Q027SBEA:
+    source: fred
+    name: State and Local Government Interest Receipts
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=B112RC1Q027SBEA
+    units: billions_of_dollars_saar
+    frequency: quarterly
+    transform: state_local_interest_receipts_context
+    update_cadence: quarterly
+    release: National Income and Product Accounts
+    liability_channel: state_local_cash_interest_context
+
+  sloos_consumer_lending:
+    source: fed_sloos
+    name: April 2026 SLOOS consumer lending standards and demand context
+    endpoint: https://www.federalreserve.gov/data/sloos/sloos-202604.htm
+    units: qualitative_survey_context
+    frequency: quarterly
+    transform: consumer_lending_standards_demand_context
+    update_cadence: quarterly
+    release: April 2026 Senior Loan Officer Opinion Survey
+    liability_channel: fast_repricing_consumer_credit_context
+
+  sloos_cre:
+    source: fed_sloos
+    name: April 2026 SLOOS CRE demand and refinancing context
+    endpoint: https://www.federalreserve.gov/data/sloos/sloos-202604.htm
+    units: qualitative_survey_context
+    frequency: quarterly
+    transform: cre_refinancing_demand_context
+    update_cadence: quarterly
+    release: April 2026 Senior Loan Officer Opinion Survey
+    liability_channel: cre_refinancing_context
+
+  sloos_ndfi_special_questions:
+    source: fed_sloos
+    name: April 2026 SLOOS NDFI special questions context
+    endpoint: https://www.federalreserve.gov/data/sloos/sloos-202604.htm
+    units: qualitative_survey_context
+    frequency: quarterly
+    transform: ndfi_funding_standards_context
+    update_cadence: quarterly
+    release: April 2026 Senior Loan Officer Opinion Survey
+    liability_channel: ndfi_private_credit_context
+
+  mba_cre_maturity_ladder_context:
+    source: mba_newslink
+    name: MBA commercial and multifamily mortgage maturity context
+    endpoint: https://newslink.mba.org/mba-newslinks/2026/february/17-of-commercial-and-multifamily-mortgage-balances-to-mature-in-2026/
+    units: billions_of_dollars_and_share
+    frequency: annual
+    transform: commercial_multifamily_maturity_context
+    update_cadence: annual_or_report_specific
+    release: 2025 Commercial Real Estate Survey of Loan Maturity Volumes
+    liability_channel: cre_refinancing_context
+
+  fed_cre_high_growth_deposit_accessible_data:
+    source: fed_feds_notes
+    name: Federal Reserve FEDS Notes CRE high-growth and local deposit accessible context
+    endpoint: https://www.federalreserve.gov/econres/notes/feds-notes/monitoring-high-credit-growth-the-link-between-local-deposits-and-cre-lending-accessible-20260501.htm
+    units: mixed_accessible_text_units
+    frequency: note
+    transform: cre_lender_exposure_local_deposit_accessible_context
+    update_cadence: static_research_note
+    release: Monitoring High Credit Growth, May 2026 FEDS Notes
+    liability_channel: cre_refinancing_context
+
+  atlanta_fed_cremi_longweights_context:
+    source: atlanta_fed
+    name: Atlanta Fed CREMI long-weight and input-sharing limitation context
+    endpoint: https://www.atlantafed.org/-/media/Project/Atlanta/FRBA/Documents/research/housing-and-policy/cremi/CREMI_CBSA_Contribution.csv
+    units: cremi_variable_weight_percent_context
+    frequency: quarterly_current_weights
+    transform: cremi_noi_cap_rate_asset_value_weight_context
+    update_cadence: quarterly
+    release: Atlanta Fed Commercial Real Estate Market Index
+    liability_channel: cre_refinancing_context
+
+  fed_cre_evergreening_extension_terms_context:
+    source: fed_feds
+    name: Federal Reserve FEDS CRE evergreening and extension terms context
+    endpoint: https://www.federalreserve.gov/econres/feds/pretend-or-amend-on-evergreening-in-cre.htm
+    units: cre_extension_terms_research_context
+    frequency: research_paper
+    transform: cre_extension_terms_refinancing_outcome_context
+    update_cadence: static_research_paper
+    release: Federal Reserve FEDS 2026-025 Pretend or Amend? On Evergreening in CRE
+    liability_channel: cre_refinancing_context
+
+  fed_private_credit_notes:
+    source: fed_feds_notes
+    name: Federal Reserve FEDS Notes private credit and monetary transmission context
+    endpoint: https://www.federalreserve.gov/econres/notes/feds-notes/private-credit-growth-and-monetary-policy-transmission-20240802.html
+    units: qualitative_research_note_context
+    frequency: note
+    transform: private_credit_monetary_transmission_context
+    update_cadence: static_research_note
+    release: Private Credit Growth and Monetary Policy Transmission
+    liability_channel: ndfi_private_credit_context
+
+  fed_private_credit_characteristics_accessible_data:
+    source: fed_feds_notes
+    name: Federal Reserve FEDS Notes private credit characteristics accessible data
+    endpoint: https://www.federalreserve.gov/econres/notes/feds-notes/private-credit-characteristics-and-risks-accessible-20240223.htm
+    units: mixed_table_units
+    frequency: note
+    transform: private_credit_accessible_table_context
+    update_cadence: static_research_note
+    release: Private Credit Characteristics and Risks Accessible Data
+    liability_channel: ndfi_private_credit_context
+
+  fed_bank_lending_private_credit_financial_stability_context:
+    source: fed_feds_notes
+    name: Federal Reserve FEDS Notes bank lending to private credit context
+    endpoint: https://www.federalreserve.gov/econres/notes/feds-notes/bank-lending-to-private-credit-size-characteristics-and-financial-stability-implications-20250523.html
+    units: bank_private_credit_exposure_stress_context
+    frequency: note
+    transform: bank_lending_private_credit_financial_stability_context
+    update_cadence: static_research_note
+    release: Bank Lending to Private Credit, May 2025 FEDS Notes
+    liability_channel: ndfi_private_credit_context
+
+  fed_indirect_credit_supply_private_credit:
+    source: fed_feds
+    name: Federal Reserve FEDS indirect credit supply and private credit context
+    endpoint: https://www.federalreserve.gov/econres/feds/indirect-credit-supply-how-bank-lending-to-private-credit-shapes-monetary-policy-transmission.htm
+    units: qualitative_research_paper_context
+    frequency: research_paper
+    transform: private_credit_bank_lending_pass_through_context
+    update_cadence: static_research_paper
+    release: Indirect Credit Supply, FEDS 2025-059
+    liability_channel: ndfi_private_credit_context
+
+  fed_indirect_credit_supply_accessible_materials:
+    source: fed_feds
+    name: Federal Reserve FEDS indirect credit supply accessible materials
+    endpoint: https://www.federalreserve.gov/econres/feds/files/feds2025059.zip
+    units: regression_and_accessible_figure_context
+    frequency: research_paper
+    transform: private_credit_bank_bdc_pass_through_real_effects_context
+    update_cadence: static_research_paper
+    release: Indirect Credit Supply, FEDS 2025-059 Accessible Materials
+    liability_channel: ndfi_private_credit_context
+
+  fed_credit_bureau_household_dsr_accessible_data:
+    source: fed_feds_notes
+    name: Federal Reserve credit bureau household debt-service accessible data
+    endpoint: https://www.federalreserve.gov/econres/notes/feds-notes/introducing-a-credit-bureau-based-measure-of-u-s-household-debt-service-20240904.htm
+    units: percent_of_disposable_personal_income
+    frequency: quarterly
+    transform: credit_bureau_scheduled_payment_dsr_context
+    update_cadence: static_research_note_accessible_data
+    release: Introducing a Credit Bureau-Based Measure of U.S. Household Debt Service
+    liability_channel: fast_repricing_consumer_credit_context
+
+  fed_student_loan_payment_restart_spending_context:
+    source: fed_feds_notes
+    name: Federal Reserve FEDS Notes student-loan payment restart spending response context
+    endpoint: https://www.federalreserve.gov/econres/notes/feds-notes/debt-payments-and-spending-evidence-from-the-2023-student-loan-payment-20250905.html
+    units: student_loan_payment_spending_response_context
+    frequency: research_note
+    transform: debt_payment_current_demand_response_context
+    update_cadence: static_research_note
+    release: Debt Payments and Spending, September 2025 FEDS Notes
+    liability_channel: fast_repricing_consumer_credit_context
+
+  fed_credit_card_limit_increase_debt_context:
+    source: fed_feds_notes
+    name: Federal Reserve FEDS Notes credit-card limit-increase debt response context
+    endpoint: https://www.federalreserve.gov/econres/notes/feds-notes/more-credit-more-debt-new-evidence-on-automated-credit-decisions-20260116.html
+    units: credit_card_limit_increase_debt_response_context
+    frequency: research_note
+    transform: credit_card_limit_increase_debt_response_context
+    update_cadence: static_research_note
+    release: More Credit, More Debt, January 2026 FEDS Notes
+    liability_channel: fast_repricing_consumer_credit_context
+
+  fed_credit_card_profitability_revolver_context:
+    source: fed_feds_notes
+    name: Federal Reserve FEDS Notes credit-card profitability revolver payment-burden context
+    endpoint: https://www.federalreserve.gov/econres/notes/feds-notes/credit-card-profitability-20220909.html
+    units: credit_card_revolver_payment_burden_context
+    frequency: research_note
+    transform: credit_card_revolver_transactor_payment_burden_context
+    update_cadence: static_research_note
+    release: Credit Card Profitability, September 2022 FEDS Notes
+    liability_channel: fast_repricing_consumer_credit_context
+
+  fed_credit_card_delinquency_prediction_context:
+    source: fed_feds_notes
+    name: Federal Reserve FEDS Notes credit-card delinquency prediction context
+    endpoint: https://www.federalreserve.gov/econres/notes/feds-notes/predicting-credit-card-delinquency-rates-20250228.html
+    units: credit_card_delinquency_prediction_model_context
+    frequency: research_note
+    transform: credit_card_delinquency_rate_sensitive_model_context
+    update_cadence: static_research_note
+    release: Predicting Credit Card Delinquency Rates, February 2025 FEDS Notes
+    liability_channel: fast_repricing_consumer_credit_context
+
+  fed_consumer_delinquency_dynamics_context:
+    source: fed_feds_notes
+    name: Federal Reserve FEDS Notes consumer delinquency dynamics context
+    endpoint: https://www.federalreserve.gov/econres/notes/feds-notes/a-note-on-recent-dynamics-of-consumer-delinquency-rates-20251124.html
+    units: credit_card_auto_delinquency_distribution_context
+    frequency: research_note
+    transform: ccp_equifax_consumer_delinquency_distribution_context
+    update_cadence: static_research_note
+    release: A Note on Recent Dynamics of Consumer Delinquency Rates, November 2025 FEDS Notes
+    liability_channel: fast_repricing_consumer_credit_context
+
+  fed_credit_card_rewards_limit_spending_context:
+    source: fed_feds
+    name: Federal Reserve FEDS credit-card rewards limit-increase spending context
+    endpoint: https://www.federalreserve.gov/econres/feds/files/feds2023007.zip
+    units: credit_card_limit_increase_spending_payment_balance_context
+    frequency: research_paper
+    transform: credit_card_rewards_limit_increase_spending_context
+    update_cadence: static_research_paper
+    release: FEDS 2023-007 Who Pays For Your Rewards?
+    liability_channel: fast_repricing_consumer_credit_context
+
+  fed_auto_loan_payment_delinquency_context:
+    source: fed_feds_notes
+    name: Federal Reserve FEDS Notes auto-loan monthly-payment and delinquency context
+    endpoint: https://www.federalreserve.gov/econres/notes/feds-notes/rising-auto-loan-delinquencies-and-high-monthly-payments-20240926.html
+    units: auto_loan_payment_delinquency_context
+    frequency: research_note
+    transform: auto_loan_payment_delinquency_context
+    update_cadence: static_research_note
+    release: Rising Auto Loan Delinquencies and High Monthly Payments, September 2024 FEDS Notes
+    liability_channel: fast_repricing_consumer_credit_context
+
+  fed_auto_loan_prepayment_maturity_context:
+    source: fed_feds
+    name: Federal Reserve FEDS auto-loan maturity and prepayment context
+    endpoint: https://www.federalreserve.gov/econres/feds/files/feds2024056.zip
+    units: auto_loan_maturity_prepayment_payment_behavior_context
+    frequency: research_paper
+    transform: auto_loan_prepayment_maturity_context
+    update_cadence: static_research_paper
+    release: FEDS 2024-056 One Month Longer, One Month Later?
+    liability_channel: fast_repricing_consumer_credit_context
+
+  boston_fed_credit_card_interest_spending_response_context:
+    source: boston_fed
+    name: Boston Fed credit-card interest-rate spending response context
+    endpoint: https://www.bostonfed.org/publications/current-policy-perspectives/2026/how-interest-rate-changes-affect-credit-card-spending.aspx
+    units: credit_card_interest_rate_spending_response_context
+    frequency: current_policy_perspective
+    transform: credit_card_interest_rate_spending_response_context
+    update_cadence: static_research_article
+    release: How Interest Rate Changes Affect Credit Card Spending, March 2026
+    liability_channel: fast_repricing_consumer_credit_context
+
+  boston_fed_credit_card_spending_channel_wp_context:
+    source: boston_fed
+    name: Boston Fed working paper credit-card spending channel context
+    endpoint: https://www.bostonfed.org/-/media/Documents/Workingpapers/PDF/2025/WP2510.pdf
+    units: credit_card_spending_channel_working_paper_context
+    frequency: research_working_paper
+    transform: credit_card_spending_channel_method_estimate_context
+    update_cadence: static_research_paper
+    release: Working Paper 25-10 The Credit Card Spending Channel of Monetary Policy, September 2025
+    liability_channel: fast_repricing_consumer_credit_context
+
+  ofr_private_credit_counterparty_exposure_context:
+    source: ofr_research
+    name: OFR private credit counterparty exposure brief
+    endpoint: https://www.financialresearch.gov/briefs/2026/03/12/measuring-counterparty-exposures-private-credit/
+    units: qualitative_research_brief_context
+    frequency: research_brief
+    transform: private_credit_counterparty_exposure_context
+    update_cadence: static_research_brief
+    release: Measuring Counterparty Exposures to Private Credit
+    liability_channel: ndfi_private_credit_context
+
+  sec_private_fund_statistics_aggregate_assets:
+    source: sec_statistics
+    name: SEC Private Fund Statistics aggregate fund assets
+    endpoint: https://www.sec.gov/files/2026-04/Aggregate_Fund_Assets_04-07-2026.json
+    units: usd_aggregate_form_pf_statistics
+    frequency: quarterly
+    transform: private_fund_aggregate_asset_context
+    update_cadence: quarterly
+    release: SEC Private Fund Statistics, April 2026 aggregate fund assets JSON
+    liability_channel: ndfi_private_credit_context
+
+  sec_bdc_public_filing_availability_context:
+    source: sec_edgar
+    name: SEC EDGAR BDC public filing availability context
+    endpoint: https://data.sec.gov/submissions/
+    units: bdc_public_filing_availability_context
+    frequency: company_filing_index
+    transform: bdc_filing_index_and_portfolio_marker_context
+    update_cadence: filing_specific
+    release: SEC EDGAR submissions JSON and archived BDC filings
+    liability_channel: ndfi_private_credit_context
+
+  sec_bdc_portfolio_investment_terms_panel:
+    source: sec_edgar
+    name: SEC EDGAR BDC portfolio investment terms panel
+    endpoint: https://data.sec.gov/submissions/
+    units: source_filing_table_units
+    frequency: company_filing_index
+    transform: normalized_bdc_schedule_of_investments_terms_panel
+    update_cadence: filing_specific
+    release: SEC EDGAR archived BDC Schedule of Investments tables
+    liability_channel: ndfi_private_credit_context
+
+  sec_bdc_portfolio_performance_status_panel:
+    source: sec_edgar
+    name: SEC EDGAR BDC portfolio performance status panel
+    endpoint: https://data.sec.gov/submissions/
+    units: source_filing_table_units
+    frequency: company_filing_index
+    transform: normalized_bdc_schedule_of_investments_performance_status_panel
+    update_cadence: filing_specific
+    release: SEC EDGAR archived BDC Schedule of Investments footnotes and fair-value fields
+    liability_channel: ndfi_private_credit_context
+
+  sec_bdc_portfolio_terms_status_join_panel:
+    source: sec_edgar
+    name: SEC EDGAR BDC portfolio terms and status joined panel
+    endpoint: https://data.sec.gov/submissions/
+    units: source_filing_table_units
+    frequency: company_filing_index
+    transform: normalized_bdc_schedule_of_investments_terms_status_join_panel
+    update_cadence: filing_specific
+    release: SEC EDGAR archived BDC Schedule of Investments terms, footnotes, and fair-value fields
+    liability_channel: ndfi_private_credit_context
+
+  sec_bdc_portfolio_terms_status_time_panel:
+    source: sec_edgar
+    name: SEC EDGAR BDC portfolio terms and status time-dimension panel
+    endpoint: https://data.sec.gov/submissions/
+    units: source_filing_table_units
+    frequency: recent_periodic_company_filings
+    transform: normalized_bdc_schedule_of_investments_terms_status_time_panel
+    update_cadence: filing_specific
+    release: SEC EDGAR archived recent BDC Schedule of Investments terms, footnotes, and fair-value fields
+    liability_channel: ndfi_private_credit_context
+
+  sec_bdc_floating_rate_pass_through_design_context:
+    source: sec_edgar
+    name: SEC EDGAR BDC floating-rate pass-through design context
+    endpoint: https://data.sec.gov/submissions/
+    units: source_filing_table_units
+    frequency: recent_periodic_company_filings
+    transform: aggregated_bdc_contractual_reference_rate_terms_context
+    update_cadence: filing_specific
+    release: SEC EDGAR archived recent BDC Schedule of Investments reference-rate, spread, floor, maturity, and valuation terms
+    liability_channel: ndfi_private_credit_context
+
+  sec_bdc_borrower_name_continuity_context:
+    source: sec_edgar
+    name: SEC EDGAR BDC exact borrower-name continuity context
+    endpoint: https://data.sec.gov/submissions/
+    units: source_filing_table_units
+    frequency: recent_periodic_company_filings
+    transform: exact_normalized_bdc_borrower_name_continuity_context
+    update_cadence: filing_specific
+    release: SEC EDGAR archived recent BDC Schedule of Investments borrower/issuer names, terms, and status markers
+    liability_channel: ndfi_private_credit_context
+
+  sec_bdc_investment_signature_continuity_context:
+    source: sec_edgar
+    name: SEC EDGAR BDC public investment signature continuity context
+    endpoint: https://data.sec.gov/submissions/
+    units: source_filing_table_units
+    frequency: recent_periodic_company_filings
+    transform: exact_bdc_borrower_investment_signature_continuity_context
+    update_cadence: filing_specific
+    release: SEC EDGAR archived recent BDC Schedule of Investments borrower/issuer names, investment types, maturities, reference-rate categories, terms, and status markers
+    liability_channel: ndfi_private_credit_context
+
+  sec_bdc_recurring_investment_value_status_context:
+    source: sec_edgar
+    name: SEC EDGAR BDC recurring investment value and status context
+    endpoint: https://data.sec.gov/submissions/
+    units: source_filing_table_units
+    frequency: recent_periodic_company_filings
+    transform: exact_bdc_recurring_investment_value_status_context
+    update_cadence: filing_specific
+    release: SEC EDGAR archived recent BDC Schedule of Investments recurring signatures, principal/par, fair value, cost, and status markers
+    liability_channel: ndfi_private_credit_context
+
+  sec_abs_ee_cmbs_asset_level_performance_panel:
+    source: sec_edgar
+    name: SEC ABS-EE CMBS asset-level performance panel
+    endpoint: https://www.sec.gov/Archives/edgar/data/
+    units: source_abs_ee_asset_data_units
+    frequency: filing_specific_asset_level_xml
+    transform: normalized_sec_abs_ee_cmbs_asset_property_performance_panel
+    update_cadence: filing_specific
+    release: SEC EDGAR Form ABS-EE Exhibit 102 CMBS asset data XML
+    liability_channel: cre_refinancing_context
+
+  sec_abs_ee_cmbs_asset_time_dimension_panel:
+    source: sec_edgar
+    name: SEC ABS-EE CMBS asset/property time-dimension panel
+    endpoint: https://data.sec.gov/submissions/
+    units: source_abs_ee_asset_data_units
+    frequency: recent_monthly_asset_level_xml
+    transform: normalized_sec_abs_ee_cmbs_recent_asset_property_time_dimension_panel
+    update_cadence: filing_specific
+    release: SEC EDGAR recent Form ABS-EE Exhibit 102 CMBS asset data XML filings for reviewed trusts
+    liability_channel: cre_refinancing_context
+
+  sec_abs_ee_recent_filing_index_context:
+    source: sec_edgar
+    name: SEC ABS-EE recent filing index context
+    endpoint: https://www.sec.gov/Archives/edgar/full-index/
+    units: sec_master_index_filing_rows
+    frequency: quarterly_master_index
+    transform: filtered_abs_ee_recent_master_index_with_candidate_cmbs_name_flags
+    update_cadence: quarterly
+    release: SEC EDGAR quarterly master index
+    liability_channel: cre_refinancing_context
+
+  sec_abs_ee_candidate_cmbs_xml_verification_context:
+    source: sec_edgar
+    name: SEC ABS-EE candidate CMBS XML verification context
+    endpoint: https://www.sec.gov/Archives/edgar/data/
+    units: sec_abs_ee_xml_verification_rows
+    frequency: bounded_quarterly_master_index_sample
+    transform: candidate_cmbs_abs_ee_filing_index_xml_assetdata_verification
+    update_cadence: quarterly
+    release: SEC EDGAR quarterly master index plus archived filing index and XML payloads
+    liability_channel: cre_refinancing_context
+
+  sec_abs_ee_cmbs_representativeness_design_review_context:
+    source: sec_edgar
+    name: SEC ABS-EE CMBS representativeness design review context
+    endpoint: https://www.sec.gov/Archives/edgar/full-index/
+    units: sec_abs_ee_representativeness_design_review_rows
+    frequency: quarterly_design_review
+    transform: abs_ee_filing_frame_xml_sample_representativeness_blocker_review
+    update_cadence: quarterly
+    release: SEC EDGAR quarterly master index and derived candidate XML sample
+    liability_channel: cre_refinancing_context
+
+  fed_z1_cmbs_abs_commercial_mortgage_population_context:
+    source: fred
+    name: Fed Z.1 CMBS/ABS commercial mortgage population denominator context
+    endpoint: https://fred.stlouisfed.org/series/BOGZ1FL673065505Q
+    units: denominator_review_rows
+    frequency: quarterly_design_review
+    transform: z1_abs_issuer_commercial_mortgage_stock_abs_ee_coverage_blocker_review
+    update_cadence: quarterly
+    release: Financial Accounts of the United States Z.1 L.220 plus SEC ABS-EE context
+    liability_channel: cre_refinancing_context
+
+  fed_z1_total_commercial_mortgage_population_context:
+    source: fred
+    name: Fed Z.1 total commercial mortgage population denominator context
+    endpoint: https://fred.stlouisfed.org/series/ASCMA
+    units: denominator_review_rows
+    frequency: quarterly_design_review
+    transform: z1_total_commercial_mortgage_stock_abs_ee_coverage_blocker_review
+    update_cadence: quarterly
+    release: Financial Accounts of the United States Z.1 L.220 plus SEC ABS-EE context
+    liability_channel: cre_refinancing_context
+
+  sec_abs_ee_cmbs_reviewed_balance_coverage_context:
+    source: sec_edgar
+    name: SEC ABS-EE CMBS reviewed balance coverage context
+    endpoint: https://www.sec.gov/Archives/edgar/data/
+    units: reviewed_balance_coverage_review_rows
+    frequency: quarterly_design_review
+    transform: abs_ee_reviewed_cmbs_actual_balance_coverage_blocker_review
+    update_cadence: quarterly
+    release: SEC EDGAR Form ABS-EE Exhibit 102 CMBS asset data XML plus Financial Accounts of the United States Z.1
+    liability_channel: cre_refinancing_context
+
+  sec_abs_ee_cmbs_maturity_status_outcome_review_context:
+    source: sec_edgar
+    name: SEC ABS-EE CMBS maturity/status outcome review context
+    endpoint: https://www.sec.gov/Archives/edgar/data/
+    units: maturity_status_outcome_review_rows
+    frequency: quarterly_design_review
+    transform: abs_ee_reviewed_cmbs_maturity_payment_status_outcome_blocker_review
+    update_cadence: quarterly
+    release: SEC EDGAR Form ABS-EE Exhibit 102 CMBS asset data XML
+    liability_channel: cre_refinancing_context
+
+  fred_nonres_construction_real_activity_bridge_context:
+    source: fred
+    name: FRED nonresidential construction real-activity bridge context
+    endpoint: https://fred.stlouisfed.org/series/TLNRESCONS
+    units: real_activity_bridge_review_rows
+    frequency: monthly_quarterly_design_review
+    transform: nonresidential_construction_spending_total_cre_stock_bridge_blocker_review
+    update_cadence: monthly
+    release: Census Bureau Value of Construction Put in Place plus Financial Accounts of the United States Z.1
+    liability_channel: cre_refinancing_context
+
+  fred_cre_property_type_construction_bridge_context:
+    source: fred
+    name: FRED CRE property-type construction bridge context
+    endpoint: https://fred.stlouisfed.org/series/PNRESCONS
+    units: property_type_real_activity_bridge_review_rows
+    frequency: monthly_quarterly_design_review
+    transform: property_type_construction_spending_cre_bridge_blocker_review
+    update_cadence: monthly
+    release: Census Bureau Value of Construction Put in Place plus Financial Accounts of the United States Z.1
+    liability_channel: cre_refinancing_context
+
+  INDPRO:
+    source: fred
+    name: "Industrial Production: Total Index"
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=INDPRO
+    units: index_2017_100
+    frequency: monthly
+    transform: level
+    update_cadence: monthly
+    release: Industrial Production and Capacity Utilization
+    liability_channel: empirical_outcome
+
+  UNRATE:
+    source: fred
+    name: Unemployment Rate
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=UNRATE
+    units: percent
+    frequency: monthly
+    transform: level
+    update_cadence: monthly
+    release: Employment Situation
+    liability_channel: empirical_outcome
+
+  FEDFUNDS:
+    source: fred
+    name: Effective Federal Funds Rate
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=FEDFUNDS
+    units: percent
+    frequency: monthly
+    transform: level
+    update_cadence: monthly
+    release: H.15
+    liability_channel: policy_rate
+
+  TDSP:
+    source: fred
+    name: Household Debt Service Payments as a Percent of Disposable Personal Income
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=TDSP
+    units: percent
+    frequency: quarterly
+    transform: level
+    update_cadence: quarterly
+    release: Household Debt Service and Financial Obligations Ratios
+    liability_channel: private_credit
+
+  CDSP:
+    source: fred
+    name: Consumer Debt Service Payments as a Percent of Disposable Personal Income
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=CDSP
+    units: percent
+    frequency: quarterly
+    transform: consumer_debt_service_payment_burden_context
+    update_cadence: quarterly
+    release: Household Debt Service and Financial Obligations Ratios
+    liability_channel: fast_repricing_consumer_credit_context
+
+  DRCCLACBS:
+    source: fred
+    name: Delinquency Rate on Credit Card Loans, All Commercial Banks
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=DRCCLACBS
+    units: percent
+    frequency: quarterly
+    transform: credit_card_delinquency_context
+    update_cadence: quarterly
+    release: Charge-Off and Delinquency Rates on Loans and Leases at Commercial Banks
+    liability_channel: fast_repricing_consumer_credit_context
+
+  DRCLACBS:
+    source: fred
+    name: Delinquency Rate on Consumer Loans, All Commercial Banks
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=DRCLACBS
+    units: percent
+    frequency: quarterly
+    transform: consumer_loan_delinquency_context
+    update_cadence: quarterly
+    release: Charge-Off and Delinquency Rates on Loans and Leases at Commercial Banks
+    liability_channel: fast_repricing_consumer_credit_context
+
+  BUSLOANS:
+    source: fred
+    name: Commercial and Industrial Loans, All Commercial Banks
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=BUSLOANS
+    units: billions_of_dollars
+    frequency: weekly
+    transform: level
+    update_cadence: weekly
+    release: H.8 Assets and Liabilities of Commercial Banks
+    liability_channel: private_credit
+
+  TOTLL:
+    source: fred
+    name: Loans and Leases in Bank Credit, All Commercial Banks
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=TOTLL
+    units: billions_of_dollars
+    frequency: weekly
+    transform: level
+    update_cadence: weekly
+    release: H.8 Assets and Liabilities of Commercial Banks
+    liability_channel: private_credit
+
+  DPSACBW027SBOG:
+    source: fred
+    name: Deposits, All Commercial Banks
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=DPSACBW027SBOG
+    units: billions_of_dollars
+    frequency: weekly
+    transform: level
+    update_cadence: weekly
+    release: H.8 Assets and Liabilities of Commercial Banks
+    liability_channel: tdc_deposit_pricing_quantity_context
+
+  SNDR:
+    source: fred
+    name: National Rate Savings
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=SNDR
+    units: percent
+    frequency: weekly
+    transform: level
+    update_cadence: weekly
+    release: FDIC National Rates and Rate Caps
+    liability_channel: deposit_pricing_pass_through_context
+
+  DTB3:
+    source: fred
+    name: 3-Month Treasury Bill Secondary Market Rate Discount Basis
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=DTB3
+    units: percent
+    frequency: business_daily
+    transform: level
+    update_cadence: business_daily
+    release: H.15 Selected Interest Rates
+    liability_channel: deposit_pricing_pass_through_context
+
+  WTREGEN:
+    source: fred
+    name: Treasury General Account at the Federal Reserve Week Average
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=WTREGEN
+    units: millions_of_dollars
+    frequency: weekly
+    transform: level
+    update_cadence: weekly
+    release: H.4.1 Factors Affecting Reserve Balances
+    liability_channel: tdc_tga_toc_context
+
+  NFCI:
+    source: fred
+    name: Chicago Fed National Financial Conditions Index
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=NFCI
+    units: index
+    frequency: weekly
+    transform: level
+    update_cadence: weekly
+    release: National Financial Conditions Index
+    liability_channel: financial_stability
+
+  BAMLH0A0HYM2:
+    source: fred
+    name: ICE BofA US High Yield Index Option-Adjusted Spread
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=BAMLH0A0HYM2
+    units: percent
+    frequency: daily
+    transform: level
+    update_cadence: business_daily
+    release: ICE BofA Fixed Income Indices
+    liability_channel: financial_stability
+
+  BAA:
+    source: fred
+    name: Moody's Seasoned Baa Corporate Bond Yield
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=BAA
+    units: percent
+    frequency: monthly
+    transform: level
+    update_cadence: monthly
+    release: Moody's Seasoned Corporate Bond Yield
+    liability_channel: conventional_drag_borrowing_cost_proxy
+
+  TREASURY_HQM_EOM_10Y_PAR:
+    source: treasury_hqm
+    name: Treasury HQM Corporate Bond Yield Curve End-of-Month 10-Year Par Yield
+    endpoint: https://home.treasury.gov/system/files/226/hqmeom_qh_pars.xls
+    units: percent
+    frequency: monthly_end_of_month
+    transform: level
+    update_cadence: monthly
+    release: Treasury HQM Corporate Bond Yield Curve
+    liability_channel: conventional_drag_borrowing_cost_proxy
+
+  FDHBPIN:
+    source: fred
+    name: Federal Debt Held by Private Investors
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=FDHBPIN
+    units: billions_of_dollars
+    frequency: quarterly
+    transform: level
+    update_cadence: quarterly
+    release: Federal Reserve Financial Accounts / Treasury Fiscal Service
+    liability_channel: holder_sector
+
+  FDHBFIN:
+    source: fred
+    name: Federal Debt Held by Foreign and International Investors
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=FDHBFIN
+    units: billions_of_dollars
+    frequency: quarterly
+    transform: level
+    update_cadence: quarterly
+    release: Federal Reserve Financial Accounts / Treasury Fiscal Service
+    liability_channel: holder_sector
+
+  FDHBFRBN:
+    source: fred
+    name: Federal Debt Held by Federal Reserve Banks
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=FDHBFRBN
+    units: billions_of_dollars
+    frequency: quarterly
+    transform: level
+    update_cadence: quarterly
+    release: Federal Reserve Financial Accounts / Treasury Fiscal Service
+    liability_channel: holder_sector
+
+  BOGZ1LM153061105Q:
+    source: fred
+    name: Households and Nonprofit Organizations; Treasury Securities; Asset, Market Value Levels
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=BOGZ1LM153061105Q
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: level
+    update_cadence: quarterly
+    release: Z.1 Financial Accounts of the United States
+    liability_channel: fine_holder_sector
+
+  BOGZ1FL763061100Q:
+    source: fred
+    name: U.S.-Chartered Depository Institutions; Treasury Securities; Asset, Level
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=BOGZ1FL763061100Q
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: level
+    update_cadence: quarterly
+    release: Z.1 Financial Accounts of the United States
+    liability_channel: fine_holder_sector
+
+  BOGZ1FL633061105Q:
+    source: fred
+    name: Money Market Funds; Treasury Securities; Asset, Level
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=BOGZ1FL633061105Q
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: level
+    update_cadence: quarterly
+    release: Z.1 Financial Accounts of the United States
+    liability_channel: fine_holder_sector
+
+  BOGZ1FL653061105Q:
+    source: fred
+    name: Mutual Funds; Treasury Securities; Asset (Market Value), Level
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=BOGZ1FL653061105Q
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: level
+    update_cadence: quarterly
+    release: Z.1 Financial Accounts of the United States
+    liability_channel: fine_holder_sector
+
+  BOGZ1FL523061105Q:
+    source: fred
+    name: Insurance Companies; Treasury Securities; Asset, Level
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=BOGZ1FL523061105Q
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: level
+    update_cadence: quarterly
+    release: Z.1 Financial Accounts of the United States
+    liability_channel: fine_holder_sector
+
+  BOGZ1FL573061105Q:
+    source: fred
+    name: Private Pension Funds; Treasury Securities; Asset, Level
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=BOGZ1FL573061105Q
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: level
+    update_cadence: quarterly
+    release: Z.1 Financial Accounts of the United States
+    liability_channel: fine_holder_sector
+
+  BOGZ1FU106130001Q:
+    source: fred
+    name: Nonfinancial Corporate Business; Interest Paid, Transactions
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=BOGZ1FU106130001Q
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: transactions_context
+    update_cadence: quarterly
+    release: Z.1 Financial Accounts of the United States
+    liability_channel: corporate_net_interest_cashflow_context
+
+  BOGZ1FU106130101Q:
+    source: fred
+    name: Nonfinancial Corporate Business; Interest Received, Transactions
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=BOGZ1FU106130101Q
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: transactions_context
+    update_cadence: quarterly
+    release: Z.1 Financial Accounts of the United States
+    liability_channel: corporate_net_interest_cashflow_context
+
+  NCBCDCA:
+    source: fred
+    name: Nonfinancial Corporate Business; Checkable Deposits and Currency; Asset (Excluding Ereits), Level
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=NCBCDCA
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: level
+    update_cadence: quarterly
+    release: Z.1 Financial Accounts of the United States
+    liability_channel: corporate_net_interest_cash_short_asset_context
+
+  TSDABSNNCB:
+    source: fred
+    name: Nonfinancial Corporate Business; Total Time and Savings Deposits; Asset, Level
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=TSDABSNNCB
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: level
+    update_cadence: quarterly
+    release: Z.1 Financial Accounts of the United States
+    liability_channel: corporate_net_interest_cash_short_asset_context
+
+  TSABSNNCB:
+    source: fred
+    name: Nonfinancial Corporate Business; Treasury Securities; Asset, Level
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=TSABSNNCB
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: level
+    update_cadence: quarterly
+    release: Z.1 Financial Accounts of the United States
+    liability_channel: corporate_net_interest_cash_short_asset_context
+
+  BOGZ1FL103034000Q:
+    source: fred
+    name: Nonfinancial Corporate Business; Money Market Fund Shares; Asset, Level
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=BOGZ1FL103034000Q
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: level
+    update_cadence: quarterly
+    release: Z.1 Financial Accounts of the United States
+    liability_channel: corporate_net_interest_cash_short_asset_context
+
+  SRPSABSNNCB:
+    source: fred
+    name: Nonfinancial Corporate Business; Security Repurchase Agreements; Asset, Level
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=SRPSABSNNCB
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: level
+    update_cadence: quarterly
+    release: Z.1 Financial Accounts of the United States
+    liability_channel: corporate_net_interest_cash_short_asset_context
+
+  CBLBSNNCB:
+    source: fred
+    name: Nonfinancial Corporate Business; Corporate Bonds; Liability (Excluding Ereits), Level
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=CBLBSNNCB
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: level
+    update_cadence: quarterly
+    release: Z.1 Financial Accounts of the United States
+    liability_channel: corporate_net_interest_debt_stock_context
+
+  NCBDBIQ027S:
+    source: fred
+    name: Nonfinancial Corporate Business; Debt Securities; Liability, Level
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=NCBDBIQ027S
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: level
+    update_cadence: quarterly
+    release: Z.1 Financial Accounts of the United States
+    liability_channel: corporate_net_interest_debt_stock_context
+
+  NCBLL:
+    source: fred
+    name: Nonfinancial Corporate Business; Loans; Liability, Level
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=NCBLL
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: level
+    update_cadence: quarterly
+    release: Z.1 Financial Accounts of the United States
+    liability_channel: corporate_net_interest_debt_stock_context
+
+  CPLBSNNCB:
+    source: fred
+    name: Nonfinancial Corporate Business; Commercial Paper; Liability, Level
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=CPLBSNNCB
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: level
+    update_cadence: quarterly
+    release: Z.1 Financial Accounts of the United States
+    liability_channel: corporate_net_interest_debt_stock_context
+
+  bea_nipa_net_interest_chapter_14:
+    source: bea
+    name: NIPA Handbook Chapter 14 Net Interest
+    endpoint: https://www.bea.gov/resources/methodologies/nipa-handbook/pdf/chapter-14.pdf
+    units: methodology_context
+    frequency: methodology
+    transform: net_interest_definition_context
+    update_cadence: methodology_specific
+    release: BEA NIPA Handbook
+    liability_channel: corporate_net_interest_cashflow_context
+
+  census_qfr_interest_expense:
+    source: census_qfr
+    name: QFR 2025Q4 corporate interest, cash, and debt-maturity table snapshot
+    endpoint: https://www2.census.gov/econ/qfr/xls/qfr25q4f.xlsx
+    units: million_dollars_or_percent_as_published
+    frequency: quarterly
+    transform: aggregate_cash_debt_maturity_context
+    update_cadence: quarterly
+    release: Census Quarterly Financial Report
+    liability_channel: corporate_net_interest_cashflow_context
+
+  compustat_cash_debt_maturity:
+    source: compustat
+    name: Compustat cash and debt maturity candidate context
+    endpoint: https://local.invalid/compustat/cash-debt-maturity
+    units: licensed_candidate_context
+    frequency: firm_panel
+    transform: cash_debt_maturity_context
+    update_cadence: licensed_dataset_specific
+    release: Compustat candidate not bundled
+    liability_channel: corporate_net_interest_cashflow_context
+
+  census_qfr_working_capital:
+    source: census_qfr
+    name: QFR working-capital candidate context
+    endpoint: https://www.census.gov/programs-surveys/qfr.html
+    units: report_context
+    frequency: quarterly
+    transform: working_capital_context
+    update_cadence: quarterly
+    release: Census Quarterly Financial Report
+    liability_channel: working_capital_cost_channel_context
+
+  compustat_working_capital:
+    source: compustat
+    name: Compustat working-capital candidate context
+    endpoint: https://local.invalid/compustat/working-capital
+    units: licensed_candidate_context
+    frequency: firm_panel
+    transform: working_capital_context
+    update_cadence: licensed_dataset_specific
+    release: Compustat candidate not bundled
+    liability_channel: working_capital_cost_channel_context
+
+  barth_ramey_cost_channel:
+    source: research_literature
+    name: Barth and Ramey cost channel literature context
+    endpoint: https://www.nber.org/system/files/chapters/c11066/c11066.pdf
+    units: literature_context
+    frequency: static_paper
+    transform: cost_channel_context
+    update_cadence: static_research_data
+    release: NBER cost channel chapter
+    liability_channel: working_capital_cost_channel_context
+
+  ravenna_walsh_cost_channel:
+    source: research_literature
+    name: Ravenna and Walsh cost channel literature context
+    endpoint: https://local.invalid/research-literature/ravenna-walsh-cost-channel
+    units: literature_context
+    frequency: static_paper
+    transform: cost_channel_context
+    update_cadence: static_research_data
+    release: Cost-channel New Keynesian literature
+    liability_channel: working_capital_cost_channel_context
+
+  chowdhury_hoffmann_schabert_2006:
+    source: research_literature
+    name: Chowdhury Hoffmann Schabert interest-rate Phillips curve context
+    endpoint: https://local.invalid/research-literature/chowdhury-hoffmann-schabert-2006
+    units: literature_context
+    frequency: static_paper
+    transform: interest_rate_augmented_phillips_curve_context
+    update_cadence: static_research_data
+    release: Cost-channel empirical literature
+    liability_channel: working_capital_cost_channel_context
+
+  ecb_cost_channel_firm_survey_2025:
+    source: research_literature
+    name: ECB firm-level cost channel context
+    endpoint: https://www.ecb.europa.eu/pub/pdf/scpwps/ecb.wp3097~5b10420116.en.pdf
+    units: literature_context
+    frequency: static_paper
+    transform: firm_survey_cost_channel_context
+    update_cadence: static_research_data
+    release: ECB Working Paper 3097
+    liability_channel: working_capital_cost_channel_context
+
+  mosler_term_structure_prices_2025:
+    source: mosler_economics
+    name: Mosler term-structure price-level draft
+    endpoint: https://moslereconomics.com/wp-content/uploads/2025/01/1_11_25-Draft_-A-US-Centered-Analysis-of-the-Price-Level-Inflation-and-the-Neutral-Rate-of-Interest.pdf
+    units: theory_context
+    frequency: static_paper
+    transform: term_structure_prices_context
+    update_cadence: paper_specific
+    release: 2025 draft
+    liability_channel: term_structure_pricing_context
+
+  cme_global_carry:
+    source: cme_group
+    name: CME cost-of-carry formula context
+    endpoint: https://www.cmegroup.com
+    units: formula_context
+    frequency: static_note
+    transform: cost_of_carry_formula_context
+    update_cadence: note_specific
+    release: CME education note context
+    liability_channel: term_structure_pricing_context
+
+  sofr_ois_curve:
+    source: research_literature
+    name: SOFR OIS curve candidate context
+    endpoint: https://local.invalid/sofr-ois-curve
+    units: curve_context
+    frequency: daily_candidate
+    transform: risk_free_curve_context
+    update_cadence: source_specific
+    release: Candidate curve source not bundled
+    liability_channel: term_structure_pricing_context
+
+  treasury_yield_curve:
+    source: treasury_fiscaldata
+    name: Treasury yield curve candidate context
+    endpoint: https://home.treasury.gov/resource-center/data-chart-center/interest-rates
+    units: percent
+    frequency: daily
+    transform: yield_curve_context
+    update_cadence: business_daily
+    release: Treasury par yield curve context
+    liability_channel: term_structure_pricing_context
+
+  debt_to_penny:
+    source: treasury_fiscaldata
+    name: Debt to the Penny
+    endpoint: https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/debt_to_penny
+    units: dollars
+    frequency: daily
+    transform: level
+    update_cadence: daily
+    release: Debt to the Penny
+    liability_channel: treasury_debt
+
+  mts_table_4:
+    source: treasury_fiscaldata
+    name: Monthly Treasury Statement Table 5
+    endpoint: https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/mts/mts_table_5
+    units: millions_of_dollars
+    frequency: monthly
+    transform: fiscal_flow
+    update_cadence: monthly
+    release: Monthly Treasury Statement
+    liability_channel: interest_outlays
+
+  treasury_mspd_table_3:
+    source: treasury_fiscaldata
+    name: Monthly Statement of the Public Debt Table 3
+    endpoint: https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/debt/mspd/mspd_table_3
+    units: millions_of_dollars
+    frequency: monthly
+    transform: security_level_maturity_proxy
+    update_cadence: monthly
+    release: Monthly Statement of the Public Debt
+    liability_channel: treasury_repricing
+
+  treasury_mspd_table_1:
+    source: treasury_fiscaldata
+    name: Monthly Statement of the Public Debt Table 1
+    endpoint: https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/debt/mspd/mspd_table_1
+    units: millions_of_dollars
+    frequency: monthly
+    transform: debt_class_reconciliation
+    update_cadence: monthly
+    release: Monthly Statement of the Public Debt
+    liability_channel: treasury_reconciliation
+
+  treasury_buybacks:
+    source: treasury_direct
+    name: Treasury Buyback Operation Results
+    endpoint: https://www.treasurydirect.gov/auctions/announcements-data-results/buy-backs/
+    units: dollars
+    frequency: operation
+    transform: buyback_operation_results
+    update_cadence: operation_specific
+    release: TreasuryDirect Buyback Announcements and Results
+    liability_channel: treasury_buybacks
+
+  treasury_auction_frn_terms:
+    source: treasury_fiscaldata
+    name: Treasury Auction Query Floating-Rate Note Terms
+    endpoint: https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query
+    units: mixed
+    frequency: auction
+    transform: frn_reset_terms
+    update_cadence: auction_specific
+    release: Treasury FiscalData Auctions Query
+    liability_channel: treasury_cashflow_inputs
+
+  treasury_auction_tips_terms:
+    source: treasury_fiscaldata
+    name: Treasury Auction Query TIPS Index Inputs
+    endpoint: https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query
+    units: mixed
+    frequency: auction
+    transform: tips_index_terms
+    update_cadence: auction_specific
+    release: Treasury FiscalData Auctions Query
+    liability_channel: treasury_cashflow_inputs
+
+  treasury_frn_daily_indexes:
+    source: treasury_fiscaldata
+    name: Treasury FRN Daily Indexes
+    endpoint: https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/frn_daily_indexes
+    units: mixed
+    frequency: daily
+    transform: frn_daily_index_path
+    update_cadence: daily
+    release: Treasury FiscalData FRN Daily Indexes
+    liability_channel: treasury_cashflow_inputs
+
+  treasury_tips_cpi_detail:
+    source: treasury_fiscaldata
+    name: Treasury TIPS CPI Data Detail
+    endpoint: https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/tips_cpi_data_detail
+    units: mixed
+    frequency: daily
+    transform: tips_daily_index_ratio_path
+    update_cadence: daily
+    release: Treasury FiscalData TIPS CPI Data
+    liability_channel: treasury_cashflow_inputs
+
+  tic_treasury_sector_transactions:
+    source: treasury_tic
+    name: TIC Treasury Bonds and Notes by Major Foreign Sector
+    endpoint: https://ticdata.treasury.gov/Publish/tressect.txt
+    units: millions_of_dollars
+    frequency: monthly
+    transform: foreign_sector_treasury_transactions
+    update_cadence: monthly
+    release: Treasury International Capital
+    liability_channel: foreign_holder_context
+
+  tic_foreign_treasury_stock_split:
+    source: treasury_tic
+    name: TIC Total U.S. Liabilities to Foreign Residents by Holder
+    endpoint: https://ticdata.treasury.gov/resource-center/data-chart-center/tic/Documents/totalticliabs.csv
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: foreign_official_private_treasury_stock_split
+    update_cadence: quarterly
+    release: Treasury International Capital
+    liability_channel: foreign_holder_context
+
+  tic_foreign_holder_custody_limitation_context:
+    source: treasury_tic
+    name: TIC Foreign Holder Custody and Beneficial-Owner Limitation Context
+    endpoint: https://home.treasury.gov/data/treasury-international-capital-tic-system-home-page/frequently-asked-questions-regarding-the/ticfaq2
+    units: custody_beneficial_owner_limitation_context
+    frequency: guidance_page_specific
+    transform: foreign_holder_beneficial_owner_limitation_context
+    update_cadence: guidance_page_specific
+    release: Treasury International Capital FAQ
+    liability_channel: foreign_holder_context
+
+  fed_cross_border_treasury_basis_trade_context:
+    source: fed_feds_notes
+    name: Federal Reserve Cross-Border Trail Treasury basis trade context
+    endpoint: https://www.federalreserve.gov/econres/notes/feds-notes/the-cross-border-trail-of-the-treasury-basis-trade-20251015.html
+    units: foreign_treasury_method_bridge_context
+    frequency: research_note_specific
+    transform: foreign_treasury_basis_trade_method_bridge_context
+    update_cadence: static_research_note_accessible_data
+    release: FEDS Notes
+    liability_channel: foreign_holder_context
+
+  NA000309Q:
+    source: fred
+    name: Federal government current expenditures interest payments to persons and business
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=NA000309Q
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: federal_interest_payments_to_persons_business_context
+    update_cadence: quarterly
+    release: Gross Domestic Product
+    liability_channel: recipient_tax_clawback_federal_interest_context
+
+  NA000310Q:
+    source: fred
+    name: Federal government current expenditures interest payments to the rest of the world
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=NA000310Q
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: federal_interest_payments_to_rest_of_world_context
+    update_cadence: quarterly
+    release: Gross Domestic Product
+    liability_channel: foreign_holder_context
+
+  ofr_mmf_treasury_holdings:
+    source: ofr_stfm
+    name: OFR Money Market Fund Treasury Portfolio Context
+    endpoint: https://data.financialresearch.gov/v1/series/dataset?dataset=mmf&start_date=2025-01-01
+    units: dollars
+    frequency: monthly
+    transform: money_market_fund_treasury_portfolio_context
+    update_cadence: monthly
+    release: OFR Short-Term Funding Monitor
+    liability_channel: money_fund_holder_context
+
+  sec_nmfp_mmf_treasury_cusip_holdings:
+    source: sec_nmfp
+    name: SEC Form N-MFP Money Fund Treasury CUSIP Holdings
+    endpoint: https://www.sec.gov/data-research/sec-markets-data/dera-form-n-mfp-data-sets
+    units: dollars
+    frequency: monthly
+    transform: money_fund_treasury_cusip_holdings
+    update_cadence: monthly
+    release: SEC Form N-MFP Data Sets
+    liability_channel: money_fund_holder_context
+
+  cbo_budget_economic_outlook:
+    source: cbo
+    name: Budget and Economic Outlook
+    endpoint: https://www.cbo.gov/publication/62105
+    units: mixed
+    frequency: annual_projection
+    transform: report_tables
+    update_cadence: report_specific
+    release: Budget and Economic Outlook
+    liability_channel: scenario_baseline
+
+  h41_current:
+    source: fed_h41
+    name: H.4.1 Current Release
+    endpoint: https://www.federalreserve.gov/releases/h41/current/
+    units: mixed
+    frequency: weekly
+    transform: release_tables
+    update_cadence: weekly
+    release: H.4.1
+    liability_channel: fed_balance_sheet
+
+  nyfed_soma_summary:
+    source: ny_fed
+    name: SOMA Summary
+    endpoint: https://markets.newyorkfed.org/api/soma/summary.json
+    units: dollars
+    frequency: weekly
+    transform: api_records
+    update_cadence: weekly
+    release: SOMA
+    liability_channel: fed_portfolio
+
+  nyfed_sofr:
+    source: ny_fed
+    name: Secured Overnight Financing Rate
+    endpoint: https://markets.newyorkfed.org/api/rates/secured/sofr/search.json
+    units: percent
+    frequency: daily
+    transform: api_records
+    update_cadence: business_daily
+    release: Secured Reference Rates
+
+  nyfed_primary_dealer_statistics_context:
+    source: ny_fed
+    name: Primary Dealer Statistics context
+    endpoint: https://www.newyorkfed.org/markets/counterparties/primary-dealers-statistics
+    units: dealer_position_and_financing_context
+    frequency: weekly
+    transform: primary_dealer_inventory_carry_context
+    update_cadence: weekly
+    release: Primary Dealer Statistics
+    liability_channel: dealer_inventory_carry_context
+    liability_channel: repo_rates
+
+  treasury_repricing_anchor:
+    source: jec_treasury
+    name: Treasury near-term repricing and average-maturity anchor
+    endpoint: https://www.jec.senate.gov/public/vendor/_accounts/JEC-R/debt/Monthly%20Debt%20Update.html
+    units: percent_and_months
+    frequency: monthly
+    transform: report_anchor
+    update_cadence: monthly
+    release: Monthly Debt Update
+    liability_channel: treasury_repricing
+
+  distributional_interest_exposure:
+    source: fed_dfa
+    name: Distributional interest-bearing asset exposure
+    endpoint: https://www.federalreserve.gov/releases/z1/dataviz/download/zips/dfa.zip
+    units: share
+    frequency: quarterly
+    transform: distributional_balance_sheet
+    update_cadence: quarterly
+    release: Distributional Financial Accounts
+    liability_channel: distributional_exposure
+
+  fed_dfa_household_account_type_context:
+    source: fed_dfa
+    name: Fed DFA household account-type balance-sheet context
+    endpoint: https://www.federalreserve.gov/releases/z1/dataviz/download/zips/dfa.zip
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: household_account_type_tax_context
+    update_cadence: quarterly
+    release: Distributional Financial Accounts
+    liability_channel: recipient_tax_clawback_account_type_context
+
+  fed_dfa_household_liability_context:
+    source: fed_dfa
+    name: Fed DFA household liability and liquid-asset context
+    endpoint: https://www.federalreserve.gov/releases/z1/dataviz/download/zips/dfa.zip
+    units: millions_of_dollars
+    frequency: quarterly
+    transform: household_liability_liquidity_context
+    update_cadence: quarterly
+    release: Distributional Financial Accounts
+    liability_channel: fast_repricing_consumer_credit_context
+
+  fed_scf_2022_summary_extract_context:
+    source: fed_scf
+    name: Fed SCF 2022 public summary extract debt and liquidity context
+    endpoint: https://www.federalreserve.gov/econres/files/scfp2022excel.zip
+    units: 2022_dollars_and_survey_flags
+    frequency: triennial_cross_section
+    transform: scf_public_summary_extract_selected_debt_liquidity_fields
+    update_cadence: triennial
+    release: 2022 Survey of Consumer Finances
+    liability_channel: fast_repricing_consumer_credit_context
+
+  fed_scf_2022_weighted_consumer_credit_summary_context:
+    source: fed_scf
+    name: Fed SCF 2022 weighted consumer-credit summary context
+    endpoint: https://www.federalreserve.gov/econres/files/scfp2022excel.zip
+    units: 2022_dollars_weighted_summary_context
+    frequency: triennial_cross_section
+    transform: scf_public_summary_extract_weighted_consumer_credit_review
+    update_cadence: triennial
+    release: 2022 Survey of Consumer Finances
+    liability_channel: fast_repricing_consumer_credit_context
+
+  fed_scf_2022_replicate_weight_methodology_context:
+    source: fed_scf
+    name: Fed SCF 2022 replicate-weight and standard-error methodology context
+    endpoint: https://www.federalreserve.gov/econres/files/scf2022rw1s.zip
+    units: replicate_weight_schema_and_methodology_context
+    frequency: triennial_cross_section
+    transform: scf_public_replicate_weight_schema_methodology_review
+    update_cadence: triennial
+    release: 2022 Survey of Consumer Finances
+    liability_channel: fast_repricing_consumer_credit_context
+
+  fed_scf_2022_consumer_credit_uncertainty_context:
+    source: fed_scf
+    name: Fed SCF 2022 consumer-credit replicate-weight uncertainty context
+    endpoint: https://www.federalreserve.gov/econres/files/Standard_Error_Documentation.pdf
+    units: 2022_dollars_weighted_uncertainty_context
+    frequency: triennial_cross_section
+    transform: scf_public_replicate_weight_uncertainty_review
+    update_cadence: triennial
+    release: 2022 Survey of Consumer Finances
+    liability_channel: fast_repricing_consumer_credit_context
+
+  fed_scf_2022_safe_asset_account_tax_context:
+    source: fed_scf
+    name: Fed SCF 2022 safe-asset and tax-account context
+    endpoint: https://www.federalreserve.gov/econres/files/scfp2022excel.zip
+    units: 2022_dollars_weighted_account_context
+    frequency: triennial_cross_section
+    transform: scf_public_summary_extract_safe_asset_tax_account_review
+    update_cadence: triennial
+    release: 2022 Survey of Consumer Finances
+    liability_channel: recipient_tax_clawback_account_type_context
+
+  fed_shed_2025_financial_fragility_credit_payment_context:
+    source: fed_shed
+    name: Fed SHED 2025 financial fragility and credit-payment behavior context
+    endpoint: https://www.federalreserve.gov/consumerscommunities/files/SHED_public_use_data_2025_(CSV).zip
+    units: weighted_share_context
+    frequency: annual_cross_section
+    transform: shed_public_use_financial_fragility_credit_payment_review
+    update_cadence: annual
+    release: 2025 Survey of Household Economics and Decisionmaking
+    liability_channel: fast_repricing_consumer_credit_context
+
+  sf_fed_monetary_policy_surprises:
+    source: sf_fed
+    name: Monetary Policy Surprises
+    endpoint: https://www.frbsf.org/wp-content/uploads/chart1-monetary-policy-surprises.csv?2026-05-08=
+    units: basis_points
+    frequency: fomc_event
+    transform: high_frequency_surprise
+    update_cadence: periodic
+    release: SF Fed Monetary Policy Surprises
+    liability_channel: monetary_shock
+
+  fed_brw_monetary_policy_shocks:
+    source: fed_feds
+    name: BRW unified monetary policy shocks
+    endpoint: https://www.federalreserve.gov/econres/feds/files/brw-shock-series.csv
+    units: percentage_points
+    frequency: monthly_and_fomc_event
+    transform: admissible_external_proxy_candidate
+    update_cadence: static_research_data
+    release: Federal Reserve FEDS 2019-043r1 BRW shock series
+    liability_channel: monetary_shock
+
+  treasury_dts:
+    source: treasury_fiscaldata
+    name: Daily Treasury Statement Operating Cash Balance
+    endpoint: https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/dts/operating_cash_balance
+    units: millions_of_dollars
+    frequency: daily
+    transform: treasury_operating_cash_balance_tga_context
+    update_cadence: business_daily
+    release: Daily Treasury Statement
+    liability_channel: public_finance_timing
+
+  treasury_mts:
+    source: treasury_fiscaldata
+    name: Monthly Treasury Statement
+    endpoint: https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/mts/mts_table_5
+    units: millions_of_dollars
+    frequency: monthly
+    transform: receipts_outlays_deficit_interest
+    update_cadence: monthly
+    release: Monthly Treasury Statement
+    liability_channel: public_finance_timing
+
+  interest_expense_public_debt:
+    source: treasury_fiscaldata
+    name: Interest Expense on the Public Debt Outstanding
+    endpoint: https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/interest_expense
+    units: dollars
+    frequency: monthly
+    transform: treasury_interest_expense
+    update_cadence: monthly
+    release: Treasury FiscalData Interest Expense
+    liability_channel: public_interest_cashflow
+
+  fed_h41_current:
+    source: fed_h41
+    name: H.4.1 Current Release calibration alias
+    endpoint: https://www.federalreserve.gov/releases/h41/current/
+    units: mixed
+    frequency: weekly
+    transform: fed_balance_sheet_remittance_state
+    update_cadence: weekly
+    release: H.4.1
+    liability_channel: fed_liability_and_remittance_timing
+
+  fred_wtregen:
+    source: fred
+    name: Treasury General Account at the Federal Reserve calibration alias
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=WTREGEN
+    units: millions_of_dollars
+    frequency: weekly
+    transform: tga_balance_timing
+    update_cadence: weekly
+    release: H.4.1 / FRED
+    liability_channel: public_finance_timing
+
+  IORB:
+    source: fred
+    name: Interest Rate on Reserve Balances
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=IORB
+    units: percent
+    frequency: business_daily
+    transform: policy_administered_rate
+    update_cadence: business_daily
+    release: Federal Reserve administered rates / FRED
+    liability_channel: iorb_cashflow_context
+
+  IOER:
+    source: fred
+    name: Interest Rate on Excess Reserves (DISCONTINUED)
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=IOER
+    units: percent
+    frequency: business_daily
+    transform: policy_administered_rate
+    update_cadence: discontinued_historical
+    release: Federal Reserve administered rates / FRED
+    liability_channel: iorb_cashflow_context
+
+  nyfed_on_rrp:
+    source: ny_fed
+    name: Overnight Reverse Repo operations calibration alias
+    endpoint: https://markets.newyorkfed.org/api/rp/reverserepo/propositions/search.json
+    units: dollars
+    frequency: operation
+    transform: on_rrp_operation_quantity_context
+    update_cadence: business_daily
+    release: NY Fed Open Market Operations
+    liability_channel: on_rrp_cashflow_context
+
+  cbo_2026_budget_outlook:
+    source: cbo
+    name: Budget and Economic Outlook 2026 to 2036
+    endpoint: https://www.cbo.gov/publication/62105
+    units: mixed
+    frequency: annual_projection
+    transform: debt_gdp_and_net_interest_projection_context
+    update_cadence: report_specific
+    release: Budget and Economic Outlook 2026 to 2036
+    liability_channel: scenario_baseline
+
+  romer_romer_2004:
+    source: berkeley_romer_romer
+    name: Romer and Romer narrative monetary shock converted snapshot
+    endpoint: https://eml.berkeley.edu/~cromer/Data/Shocks/RomerandRomerDataAppendix.xls
+    units: basis_points
+    frequency: monthly
+    transform: converted_monthly_narrative_shock_resid_pct_point_times_100_fail_closed
+    update_cadence: static_research_data
+    release: Monetary shock research-data appendix converted to reviewed CSV snapshot
+    liability_channel: denominator_design_context
+
+  gurkaynak_sack_swanson_2005:
+    source: sf_fed
+    name: Target and path factor monetary surprise context
+    endpoint: https://www.frbsf.org/research-and-insights/data-and-indicators/monetary-policy-surprises/
+    units: basis_points
+    frequency: fomc_event
+    transform: target_path_factor_context
+    update_cadence: static_research_data
+    release: Monetary surprise research-data context
+    liability_channel: denominator_design_context
+
+  z1_financial_accounts:
+    source: fed_dfa
+    name: Z.1 Financial Accounts calibration context
+    endpoint: https://www.federalreserve.gov/releases/z1/
+    units: mixed
+    frequency: quarterly
+    transform: sector_instrument_balance_sheet_context
+    update_cadence: quarterly
+    release: Z.1 Financial Accounts
+    liability_channel: recipient_leakage_context
+
+  tic_securities_b:
+    source: treasury_tic
+    name: TIC Securities B Treasury context
+    endpoint: https://ticdata.treasury.gov/Publish/tressect.txt
+    units: millions_of_dollars
+    frequency: monthly
+    transform: foreign_treasury_holder_and_flow_context
+    update_cadence: monthly
+    release: Treasury International Capital
+    liability_channel: recipient_leakage_context
+
+  ofr_mmf_data_release:
+    source: ofr_stfm
+    name: OFR U.S. Money Market Fund Data Release
+    endpoint: https://data.financialresearch.gov/v1/series/dataset?dataset=mmf
+    units: dollars
+    frequency: monthly
+    transform: mmf_portfolio_context
+    update_cadence: monthly
+    release: OFR U.S. MMF Data Release
+    liability_channel: recipient_leakage_context
+
+  sec_n_mfp:
+    source: sec_nmfp
+    name: SEC Form N-MFP flat files calibration context
+    endpoint: https://www.sec.gov/data-research/sec-markets-data/dera-form-n-mfp-data-sets
+    units: dollars
+    frequency: monthly
+    transform: mmf_holdings_flat_file_context
+    update_cadence: monthly
+    release: SEC Form N-MFP Data Sets
+    liability_channel: recipient_leakage_context
+
+  ea_tdc_matched_deposit_h0:
+    source: ea_tdc
+    name: EA-TDC matched-deposit pass-through estimate at horizon 0
+    endpoint: https://local.invalid/ea-tdc/output/models/paper_tier2_selected_credit_rate_lags_estimates.csv
+    units: dollars_per_dollar_tdc
+    frequency: quarterly_sample
+    transform: matched_deposit_pass_through_estimate
+    update_cadence: sibling_project_snapshot
+    release: ea-tdc paper tier-2 selected credit-rate-lags estimate
+    liability_channel: dynamic_tdc_liquidity_state
+
+  cfpb_bnpl_market_trends:
+    source: cfpb
+    name: Buy Now Pay Later Market Trends and Consumer Impacts
+    endpoint: https://www.consumerfinance.gov/data-research/research-reports/buy-now-pay-later-market-trends-and-consumer-impacts/
+    units: report_context
+    frequency: report_specific
+    transform: bnpl_market_scale_duration_context
+    update_cadence: report_specific
+    release: CFPB BNPL report
+    liability_channel: zero_interest_credit_context
+
+  fed_dfa_liquid_safe_asset_distribution:
+    source: fed_dfa
+    name: DFA liquid safe-asset distribution proxy
+    endpoint: https://www.federalreserve.gov/releases/z1/dataviz/download/zips/dfa.zip
+    units: distribution_group_balance_sheet_context
+    frequency: quarterly
+    transform: financialization_household_safe_asset_distribution_context
+    update_cadence: quarterly
+    release: Distributional Financial Accounts
+    liability_channel: financialization_proxy_context
+
+  fed_scf_safe_asset_account_ownership_2022:
+    source: fed_scf
+    name: SCF 2022 safe-asset account ownership context
+    endpoint: https://www.federalreserve.gov/econres/files/scfp2022excel.zip
+    units: household_account_ownership_context
+    frequency: triennial
+    transform: financialization_safe_asset_account_ownership_context
+    update_cadence: triennial
+    release: Survey of Consumer Finances 2022 public extract
+    liability_channel: financialization_proxy_context
+
+  fred_z1_household_safe_asset_stock:
+    source: fred
+    name: Z.1/FRED household safe-asset stock context
+    endpoint: https://fred.stlouisfed.org/
+    units: billions_of_dollars
+    frequency: quarterly
+    transform: household_safe_asset_stock_context
+    update_cadence: quarterly
+    release: Z.1 Financial Accounts mirrored through FRED
+    liability_channel: financialization_proxy_context
+
+  fred_z1_nonfinancial_corporate_liquid_assets:
+    source: fred
+    name: Z.1/FRED nonfinancial corporate liquid-asset context
+    endpoint: https://fred.stlouisfed.org/
+    units: billions_of_dollars
+    frequency: quarterly
+    transform: firm_liquid_asset_public_context
+    update_cadence: quarterly
+    release: Z.1 Financial Accounts mirrored through FRED
+    liability_channel: financialization_proxy_context
+
+  fred_z1_financial_sector_depth:
+    source: fred
+    name: Z.1/FRED financial-sector depth context
+    endpoint: https://fred.stlouisfed.org/
+    units: billions_of_dollars
+    frequency: quarterly
+    transform: financial_sector_depth_context_only
+    update_cadence: quarterly
+    release: Z.1 Financial Accounts mirrored through FRED
+    liability_channel: financialization_proxy_context
+
+  fred_h8_deposit_credit_cre_ndfi_context:
+    source: fred
+    name: H.8 deposit, credit, CRE, and NDFI context
+    endpoint: https://fred.stlouisfed.org/
+    units: billions_of_dollars
+    frequency: weekly
+    transform: h8_deposit_credit_cre_ndfi_context
+    update_cadence: weekly
+    release: H.8 Assets and Liabilities of Commercial Banks
+    liability_channel: financialization_proxy_context
+
+  fdic_national_rate_caps_product_rates:
+    source: fdic
+    name: FDIC National Rates and Rate Caps product-rate history
+    endpoint: https://www.fdic.gov/national-rates-and-rate-caps
+    units: percent
+    frequency: monthly
+    transform: deposit_product_rate_context
+    update_cadence: monthly
+    release: FDIC National Rates and Rate Caps
+    liability_channel: financialization_proxy_context
+
+  fred_sndr_savings_deposit_rate:
+    source: fred
+    name: FRED National Rate Savings
+    endpoint: https://fred.stlouisfed.org/graph/fredgraph.csv?id=SNDR
+    units: percent
+    frequency: weekly
+    transform: savings_deposit_rate_context
+    update_cadence: weekly
+    release: FDIC National Rates and Rate Caps mirrored through FRED
+    liability_channel: financialization_proxy_context
+
+  fdic_summary_of_deposits:
+    source: fdic
+    name: FDIC Summary of Deposits
+    endpoint: https://www.fdic.gov/bank-financial-reports/summary-deposits
+    units: branch_market_deposit_context
+    frequency: annual
+    transform: deposit_market_structure_conditioner_context
+    update_cadence: annual
+    release: FDIC Summary of Deposits
+    liability_channel: financialization_proxy_context
+
+  fdic_bank_margin_distribution_panel:
+    source: fdic
+    name: FDIC BankFind financials aggregate bank income/dividend retention context
+    endpoint: https://api.fdic.gov/banks/financials
+    units: millions_of_dollars_from_bank_level_thousand_dollar_call_report_fields
+    frequency: quarterly
+    transform: aggregate_net_income_minus_cash_dividends_route_context
+    update_cadence: quarterly
+    release: FDIC BankFind Suite Financials API
+    liability_channel: bank_retained_margin_distribution_route_context
+
+  ici_weekly_mmf_assets_by_type:
+    source: ici
+    name: ICI weekly money market fund assets by type
+    endpoint: https://www.ici.org/research/stats/mmf
+    units: dollars
+    frequency: weekly
+    transform: retail_institutional_mmf_asset_context
+    update_cadence: weekly
+    release: ICI weekly money market fund assets
+    liability_channel: financialization_proxy_context
+
+  ofr_mmf_monitor_portfolio_categories:
+    source: ofr_stfm
+    name: OFR MMF Monitor portfolio categories
+    endpoint: https://www.financialresearch.gov/money-market-funds/
+    units: dollars
+    frequency: monthly
+    transform: mmf_portfolio_category_context
+    update_cadence: monthly
+    release: OFR Money Market Fund Monitor
+    liability_channel: financialization_proxy_context
+
+  sec_nmfp_mmf_holdings_flatfiles:
+    source: sec_nmfp
+    name: SEC Form N-MFP MMF holdings flat files
+    endpoint: https://www.sec.gov/data-research/sec-markets-data/dera-form-n-mfp-data-sets
+    units: dollars
+    frequency: monthly
+    transform: mmf_holdings_flatfile_context
+    update_cadence: monthly
+    release: SEC Form N-MFP Data Sets
+    liability_channel: financialization_proxy_context
+
+  bea_personal_interest_income_payments:
+    source: bea
+    name: BEA/FRED personal interest income and payments context
+    endpoint: https://www.bea.gov/
+    units: dollars
+    frequency: monthly_or_quarterly
+    transform: personal_net_interest_position_context
+    update_cadence: release_specific
+    release: BEA NIPA personal income and outlay accounts
+    liability_channel: financialization_proxy_context
+
+  fed_household_debt_service_ratios:
+    source: fred
+    name: Household debt service ratios
+    endpoint: https://fred.stlouisfed.org/series/TDSP
+    units: percent_of_disposable_personal_income
+    frequency: quarterly
+    transform: household_borrower_fragility_context
+    update_cadence: quarterly
+    release: Federal Reserve household debt service ratios
+    liability_channel: financialization_proxy_context
+
+  nyfed_household_debt_credit_context:
+    source: ny_fed
+    name: NY Fed Household Debt and Credit context
+    endpoint: https://www.newyorkfed.org/microeconomics/hhdc
+    units: household_credit_context
+    frequency: quarterly
+    transform: household_debt_credit_context_only
+    update_cadence: quarterly
+    release: NY Fed Household Debt and Credit
+    liability_channel: financialization_proxy_context
+
+  cfpb_credit_card_market_context:
+    source: cfpb
+    name: CFPB credit-card market context
+    endpoint: https://www.consumerfinance.gov/data-research/research-reports/the-consumer-credit-card-market/
+    units: credit_card_market_context
+    frequency: report_specific
+    transform: credit_card_fast_repricing_context_only
+    update_cadence: biennial_report_specific
+    release: CFPB Consumer Credit Card Market report
+    liability_channel: financialization_proxy_context
+
+  cfpb_bnpl_market_context:
+    source: cfpb
+    name: CFPB BNPL market context
+    endpoint: https://www.consumerfinance.gov/data-research/research-reports/the-buy-now-pay-later-market/
+    units: bnpl_market_context
+    frequency: report_specific
+    transform: bnpl_materiality_context_only
+    update_cadence: report_specific
+    release: CFPB BNPL market report
+    liability_channel: financialization_proxy_context
+
+  ffiec_call_report_repricing_bulk:
+    source: ffiec_cdr
+    name: FFIEC Call Report bulk repricing and deposit-rate context
+    endpoint: https://cdr.ffiec.gov/public/PWS/DownloadBulkData.aspx
+    units: call_report_bulk_context
+    frequency: quarterly
+    transform: bank_deposit_beta_and_loan_repricing_context
+    update_cadence: quarterly
+    release: FFIEC Call Report bulk data
+    liability_channel: financialization_proxy_context
+
+  sec_bdc_datasets_context:
+    source: sec_edgar
+    name: SEC BDC datasets public context
+    endpoint: https://www.sec.gov/data-research/sec-markets-data/bdc-data-sets
+    units: bdc_public_dataset_context
+    frequency: filing_or_quarterly
+    transform: bdc_private_credit_context_only
+    update_cadence: filing_specific
+    release: SEC Business Development Company Data Sets
+    liability_channel: financialization_proxy_context
+
+  sec_private_fund_statistics_context:
+    source: sec_statistics
+    name: SEC private fund statistics context
+    endpoint: https://www.sec.gov/data-research/statistics-data-visualizations/private-fund-statistics
+    units: private_fund_aggregate_context
+    frequency: quarterly
+    transform: private_fund_aggregate_context_only
+    update_cadence: quarterly
+    release: SEC Private Fund Statistics
+    liability_channel: financialization_proxy_context
+
+  sec_absee_cre_cmbs_context:
+    source: sec_edgar
+    name: SEC ABS-EE / Reg AB CMBS context
+    endpoint: https://www.sec.gov/edgar
+    units: cmbs_asset_level_context
+    frequency: filing_specific
+    transform: absee_cre_cmbs_context_only
+    update_cadence: filing_specific
+    release: SEC ABS-EE and Regulation AB asset-level disclosures
+    liability_channel: financialization_proxy_context
+
+  compustat_firm_financialization_protocol:
+    source: compustat
+    name: Compustat firm financialization licensed-data protocol
+    endpoint: https://www.spglobal.com/marketintelligence/en/solutions/products/compustat
+    units: licensed_design_only
+    frequency: licensed_dataset_specific
+    transform: firm_financialization_restricted_protocol
+    update_cadence: licensed_dataset_specific
+    release: Compustat candidate firm panel
+    liability_channel: financialization_restricted_design

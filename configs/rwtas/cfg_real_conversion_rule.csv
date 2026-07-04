@@ -1,0 +1,8 @@
+conversion_rule_id,cell_id,sector_id,effect_family,activity_component,conversion_coeff,domestic_eligibility_weight,input_basis_label,valid_from,valid_to
+conv_hh_saver,hh_saver,households,real_demand,consumption,0.40,1,assumption,2026-01,
+conv_hh_borrower,hh_borrower,households,real_demand,consumption,0.80,1,assumption,2026-01,
+conv_banks,banks_depositories,banks_depositories,real_demand,credit_supply,0.10,1,assumption,2026-01,
+conv_nonbank,nonbank_financial,nonbank_financial,real_demand,credit_supply,0.05,1,assumption,2026-01,
+conv_nfc,nonfinancial_firms,nonfinancial_firms,real_demand,private_investment,0.60,1,assumption,2026-01,
+conv_state_local,state_local_public_authorities,state_local_public_authorities,real_demand,public_spending,0.50,1,assumption,2026-01,
+conv_row,rest_of_world,rest_of_world,real_demand,net_exports,0.00,1,assumption,2026-01,

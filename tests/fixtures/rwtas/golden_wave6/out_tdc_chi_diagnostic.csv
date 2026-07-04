@@ -1,0 +1,2 @@
+diagnostic_id,include_flag,chi_low,chi_base,chi_high,units,input_basis_label,rationale,dose_mode
+tdc_liquidity_stock_chi,0,0.03,0.07,0.12,demand_$/$stock,owner_gated_diagnostic_only,Stock-without-flow conversion remains banned from the headline; row is emitted only as a gated diagnostic.,persistent_level

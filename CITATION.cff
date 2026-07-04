@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+title: "RateWall: Public Debt, Reserve Balances, and the Diminishing Returns to Monetary Tightening"
+message: "If you use this research package, cite the generated release artifacts and source provenance."
+type: software
+authors:
+  - family-names: Wray
+    given-names: Shane
+version: 23.0.0
+date-released: 2026-05-12
+repository-code: "https://example.invalid/ratewall-private-release"
+keywords:
+  - monetary transmission
+  - public debt
+  - source-backed accounting
+  - reproducible research
+license: LicenseRef-private-research-release

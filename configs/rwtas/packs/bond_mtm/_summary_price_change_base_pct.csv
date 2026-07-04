@@ -1,0 +1,9 @@
+instrument_family,0-2y,2-5y,5-10y,10y+
+treasuries_direct,-0.882,-1.05,-1.39,-1.625
+corporate_direct,-0.77,-1.44,-2.17,-2.8
+muni_direct,-0.65,-1.28,-1.854,-2.176
+agency_mbs_direct,-0.84,-1.575,-1.894,-2.1
+bond_fund_lookthrough_treasury,-0.882,-1.05,-1.39,-1.625
+bond_fund_lookthrough_corporate,-0.77,-1.44,-2.17,-2.8
+bond_fund_lookthrough_muni,-0.65,-1.28,-1.854,-2.176
+bond_fund_lookthrough_agency_mbs,-0.84,-1.575,-1.894,-2.1

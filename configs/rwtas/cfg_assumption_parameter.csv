@@ -1,0 +1,2 @@
+parameter_id,parameter_value,input_basis_label,description
+ricardian_offset,0,assumption,named financing offset applied to public payer cells from referenced private-cell conversion values

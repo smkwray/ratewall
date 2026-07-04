@@ -1,0 +1,6 @@
+state_id,month,claim_id,performing_principal_bil,distressed_paying_principal_bil,defaulted_nonperforming_principal_bil,cumulative_writeoff_bil
+current_state_2026_01,2026-01,C1,1000,0,0,0
+current_state_2026_01,2026-01,C2,500,0,0,0
+current_state_2026_01,2026-01,C3,600,0,0,0
+current_state_2026_01,2026-01,C4,1200,0,0,0
+current_state_2026_01,2026-01,C5,300,0,0,0

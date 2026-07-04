@@ -1,0 +1,156 @@
+schema: ratewall.keep_tables.v1
+generated_from:
+- outputs/tables/ratewall_paper_core_results_index.csv
+- outputs/tables/ratewall_active_output_index.csv
+- Evidence round 2 de-bloat runbook seed rules
+- FRB/US review-only benchmark excluded from hash keepers after repeat-build nondeterminism
+  check
+- Runtime benchmark overlay keeps FRB/US review-only copied values, but canonicalizes
+  their displayed precision for repeat-build hash stability
+tiers:
+  tier1_paper_core:
+  - output_name: ratewall_forecast_path_ratio_pass_through_scenario_registry.csv
+    artifact_path: outputs/tables/ratewall_forecast_path_ratio_pass_through_scenario_registry.csv
+    reason: paper_core_results_index
+    source: paper_core
+  - output_name: ratewall_forecast_holder_tdc_consistency_bridge.csv
+    artifact_path: outputs/tables/ratewall_forecast_holder_tdc_consistency_bridge.csv
+    reason: paper_core_results_index
+    source: paper_core
+  - output_name: ratewall_joint_wall_probability_summary.csv
+    artifact_path: outputs/tables/ratewall_joint_wall_probability_summary.csv
+    reason: paper_core_results_index
+    source: paper_core
+  - output_name: ratewall_annual_flow_runtime_family_registry.csv
+    artifact_path: outputs/tables/ratewall_annual_flow_runtime_family_registry.csv
+    reason: paper_core_results_index
+    source: paper_core
+  - output_name: ratewall_ratio_object_registry.csv
+    artifact_path: outputs/tables/ratewall_ratio_object_registry.csv
+    reason: paper_core_results_index
+    source: paper_core
+  - output_name: ratewall_active_output_index.csv
+    artifact_path: outputs/tables/ratewall_active_output_index.csv
+    reason: paper_core_results_index
+    source: paper_core
+  - output_name: ratewall_reference_scenario_object_crosswalk.csv
+    artifact_path: outputs/tables/ratewall_reference_scenario_object_crosswalk.csv
+    reason: paper_core_results_index
+    source: paper_core
+  - output_name: ratewall_tdc_double_count_guardrail.csv
+    artifact_path: outputs/tables/ratewall_tdc_double_count_guardrail.csv
+    reason: paper_core_results_index
+    source: paper_core
+  - output_name: ratewall_2d_wall_phase_diagram.csv
+    artifact_path: outputs/tables/ratewall_2d_wall_phase_diagram.csv
+    reason: paper_core_results_index
+    source: paper_core
+  - output_name: ratewall_final_recipient_current_demand_bridge_attempt.csv
+    artifact_path: outputs/tables/ratewall_final_recipient_current_demand_bridge_attempt.csv
+    reason: paper_core_results_index
+    source: paper_core
+  - output_name: ratewall_publication_claim_decision.csv
+    artifact_path: outputs/tables/ratewall_publication_claim_decision.csv
+    reason: paper_core_results_index
+    source: paper_core
+  - output_name: ratewall_critical_beta_frontier.csv
+    artifact_path: outputs/tables/ratewall_critical_beta_frontier.csv
+    reason: paper_core_results_index
+    source: paper_core
+  - output_name: ratewall_historical_closest_approach_clean.csv
+    artifact_path: outputs/tables/ratewall_historical_closest_approach_clean.csv
+    reason: paper_core_results_index
+    source: paper_core
+  - output_name: ratewall_paper_canonical_scenario_results.csv
+    artifact_path: outputs/tables/ratewall_paper_canonical_scenario_results.csv
+    reason: paper_core_results_index
+    source: paper_core
+  - output_name: ratewall_minimum_conditions_to_hit_wall.csv
+    artifact_path: outputs/tables/ratewall_minimum_conditions_to_hit_wall.csv
+    reason: paper_core_results_index
+    source: paper_core
+  - output_name: ratewall_wall_hit_scenarios.csv
+    artifact_path: outputs/tables/ratewall_wall_hit_scenarios.csv
+    reason: paper_candidate_wall_hit
+    source: paper_candidate
+  tier2_diagnostics:
+  - output_name: ratewall_annual_flow_denominator_anchor_registry.csv
+    artifact_path: outputs/tables/ratewall_annual_flow_denominator_anchor_registry.csv
+    reason: denominator_anchor_registry
+    source: evidence2_seed_validated_present
+  - output_name: ratewall_annual_support_numerator_component_rollup.csv
+    artifact_path: outputs/tables/ratewall_annual_support_numerator_component_rollup.csv
+    reason: numerator_component_rollup
+    source: evidence2_seed_validated_present
+  - output_name: ratewall_calibration_parameter_recommendations.csv
+    artifact_path: outputs/tables/ratewall_calibration_parameter_recommendations.csv
+    reason: calibration_recommendations
+    source: evidence2_seed_validated_present
+  - output_name: ratewall_conventional_drag_fspdp_gdp_share_conversion_sensitivity.csv
+    artifact_path: outputs/tables/ratewall_conventional_drag_fspdp_gdp_share_conversion_sensitivity.csv
+    reason: fspdp_conversion_sensitivity
+    source: evidence2_seed_validated_present
+  - output_name: ratewall_conventional_drag_fspdp_lp_sample_base_share_join.csv
+    artifact_path: outputs/tables/ratewall_conventional_drag_fspdp_lp_sample_base_share_join.csv
+    reason: fspdp_sample_base_share_join
+    source: evidence2_seed_validated_present
+  - output_name: ratewall_denominator_literature_matrix.csv
+    artifact_path: outputs/tables/ratewall_denominator_literature_matrix.csv
+    reason: denominator_literature_matrix
+    source: evidence2_seed_validated_present
+  - output_name: ratewall_denominator_sensitivity.csv
+    artifact_path: outputs/tables/ratewall_denominator_sensitivity.csv
+    reason: denominator_sensitivity
+    source: evidence2_seed_validated_present
+  - output_name: ratewall_forecast_path_ratio_pass_through_scenario_frontier.csv
+    artifact_path: outputs/tables/ratewall_forecast_path_ratio_pass_through_scenario_frontier.csv
+    reason: forecast_pass_through_frontier
+    source: evidence2_seed_validated_present
+  - output_name: ratewall_forecast_path_ratio_scenario_frontier.csv
+    artifact_path: outputs/tables/ratewall_forecast_path_ratio_scenario_frontier.csv
+    reason: forecast_frontier
+    source: evidence2_seed_validated_present
+  - output_name: ratewall_tdc_assumption_mode_channel.csv
+    artifact_path: outputs/tables/ratewall_tdc_assumption_mode_channel.csv
+    reason: tdc_forward_headline_assumption_mode_channel
+    source: evidence_b_c_phase3_headline_consolidation
+  - output_name: ratewall_forecast_product_reviewer_decision_summary.csv
+    artifact_path: outputs/tables/ratewall_forecast_product_reviewer_decision_summary.csv
+    reason: forecast_reviewer_decision
+    source: evidence2_seed_validated_present
+  - output_name: ratewall_joint_wall_probability_axis_registry.csv
+    artifact_path: outputs/tables/ratewall_joint_wall_probability_axis_registry.csv
+    reason: joint_probability_axis_registry
+    source: evidence2_seed_validated_present
+  - output_name: ratewall_joint_wall_probability_surface.csv
+    artifact_path: outputs/tables/ratewall_joint_wall_probability_surface.csv
+    reason: joint_probability_surface
+    source: evidence2_seed_validated_present
+  - output_name: ratewall_parameter_packs.csv
+    artifact_path: outputs/tables/ratewall_parameter_packs.csv
+    reason: parameter_packs
+    source: evidence2_seed_validated_present
+  - output_name: ratewall_runtime_annual_flow_support_offset_benchmark_overlay.csv
+    artifact_path: outputs/tables/ratewall_runtime_annual_flow_support_offset_benchmark_overlay.csv
+    reason: runtime_benchmark_overlay
+    source: evidence2_seed_validated_present
+  - output_name: ratewall_runtime_annual_flow_support_offset_frontier_summary.csv
+    artifact_path: outputs/tables/ratewall_runtime_annual_flow_support_offset_frontier_summary.csv
+    reason: runtime_frontier_summary
+    source: evidence2_seed_validated_present
+  - output_name: ratewall_runtime_annual_flow_support_offset_scenarios.csv
+    artifact_path: outputs/tables/ratewall_runtime_annual_flow_support_offset_scenarios.csv
+    reason: runtime_support_offset
+    source: evidence2_seed_validated_present
+  - output_name: ratewall_tdc_materialization_semantic_summary.csv
+    artifact_path: outputs/tables/ratewall_tdc_materialization_semantic_summary.csv
+    reason: tdc_semantic_guardrail
+    source: evidence2_seed_validated_present
+  - output_name: ratewall_wall_denominator_path_contract.csv
+    artifact_path: outputs/tables/ratewall_wall_denominator_path_contract.csv
+    reason: denominator_path_contract
+    source: evidence2_seed_validated_present
+  - output_name: ratewall_paper_core_results_index.csv
+    artifact_path: outputs/tables/ratewall_paper_core_results_index.csv
+    reason: spine_guardrail_or_registry
+    source: name_rule

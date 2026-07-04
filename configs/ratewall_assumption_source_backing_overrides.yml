@@ -1,0 +1,75 @@
+- assumption_handle: contractionary_drag_gdp_share
+  artifact_or_surface: "*"
+  scenario_or_path_scope: "*"
+  source_backing_class: literature_context_only_prior
+  source_backing_subclass: source_context_not_denominator_estimate
+  allowed_use: sensitivity_only
+  promotion_status: blocked
+  prior_narrowing_allowed: "false"
+  formula_replacement_allowed: "false"
+  split_denominator_promotion_allowed: "false"
+  calibration_needed: admissible shock response design with support, pretrend/placebo, relevance, sign, horizon, uncertainty, and robustness diagnostics
+  evidence_needed_before_prior_narrowing: promotion-grade conventional-drag response design, not source context alone
+
+- assumption_handle: borrowing_cost_drag_share
+  artifact_or_surface: "*"
+  scenario_or_path_scope: "*"
+  source_backing_class: literature_context_only_prior
+  source_backing_subclass: composition_prior_not_channel_estimate
+  promotion_status: blocked
+  prior_narrowing_allowed: "false"
+  split_denominator_promotion_allowed: "false"
+
+- assumption_handle: credit_supply_drag_share
+  artifact_or_surface: "*"
+  scenario_or_path_scope: "*"
+  source_backing_class: literature_context_only_prior
+  source_backing_subclass: composition_prior_not_channel_estimate
+  promotion_status: blocked
+  prior_narrowing_allowed: "false"
+  split_denominator_promotion_allowed: "false"
+
+- assumption_handle: asset_price_drag_share
+  artifact_or_surface: "*"
+  scenario_or_path_scope: "*"
+  source_backing_class: literature_context_only_prior
+  source_backing_subclass: composition_prior_not_channel_estimate
+  promotion_status: blocked
+  prior_narrowing_allowed: "false"
+  split_denominator_promotion_allowed: "false"
+
+- assumption_handle: expectations_drag_share
+  artifact_or_surface: "*"
+  scenario_or_path_scope: "*"
+  source_backing_class: literature_context_only_prior
+  source_backing_subclass: composition_prior_not_channel_estimate
+  promotion_status: blocked
+  prior_narrowing_allowed: "false"
+  split_denominator_promotion_allowed: "false"
+
+- assumption_handle: exchange_rate_external_drag_share
+  artifact_or_surface: "*"
+  scenario_or_path_scope: "*"
+  source_backing_class: literature_context_only_prior
+  source_backing_subclass: composition_prior_not_channel_estimate
+  promotion_status: blocked
+  prior_narrowing_allowed: "false"
+  split_denominator_promotion_allowed: "false"
+
+- assumption_handle: qrawatch_pricing_scenario_translation
+  artifact_or_surface: "../qrawatch/output/publish/pricing_scenario_translation.csv"
+  scenario_or_path_scope: "*"
+  source_backing_class: scenario_assumption
+  source_backing_subclass: qrawatch_reduced_form_scenario_context_not_ratewall_calibration
+  pricing_output_enabled: "false"
+  allowed_use: sensitivity_only_not_ratewall_pricing_output
+  blocked_use: ratewall_pricing_output;evidence_mode;main_ratio
+
+- assumption_handle: tdcsim_holder_absorption_path
+  artifact_or_surface: "../tdcsim/data/ratewall_inputs/tdcsim_holder_absorption_path.csv"
+  scenario_or_path_scope: "*"
+  source_backing_class: sibling_contract_value
+  source_backing_subclass: sibling_contract_prior_not_holder_allocation_evidence
+  holder_allocation_enabled: "false"
+  allowed_use: tdcsim_regularization_prior_only
+  blocked_use: holder_allocation_evidence

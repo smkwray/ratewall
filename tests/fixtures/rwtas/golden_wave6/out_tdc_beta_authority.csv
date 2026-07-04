@@ -1,0 +1,6 @@
+state_id,low,base,high,is_default,authority,state_family,transition_direction,input_basis_label,rationale,dose_mode
+offset_state,0,0.1,0.2,0,tdcest_owner_relayed_2026_07_04,offset_state,,scenario_use_only,State->beta mapping row. 0.342 stays the unconditional default per the frozen hierarchy.,persistent_level
+tdcest_current_point_estimate_mid_transition,0.342,0.342,0.342,1,tdcest_second_message,mid_transition,toward_offset_state,tdcest_current_point_estimate_mid_transition,"Current point estimate, not a structural constant. System likely transitioning back toward offset_state.",persistent_level
+plumbing_active,0.45,0.5,0.6,0,tdcest_owner_relayed_2026_07_04,plumbing_active,,scenario_use_only,State->beta mapping row for the dormant candidate rule.,persistent_level
+large_fiscal_shock_sensitivity_only,0.60,0.65,0.70,0,tdcest_second_message,scenario_gated,,tdcest_large_fiscal_shock_sensitivity_only,Scenario-gated large-fiscal-shock sensitivity only; not an unconditional forward default.,persistent_level
+small_tdc_flows_quiet_quarter,0,0,0,0,tdcest_second_message,offset_state,,tdcest_small_flows_quiet_quarter_pending_threshold,Small quiet-quarter flows approximately zero; under the two-state doctrine this is the offset_state showing through in low-flow quarters.,persistent_level

@@ -1,0 +1,81 @@
+period,evidence_type,value,units,source_id,interpretation
+2010-2019 avg,Z.1 total issuance/absorption denominator,9396.218,$bn annual transactions,S01_Z1_total,Denominator: all-sector annual Treasury securities asset transactions; annual net marginal Treasury securities absorbed in Z.1.
+2010-2019 avg,Mode A net share base,0.4355570507197683,share of net issuance,S01_Z1_total_residual,"Residual domestic nonbank holder change after banks, Fed/SOMA, foreign official/private."
+2010-2019 avg,Mode B net share base,0.04183052692051206,share of net issuance,S04_S08_Z1_banks_H8,Bank balance-sheet expansion component of bank Treasury transactions; split by H.8 deposit and non-MBS securities state evidence.
+2010-2019 avg,Mode C net share base,0.030721216770406987,share of net issuance,S04_S08_Z1_banks_H8,Bank asset-reallocation component of bank Treasury transactions; split by H.8 state evidence.
+2010-2019 avg,Mode D net share base,0.1637025662878405,share of net issuance,S02_Z1_SOMA,Central bank/SOMA Treasury transactions. Positive = Fed purchase absorption; negative = QT/disabsorption.
+2010-2019 avg,Mode E net share base,0.1279657411098806,share of net issuance,S09_Z1_foreign_official,"Foreign official Treasury transactions, used as onshore/custodial-settlement proxy."
+2010-2019 avg,Mode F net share base,0.20022289819159156,share of net issuance,S10_Z1_foreign_private,"Private foreign Treasury transactions, used as offshore/eurodollar foreign proxy."
+2019,Z.1 total issuance/absorption denominator,1062.691,$bn annual transactions,S01_Z1_total,Denominator: all-sector annual Treasury securities asset transactions; annual net marginal Treasury securities absorbed in Z.1.
+2019,Mode A net share base,0.5077684858533666,share of net issuance,S01_Z1_total_residual,"Residual domestic nonbank holder change after banks, Fed/SOMA, foreign official/private."
+2019,Mode B net share base,0.0831905041070264,share of net issuance,S04_S08_Z1_banks_H8,Bank balance-sheet expansion component of bank Treasury transactions; split by H.8 deposit and non-MBS securities state evidence.
+2019,Mode C net share base,0.035653073188725605,share of net issuance,S04_S08_Z1_banks_H8,Bank asset-reallocation component of bank Treasury transactions; split by H.8 state evidence.
+2019,Mode D net share base,0.09329334679601126,share of net issuance,S02_Z1_SOMA,Central bank/SOMA Treasury transactions. Positive = Fed purchase absorption; negative = QT/disabsorption.
+2019,Mode E net share base,-0.000296417302866026,share of net issuance,S09_Z1_foreign_official,"Foreign official Treasury transactions, used as onshore/custodial-settlement proxy."
+2019,Mode F net share base,0.28039100735773614,share of net issuance,S10_Z1_foreign_private,"Private foreign Treasury transactions, used as offshore/eurodollar foreign proxy."
+2019,Z.1 MMF Treasury transactions,177.534,$bn annual transactions,S11_Z1_MMF_Treasuries,Positive MMF Treasury transactions identify possible domestic nonbank bill absorption.
+2019,H.8 deposits YoY,791.5688000000009,$bn Dec/Dec,S13_H8_deposits,State evidence for bank expansion vs reallocation split.
+2019,H.8 non-MBS bank securities YoY,128.9556,$bn Dec/Dec,S14_H8_non_MBS,Non-MBS includes Treasury and agency obligations other than MBS; used with deposits to classify bank absorption mode.
+2020,Z.1 total issuance/absorption denominator,4317.251,$bn annual transactions,S01_Z1_total,Denominator: all-sector annual Treasury securities asset transactions; annual net marginal Treasury securities absorbed in Z.1.
+2020,Mode A net share base,0.32269261157157647,share of net issuance,S01_Z1_total_residual,"Residual domestic nonbank holder change after banks, Fed/SOMA, foreign official/private."
+2020,Mode B net share base,0.059615262119343995,share of net issuance,S04_S08_Z1_banks_H8,Bank balance-sheet expansion component of bank Treasury transactions; split by H.8 deposit and non-MBS securities state evidence.
+2020,Mode C net share base,0.010520340374001883,share of net issuance,S04_S08_Z1_banks_H8,Bank asset-reallocation component of bank Treasury transactions; split by H.8 state evidence.
+2020,Mode D net share base,0.5916419962610466,share of net issuance,S02_Z1_SOMA,Central bank/SOMA Treasury transactions. Positive = Fed purchase absorption; negative = QT/disabsorption.
+2020,Mode E net share base,-0.007509639814780285,share of net issuance,S09_Z1_foreign_official,"Foreign official Treasury transactions, used as onshore/custodial-settlement proxy."
+2020,Mode F net share base,0.023039429488811283,share of net issuance,S10_Z1_foreign_private,"Private foreign Treasury transactions, used as offshore/eurodollar foreign proxy."
+2020,Z.1 MMF Treasury transactions,1343.33,$bn annual transactions,S11_Z1_MMF_Treasuries,Positive MMF Treasury transactions identify possible domestic nonbank bill absorption.
+2020,H.8 deposits YoY,2833.295399999999,$bn Dec/Dec,S13_H8_deposits,State evidence for bank expansion vs reallocation split.
+2020,H.8 non-MBS bank securities YoY,307.5034999999999,$bn Dec/Dec,S14_H8_non_MBS,Non-MBS includes Treasury and agency obligations other than MBS; used with deposits to classify bank absorption mode.
+2021,Z.1 total issuance/absorption denominator,1611.378,$bn annual transactions,S01_Z1_total,Denominator: all-sector annual Treasury securities asset transactions; annual net marginal Treasury securities absorbed in Z.1.
+2021,Mode A net share base,-0.2629265138285368,share of net issuance,S01_Z1_total_residual,"Residual domestic nonbank holder change after banks, Fed/SOMA, foreign official/private."
+2021,Mode B net share base,0.2322136705354051,share of net issuance,S04_S08_Z1_banks_H8,Bank balance-sheet expansion component of bank Treasury transactions; split by H.8 deposit and non-MBS securities state evidence.
+2021,Mode C net share base,0.058053417633851266,share of net issuance,S04_S08_Z1_banks_H8,Bank asset-reallocation component of bank Treasury transactions; split by H.8 state evidence.
+2021,Mode D net share base,0.5967283902349417,share of net issuance,S02_Z1_SOMA,Central bank/SOMA Treasury transactions. Positive = Fed purchase absorption; negative = QT/disabsorption.
+2021,Mode E net share base,0.048277312958225814,share of net issuance,S09_Z1_foreign_official,"Foreign official Treasury transactions, used as onshore/custodial-settlement proxy."
+2021,Mode F net share base,0.32765372246611285,share of net issuance,S10_Z1_foreign_private,"Private foreign Treasury transactions, used as offshore/eurodollar foreign proxy."
+2021,Z.1 MMF Treasury transactions,-651.257,$bn annual transactions,S11_Z1_MMF_Treasuries,Positive MMF Treasury transactions identify possible domestic nonbank bill absorption.
+2021,H.8 deposits YoY,1876.677099999999,$bn Dec/Dec,S13_H8_deposits,State evidence for bank expansion vs reallocation split.
+2021,H.8 non-MBS bank securities YoY,417.8519000000001,$bn Dec/Dec,S14_H8_non_MBS,Non-MBS includes Treasury and agency obligations other than MBS; used with deposits to classify bank absorption mode.
+2022,Z.1 total issuance/absorption denominator,1287.442,$bn annual transactions,S01_Z1_total,Denominator: all-sector annual Treasury securities asset transactions; annual net marginal Treasury securities absorbed in Z.1.
+2022,Mode A net share base,0.7957057482977874,share of net issuance,S01_Z1_total_residual,"Residual domestic nonbank holder change after banks, Fed/SOMA, foreign official/private."
+2022,Mode B net share base,0.011329248230211536,share of net issuance,S04_S08_Z1_banks_H8,Bank balance-sheet expansion component of bank Treasury transactions; split by H.8 deposit and non-MBS securities state evidence.
+2022,Mode C net share base,0.033987744690634605,share of net issuance,S04_S08_Z1_banks_H8,Bank asset-reallocation component of bank Treasury transactions; split by H.8 state evidence.
+2022,Mode D net share base,-0.14616503112373216,share of net issuance,S02_Z1_SOMA,Central bank/SOMA Treasury transactions. Positive = Fed purchase absorption; negative = QT/disabsorption.
+2022,Mode E net share base,-0.012729893851528845,share of net issuance,S09_Z1_foreign_official,"Foreign official Treasury transactions, used as onshore/custodial-settlement proxy."
+2022,Mode F net share base,0.31787218375662746,share of net issuance,S10_Z1_foreign_private,"Private foreign Treasury transactions, used as offshore/eurodollar foreign proxy."
+2022,Z.1 MMF Treasury transactions,-750.656,$bn annual transactions,S11_Z1_MMF_Treasuries,Positive MMF Treasury transactions identify possible domestic nonbank bill absorption.
+2022,H.8 deposits YoY,-148.03389999999854,$bn Dec/Dec,S13_H8_deposits,State evidence for bank expansion vs reallocation split.
+2022,H.8 non-MBS bank securities YoY,1.3097999999999956,$bn Dec/Dec,S14_H8_non_MBS,Non-MBS includes Treasury and agency obligations other than MBS; used with deposits to classify bank absorption mode.
+2023,Z.1 total issuance/absorption denominator,2381.591,$bn annual transactions,S01_Z1_total,Denominator: all-sector annual Treasury securities asset transactions; annual net marginal Treasury securities absorbed in Z.1.
+2023,Mode A net share base,1.0473649757662,share of net issuance,S01_Z1_total_residual,"Residual domestic nonbank holder change after banks, Fed/SOMA, foreign official/private."
+2023,Mode B net share base,0.0,share of net issuance,S04_S08_Z1_banks_H8,Bank balance-sheet expansion component of bank Treasury transactions; split by H.8 deposit and non-MBS securities state evidence.
+2023,Mode C net share base,-0.04203534527968908,share of net issuance,S04_S08_Z1_banks_H8,Bank asset-reallocation component of bank Treasury transactions; split by H.8 state evidence.
+2023,Mode D net share base,-0.31110295596515103,share of net issuance,S02_Z1_SOMA,Central bank/SOMA Treasury transactions. Positive = Fed purchase absorption; negative = QT/disabsorption.
+2023,Mode E net share base,0.029172515347933376,share of net issuance,S09_Z1_foreign_official,"Foreign official Treasury transactions, used as onshore/custodial-settlement proxy."
+2023,Mode F net share base,0.27660081013070675,share of net issuance,S10_Z1_foreign_private,"Private foreign Treasury transactions, used as offshore/eurodollar foreign proxy."
+2023,Z.1 MMF Treasury transactions,1205.479,$bn annual transactions,S11_Z1_MMF_Treasuries,Positive MMF Treasury transactions identify possible domestic nonbank bill absorption.
+2023,ON RRP drawdown limiting A_RRP submode,1535.233,$bn annual decline in ON RRP,S12_FRED_RRPONTSYD,"A_RRP equals min(MMF Treasury purchases, ON RRP drawdown, positive domestic-nonbank residual). This is a settlement-taxonomy extension, not a fitted plug."
+2023,H.8 deposits YoY,-367.77769999999873,$bn Dec/Dec,S13_H8_deposits,State evidence for bank expansion vs reallocation split.
+2023,H.8 non-MBS bank securities YoY,-93.06110000000012,$bn Dec/Dec,S14_H8_non_MBS,Non-MBS includes Treasury and agency obligations other than MBS; used with deposits to classify bank absorption mode.
+2024,Z.1 total issuance/absorption denominator,1912.901,$bn annual transactions,S01_Z1_total,Denominator: all-sector annual Treasury securities asset transactions; annual net marginal Treasury securities absorbed in Z.1.
+2024,Mode A net share base,0.8478128246051416,share of net issuance,S01_Z1_total_residual,"Residual domestic nonbank holder change after banks, Fed/SOMA, foreign official/private."
+2024,Mode B net share base,0.05674493870827607,share of net issuance,S04_S08_Z1_banks_H8,Bank balance-sheet expansion component of bank Treasury transactions; split by H.8 deposit and non-MBS securities state evidence.
+2024,Mode C net share base,0.04642767712495314,share of net issuance,S04_S08_Z1_banks_H8,Bank asset-reallocation component of bank Treasury transactions; split by H.8 state evidence.
+2024,Mode D net share base,-0.2693772443006721,share of net issuance,S02_Z1_SOMA,Central bank/SOMA Treasury transactions. Positive = Fed purchase absorption; negative = QT/disabsorption.
+2024,Mode E net share base,0.014726846815386682,share of net issuance,S09_Z1_foreign_official,"Foreign official Treasury transactions, used as onshore/custodial-settlement proxy."
+2024,Mode F net share base,0.3036649570469146,share of net issuance,S10_Z1_foreign_private,"Private foreign Treasury transactions, used as offshore/eurodollar foreign proxy."
+2024,Z.1 MMF Treasury transactions,725.357,$bn annual transactions,S11_Z1_MMF_Treasuries,Positive MMF Treasury transactions identify possible domestic nonbank bill absorption.
+2024,ON RRP drawdown limiting A_RRP submode,545.0229999999999,$bn annual decline in ON RRP,S12_FRED_RRPONTSYD,"A_RRP equals min(MMF Treasury purchases, ON RRP drawdown, positive domestic-nonbank residual). This is a settlement-taxonomy extension, not a fitted plug."
+2024,H.8 deposits YoY,438.23539999999775,$bn Dec/Dec,S13_H8_deposits,State evidence for bank expansion vs reallocation split.
+2024,H.8 non-MBS bank securities YoY,212.60130000000004,$bn Dec/Dec,S14_H8_non_MBS,Non-MBS includes Treasury and agency obligations other than MBS; used with deposits to classify bank absorption mode.
+2025,Z.1 total issuance/absorption denominator,1930.171,$bn annual transactions,S01_Z1_total,Denominator: all-sector annual Treasury securities asset transactions; annual net marginal Treasury securities absorbed in Z.1.
+2025,Mode A net share base,0.6738988410871368,share of net issuance,S01_Z1_total_residual,"Residual domestic nonbank holder change after banks, Fed/SOMA, foreign official/private."
+2025,Mode B net share base,0.06300187910812047,share of net issuance,S04_S08_Z1_banks_H8,Bank balance-sheet expansion component of bank Treasury transactions; split by H.8 deposit and non-MBS securities state evidence.
+2025,Mode C net share base,0.04200125273874698,share of net issuance,S04_S08_Z1_banks_H8,Bank asset-reallocation component of bank Treasury transactions; split by H.8 state evidence.
+2025,Mode D net share base,-0.042914332460699076,share of net issuance,S02_Z1_SOMA,Central bank/SOMA Treasury transactions. Positive = Fed purchase absorption; negative = QT/disabsorption.
+2025,Mode E net share base,0.02579771429578001,share of net issuance,S09_Z1_foreign_official,"Foreign official Treasury transactions, used as onshore/custodial-settlement proxy."
+2025,Mode F net share base,0.23821464523091476,share of net issuance,S10_Z1_foreign_private,"Private foreign Treasury transactions, used as offshore/eurodollar foreign proxy."
+2025,Z.1 MMF Treasury transactions,522.981,$bn annual transactions,S11_Z1_MMF_Treasuries,Positive MMF Treasury transactions identify possible domestic nonbank bill absorption.
+2025,ON RRP drawdown limiting A_RRP submode,367.467,$bn annual decline in ON RRP,S12_FRED_RRPONTSYD,"A_RRP equals min(MMF Treasury purchases, ON RRP drawdown, positive domestic-nonbank residual). This is a settlement-taxonomy extension, not a fitted plug."
+2025,H.8 deposits YoY,728.7188000000024,$bn Dec/Dec,S13_H8_deposits,State evidence for bank expansion vs reallocation split.
+2025,H.8 non-MBS bank securities YoY,182.36490000000003,$bn Dec/Dec,S14_H8_non_MBS,Non-MBS includes Treasury and agency obligations other than MBS; used with deposits to classify bank absorption mode.

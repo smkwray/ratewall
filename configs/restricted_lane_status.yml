@@ -1,0 +1,40 @@
+schema: ratewall.restricted_lane_status.v1
+reopen_trigger: >-
+  Reopen exactly one lane only when this manifest changes that lane status from
+  retired to active in the same change that adds a source-backed
+  unit-of-observation, required-fields bridge, and admission test for that lane.
+lanes:
+  beneficial_owner_final_recipient_lookthrough:
+    status: retired
+    source_line_reference: configs/sources.yml:2185-2189
+    source_keys:
+      - tic_foreign_holder_custody_limitation_context
+    retired_reason: >-
+      TIC custody data do not identify the final beneficial recipient needed for
+      in-band liability allocation.
+  bank_iorb_retention_to_depositor_timing:
+    status: retired
+    source_line_reference: configs/sources.yml:2491-2511
+    source_keys:
+      - IORB
+      - IOER
+    retired_reason: >-
+      Administered-rate series do not identify bank retention versus depositor
+      pass-through timing.
+  security_level_reset_financialization:
+    status: retired
+    source_line_reference: configs/sources.yml:2871-2874
+    source_keys:
+      - compustat_firm_financialization_protocol
+    retired_reason: >-
+      Security-level reset and firm-financialization evidence remains
+      restricted-design context, not a backend input lane.
+forbidden_active_markers:
+  - "restricted_lane_status: active"
+  - "lane_status: active"
+  - "status: active"
+  - "promotion_status: active"
+  - "source_status: active"
+  - "enters_main_ratio: true"
+  - "evidence_mode_enabled: true"
+  - "runtime_default: true"

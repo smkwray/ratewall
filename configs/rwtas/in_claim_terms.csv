@@ -1,0 +1,6 @@
+claim_id,rate_type,reference_rate_id,spread,contract_adjustment,contract_fixed_rate,administered_rate,zero_rate_flag,reset_frequency_months,next_reset_month,reset_lag,maturity_month,maturity_bucket_id,repricing_share,interest_payment_frequency,amortization_type,cashflow_schedule_id,default_rule_id,fee_reward_subsidy_rule_id
+C1,floating,treasury_safe,0,0,0,0,false,1,2026-01,0,2026-01,0_1m,1,monthly,interest_only,none,v0_all_performing,none
+C2,administered,reserve_admin,0,0,0,0,false,1,2026-01,0,perpetual,overnight_or_demand,1,monthly,perpetual_no_principal,none,v0_all_performing,none
+C3,floating,household_credit_ref,0,0,0,0,false,1,2026-01,0,perpetual,overnight_or_demand,1,monthly,interest_only,none,v0_all_performing,none
+C4,floating,firm_credit_ref,0,0,0,0,false,1,2026-01,0,perpetual,overnight_or_demand,1,monthly,interest_only,none,v0_all_performing,none
+C5,administered,deposit_admin,0,0,0,0,false,1,2026-01,0,perpetual,overnight_or_demand,1,monthly,perpetual_no_principal,none,v0_all_performing,none

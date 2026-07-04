@@ -1,0 +1,70 @@
+check_id,status,message,dose_mode
+T25_files,pass,all required pack CSVs load,persistent_level
+T25_bounds,pass,all pack rows satisfy low<=base<=high,persistent_level
+T25_labels,pass,all parameter rows carry input_basis_label,persistent_level
+T25_phase6_files,pass,Phase 6 pack CSVs load,persistent_level
+T25_phase6_bounds,pass,Phase 6 rows satisfy low<=base<=high,persistent_level
+T25_phase6_labels,pass,Phase 6 rows carry input_basis_label,persistent_level
+T25_phase6_include0,pass,include_flag=0 rows load for diagnostics,persistent_level
+T25_scenario_delta_bnpl_delta_set,pass,bnpl_delta_set sector balance identities close,persistent_level
+T25_household_stock_splits_auto_installment_debt,pass,household_stock_splits auto_installment_debt base shares sum to 1,persistent_level
+T25_household_stock_splits_bnpl_card_float_removed,pass,household_stock_splits bnpl_card_float_removed base shares sum to 1,persistent_level
+T25_household_stock_splits_bnpl_float_deposits,pass,household_stock_splits bnpl_float_deposits base shares sum to 1,persistent_level
+T25_household_stock_splits_bnpl_float_mmfs,pass,household_stock_splits bnpl_float_mmfs base shares sum to 1,persistent_level
+T25_household_stock_splits_bnpl_funding_liability,pass,household_stock_splits bnpl_funding_liability base shares sum to 1,persistent_level
+T25_household_stock_splits_bnpl_installment,pass,household_stock_splits bnpl_installment base shares sum to 1,persistent_level
+T25_household_stock_splits_bond_equity_funds_lookthrough,pass,household_stock_splits bond_equity_funds_lookthrough base shares sum to 1,persistent_level
+T25_household_stock_splits_consumer_installment_debt_all,pass,household_stock_splits consumer_installment_debt_all base shares sum to 1,persistent_level
+T25_household_stock_splits_credit_card_revolving_balances,pass,household_stock_splits credit_card_revolving_balances base shares sum to 1,persistent_level
+T25_household_stock_splits_dc_pension_assets,pass,household_stock_splits dc_pension_assets base shares sum to 1,persistent_level
+T25_household_stock_splits_deposits_checkable,pass,household_stock_splits deposits_checkable base shares sum to 1,persistent_level
+T25_household_stock_splits_deposits_savings_mmda,pass,household_stock_splits deposits_savings_mmda base shares sum to 1,persistent_level
+T25_household_stock_splits_deposits_time_cds,pass,household_stock_splits deposits_time_cds base shares sum to 1,persistent_level
+T25_household_stock_splits_mmf_shares,pass,household_stock_splits mmf_shares base shares sum to 1,persistent_level
+T25_household_stock_splits_mortgages_arm_heloc,pass,household_stock_splits mortgages_arm_heloc base shares sum to 1,persistent_level
+T25_household_stock_splits_mortgages_fixed,pass,household_stock_splits mortgages_fixed base shares sum to 1,persistent_level
+T25_household_stock_splits_personal_installment_debt,pass,household_stock_splits personal_installment_debt base shares sum to 1,persistent_level
+T25_household_stock_splits_student_installment_debt,pass,household_stock_splits student_installment_debt base shares sum to 1,persistent_level
+T25_household_stock_splits_treasuries_direct,pass,household_stock_splits treasuries_direct base shares sum to 1,persistent_level
+T25_lookthrough_shares_banks_retained_margin,pass,lookthrough_shares banks_retained_margin base shares sum to 1,persistent_level
+T25_lookthrough_shares_db_pensions,pass,lookthrough_shares db_pensions base shares sum to 1,persistent_level
+T25_lookthrough_shares_dc_pensions,pass,lookthrough_shares dc_pensions base shares sum to 1,persistent_level
+T25_lookthrough_shares_insurers,pass,lookthrough_shares insurers base shares sum to 1,persistent_level
+T25_lookthrough_shares_mmfs,pass,lookthrough_shares mmfs base shares sum to 0.999999999999999976,persistent_level
+T25_lookthrough_shares_mutual_funds_etfs,pass,lookthrough_shares mutual_funds_etfs base shares sum to 1,persistent_level
+T26_all_marketable_treasuries,pass,all_marketable_treasuries shares sum to 1.000000000000000025 including unallocated,persistent_level
+T26_treasury_bills,pass,treasury_bills shares sum to 0.999999999999999912 including unallocated,persistent_level
+T26_treasury_notes_bonds_tips,pass,treasury_notes_bonds_tips shares sum to 0.999999999999999994 including unallocated,persistent_level
+T27_treasury_stock,pass,bills=6819.3 coupons=23822.3 total=30641.6,persistent_level
+T28,pass,look-through shares sum to 1 and route once,persistent_level
+T29,pass,remittance/deferred asset logic is nonnegative where required,persistent_level
+T30,pass,120-month RW sums N and D; monthly shock timing preserved,persistent_level
+T31,pass,headline carries ricardian columns and L/B/H rows,persistent_level
+T32,pass,legacy comparator emitted as comparator_only,persistent_level
+T33,pass,retiree collapse diagnostic emitted,persistent_level
+T34,pass,calibrated reward-vs-avoided-interest fungibility uses same cell nets,persistent_level
+T35,pass,A1 deposit family split and beta ordering enforced,persistent_level
+T36,pass,A2 mortgage interest paid equals holder receipts,persistent_level
+T36B,pass,mortgage_turnover_share low/base/high bands visibly move fixed-mortgage gross,persistent_level
+T37,pass,A6 MMF asset closure and pass-through enforced,persistent_level
+T38,pass,Phase 6 waterfall scaffold is additive and labeled,persistent_level
+T39,pass,Phase 6 overlap registry prevents double assignment,persistent_level
+T40,pass,year-1 RW_full D is within legacy scalar completeness gate,persistent_level
+T41,pass,deposit holder rows route exactly once and match bank payment,persistent_level
+T42,pass,additive waterfall inputs have no exposure-level duplicates,persistent_level
+T43,pass,cashflow leg-gross net reconciles to headline net,persistent_level
+T44,pass,CRE cashflow routing closes payer and holder legs,persistent_level
+T53,pass,TDCSim measured coupon-roll schedule is intact and steepens base path,persistent_level
+T55,pass,diagnostic/scenario tables are isolated from headline additive rows,persistent_level
+T58,pass,tax layer taxes only current/taxable wrapper slices once,persistent_level
+T59,pass,independent tax-flow recomputation equals stored Treasury receipt flow,persistent_level
+T60,pass,higher 163(j) stress weakly lowers effective shield,persistent_level
+T60B,pass,direct 163(j) stress probe: 300bp shield is below 100bp shield for leveraged family,persistent_level
+T61,pass,after-tax household N is below pre-tax household N,persistent_level
+T62,pass,tax clawback memo rows are sourced to the tax calibration pack,persistent_level
+T47,pass,constant spread/level terms do not enter pair deltas,persistent_level
+T48,pass,cost legs do not route positive converted income to household cells,persistent_level
+T49,pass,scenario delta-set balance identities close by sector,persistent_level
+T50,pass,TDC stocks are zero when issuance divergence is zero,persistent_level
+T51,pass,TDC created-deposit income uses full level rate,persistent_level
+T52,pass,parameter-derived scenario stocks match declared stocks,persistent_level

@@ -1,0 +1,6 @@
+state_id,opening_month,claim_id,holder_sector,holder_cell,issuer_sector,issuer_cell,instrument,incidence_mode,principal_begin_bil,book_value_begin_bil,market_value_begin_bil,currency,valuation_basis,report_group_id
+current_state_2026_01,2026-01,C1,households,hh_saver,treasury_federal_government,treasury_federal,treasury_debt,direct,1000,1000,1000,USD,par,public_interest_report
+current_state_2026_01,2026-01,C2,banks_depositories,banks_depositories,federal_reserve,federal_reserve,central_bank_reserve_claim,direct,500,500,500,USD,par,central_bank_administered_interest_report
+current_state_2026_01,2026-01,C3,banks_depositories,banks_depositories,households,hh_borrower,household_credit,direct,600,600,600,USD,par,private_debt_service_report
+current_state_2026_01,2026-01,C4,nonbank_financial,nonbank_financial,nonfinancial_firms,nonfinancial_firms,firm_credit,direct,1200,1200,1200,USD,par,private_debt_service_report
+current_state_2026_01,2026-01,C5,nonfinancial_firms,nonfinancial_firms,banks_depositories,banks_depositories,deposit_claim,direct,300,300,300,USD,par,deposit_pass_through_report

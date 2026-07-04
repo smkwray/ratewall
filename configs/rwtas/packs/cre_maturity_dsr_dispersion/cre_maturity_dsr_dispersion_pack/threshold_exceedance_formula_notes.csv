@@ -1,0 +1,5 @@
+formula_id,formula,notes
+threshold_exceedance_without_shock,share_above = 1 - F_cell_family(threshold_base),F is the monotone CDF implied by p10/p25/p50/p75/p90 buckets.
+threshold_exceedance_with_metric_shock,share_above(shock_delta) = 1 - F_cell_family(threshold_base - shock_delta),Equivalent to applying the shock to each household or firm DSR/inverse-coverage observation.
+incremental_share_crossing,incremental_crossing = share_above(shock_delta) - share_above(0),Use incremental crossing to desynchronize transition activation and avoid point-value all-or-nothing behavior.
+monthly_pd_increment,"q_increment = slope_dsr * E[max(0, metric + shock_delta - threshold) | distribution] or approx slope_dsr * midpoint_excess_by_bucket","For a first implementation, bucket mass above threshold can scale the existing distress-pack slope; bucket midpoint excess is better than share-only when available."

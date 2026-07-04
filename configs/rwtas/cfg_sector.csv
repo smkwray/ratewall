@@ -1,0 +1,9 @@
+sector_id,sector_code,display_name,role,is_base_sector
+households,HH,Households,household cashflow and consumption response,true
+nonfinancial_firms,NFC,Nonfinancial firms,firm borrowing cashflow and investment response,true
+banks_depositories,BANK,Banks and depositories,reserve loan and deposit intermediary,true
+nonbank_financial,NBFI,Nonbank financial,nonbank credit and pass-through intermediary,true
+federal_reserve,FRB,Federal Reserve,administered-rate liability issuer,true
+treasury_federal_government,TREAS,Treasury federal fiscal authority,federal debt issuer,true
+state_local_public_authorities,SLG,State-local public authorities,public authority borrower and spender,true
+rest_of_world,ROW,Rest of world,foreign counterparty and leakage sector,true

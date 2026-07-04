@@ -1,0 +1,5 @@
+cell_or_sector,low,base,high
+hh_constrained_net_borrower,0.000734,0.037342,0.434549
+hh_middle_owner_illiquid,0.004051,0.193726,2.006856
+hh_retiree_fixed_income_saver,0.008545,0.519533,6.84159
+hh_unconstrained_saver,0.005333,0.277551,2.298685

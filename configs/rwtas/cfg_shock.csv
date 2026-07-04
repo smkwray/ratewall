@@ -1,0 +1,2 @@
+shock_id,shock_bps_year,shock_rate_delta_ann,application_rule
+MP_100BPY_TIGHTENING,100,0.0100,eligible_reference_rate_path

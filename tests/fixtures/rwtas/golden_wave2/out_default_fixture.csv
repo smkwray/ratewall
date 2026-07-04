@@ -1,0 +1,2 @@
+fixture_id,principal_begin_bil,performing_principal_bil,distressed_paying_principal_bil,defaulted_nonperforming_principal_bil,scheduled_interest_base_bil,defaulted_scheduled_interest_base_bil,writeoff_bil,holder_loss_bil,issuer_relief_bil,non_double_count_check_bil,principal_identity_status
+phase2_default_stress,100,70,20,10,90,0,3,3,3,0,pass

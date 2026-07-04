@@ -1,0 +1,5 @@
+year,v1_direct_treasury_interest_support,model_comparable_residual_level,model_comparable_residual_support_vs_2021,difference_ours_minus_v1,ratio_ours_to_v1,finding
+2021,,309.595177,0.000000,,,Baseline model-comparable residual level; v1 support row is only reported for 2022-2024.
+2022,38.148000,348.316713,38.721536,0.573536,1.015034,2022 close but not identical; 2023 and 2024 materially fail. v1 support row does not survive as model-comparable Treasury perimeter.
+2023,135.246000,627.267393,317.672216,182.426216,2.348847,2022 close but not identical; 2023 and 2024 materially fail. v1 support row does not survive as model-comparable Treasury perimeter.
+2024,171.507000,813.349169,503.753992,332.246992,2.937221,2022 close but not identical; 2023 and 2024 materially fail. v1 support row does not survive as model-comparable Treasury perimeter.

@@ -1,0 +1,23 @@
+marginal_object_id: RW_M_PLUS_100BP_YEAR
+rw_m_formula: Delta_N[t,h](+100bp-year | S_t) / Delta_D_conv[t,h](+100bp-year | S_t)
+shock_path_id: plus_100bp_year
+shock_bps_year: 100
+horizon: annual_h1_100bp_year
+same_state_pair_required: true
+selected_ratio_status: blocked_until_same_state_marginal_n_and_d_exist
+
+marginal_denominator:
+  coefficient_source_id: marginal_denominator_owner_band_v1
+  coefficient_unit: dollars_of_conventional_demand_drag_per_nominal_gdp_dollar_per_100bp_year
+  shock_bps_year: 100
+  state_multiplier: 1
+  cases:
+    - c_D_case: low
+      c_D: 0.0035
+      selected: false
+    - c_D_case: base
+      c_D: 0.00776
+      selected: true
+    - c_D_case: high
+      c_D: 0.0130
+      selected: false

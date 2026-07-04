@@ -1,0 +1,7 @@
+parameter_id,cell_or_sector,low,base,high,units,input_basis_label,rationale
+tdc_spend_landing_split,hh_constrained_net_borrower,0.22,0.25,0.30,share,owner_assumption_mode,Treasury spending recipient split for deposits created by reserve-using absorption modes.
+tdc_spend_landing_split,hh_middle_owner_illiquid,0.24,0.25,0.28,share,owner_assumption_mode,Treasury spending recipient split for deposits created by reserve-using absorption modes.
+tdc_spend_landing_split,hh_retiree_fixed_income_saver,0.08,0.10,0.12,share,owner_assumption_mode,Treasury spending recipient split for deposits created by reserve-using absorption modes.
+tdc_spend_landing_split,hh_unconstrained_saver,0.10,0.15,0.20,share,owner_assumption_mode,Treasury spending recipient split for deposits created by reserve-using absorption modes.
+tdc_spend_landing_split,firm_bank_dependent_small,0.12,0.10,0.08,share,owner_assumption_mode,Treasury spending recipient split for deposits created by reserve-using absorption modes.
+tdc_spend_landing_split,firm_market_funded_large,0.24,0.15,0.02,share,owner_assumption_mode,Treasury spending recipient split for deposits created by reserve-using absorption modes.

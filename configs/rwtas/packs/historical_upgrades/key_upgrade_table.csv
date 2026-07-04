@@ -1,0 +1,17 @@
+item,year,value,material_c_move
+Treasury bill/coupon split of marketable debt,1965,bills $53.655bn (25.749%); coupon $154.726bn (74.251%); marketable total $208.381bn,NO
+Treasury bill/coupon split of marketable debt,1985,bills $384.220bn (28.248%); coupon $975.959bn (71.752%); marketable total $1360.179bn,YES
+Treasury bill/coupon split of marketable debt,2005,bills $910.323bn (22.388%); coupon $3155.730bn (77.612%); marketable total $4066.053bn,NO
+Holder shares of debt held by public,1965,Fed 14.994%; private depositories 27.665%; HH direct 28.668%; foreign 5.007%,NO
+Holder shares of debt held by public,1985,Fed 11.266%; private depositories 15.212%; HH direct 18.725%; foreign 15.020%,NO
+Holder shares of debt held by public,2005,Fed 16.035%; private depositories 2.532%; HH direct 9.270%; foreign 43.212%,YES for foreign
+Residential mortgage debt outstanding,1965,$219.449bn,NO
+Residential mortgage debt outstanding,1985,"$1,450.249bn",NO
+Residential mortgage debt outstanding,2005,"$8,902.867bn",NO
+Fed balance-sheet proxy and remittances,1965,balance-sheet proxy $62.648bn; remittances $1.296810bn,NO
+Fed balance-sheet proxy and remittances,1985,balance-sheet proxy $243.481bn; remittances $17.796464bn,NO
+Allocation exact pulls,2021,"HH dep+MMF tx 1,861,137mn; HH direct equity tx 1,360,719mn; NFC money-like assets 3,226,287mn; NCBCEBA -75,383mn; HH/NPO MMF share 53.904%",gap fill
+Allocation exact pulls,2022,"HH dep+MMF tx -42,804mn; HH direct equity tx 323,030mn; NFC money-like assets 3,124,848mn; NCBCEBA -584,142mn; HH/NPO MMF share 59.299%",gap fill
+Allocation exact pulls,2023,"HH dep+MMF tx 332,538mn; HH direct equity tx 238,842mn; NFC money-like assets 3,336,387mn; NCBCEBA -610,981mn; HH/NPO MMF share 63.398%",gap fill
+Allocation exact pulls,2024,"HH dep+MMF tx 787,430mn; HH direct equity tx 984,874mn; NFC money-like assets 3,713,504mn; NCBCEBA -398,014mn; HH/NPO MMF share 64.988%",gap fill
+Allocation exact pulls,2025,"HH dep+MMF tx 998,608mn; HH direct equity tx 863,510mn; NFC money-like assets 4,148,683mn; NCBCEBA -304,066mn; HH/NPO MMF share 65.065%",gap fill

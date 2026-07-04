@@ -1,0 +1,2 @@
+default_rule_id,transition_timing,scheduled_payment_on_defaulted_flag,interest_accrual_on_defaulted_flag
+v0_all_performing,after_scheduled_payment,false,false

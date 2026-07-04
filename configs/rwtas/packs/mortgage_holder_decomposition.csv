@@ -1,0 +1,4 @@
+parameter_id,holder,instrument_family,low,base,high,units,source_id,input_basis_label,rationale
+mortgage_holder_stock_bn,banks_nonbanks_whole_loans,mortgage_holder_decomposition,1875.0,2226.6,2500.0,$bn_current,PACK_AUDIT_A2,owner_assumption_mode,Residual whole-loan holder amount after Fed and investor agency-MBS holder decomposition.
+mortgage_holder_stock_bn,federal_reserve_agency_mbs,mortgage_holder_decomposition,1900.0,1963.4,2025.0,$bn_current,H41_JUN24_2026;PACK_AUDIT_A2,2026Q1 / latest available opening stock,Fed agency-MBS holdings treated as holder decomposition of the mortgage pool.
+mortgage_holder_stock_bn,nonbank_finance_agency_mbs_investors,mortgage_holder_decomposition,8000.0,9000.0,10000.0,$bn_current,OWNER_MBS_RESIDUAL;PACK_AUDIT_A2,owner_assumption_mode,Residual agency/private MBS investors treated as holder decomposition of the mortgage pool.

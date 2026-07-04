@@ -1,0 +1,3 @@
+report_view_id,report_group_id,channel_id,additive_flag,exclusive_assignment_flag,classification_basis
+official,official_total,official_total,true,true,net_within_cell
+leg_gross_diagnostic,gross_legs,gross_leg_diagnostic,false,false,leg_gross_diagnostic

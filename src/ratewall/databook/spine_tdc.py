@@ -1,0 +1,191 @@
+"""TDC spine table writer adapters."""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+from ratewall.databook.table_io import write_rows
+
+
+TDC_DOUBLE_COUNT_GUARDRAIL_FIELDS = [
+    "quarter",
+    "assumption_set",
+    "horizon",
+    "residual_pack_id",
+    "allocation_bucket",
+    "candidate_overlap_channel",
+    "candidate_overlap_channel_family",
+    "candidate_overlap_bil",
+    "default_action",
+    "admitted_incremental_countervailing_bil",
+    "admitted_incremental_drag_bil",
+    "guardrail_pass",
+    "violation_reason",
+    "enters_main_ratio",
+    "tdc_beta_denominator_freeze",
+    "tdc_credit_supply_overlap_memo_share",
+    "tdc_credit_supply_overlap_discount_share_live",
+    "allowed_use",
+    "blocked_use",
+    "safe_sentence",
+    "claim_boundary",
+    "empirical_claim_enabled",
+    "policy_failure_claim_enabled",
+    "pricing_output_enabled",
+    "incidence_claim_enabled",
+    "welfare_claim_enabled",
+    "tax_output_enabled",
+    "mpc_output_enabled",
+    "holder_allocation_enabled",
+    "reset_calendar_construction_enabled",
+    "raw_rate_shock_enabled",
+    "causal_financialization_claim_enabled",
+]
+
+
+FORECAST_HOLDER_TDC_CONSISTENCY_BRIDGE_FIELDS = [
+    "forecast_year",
+    "mpc_scenario",
+    "maturity_scenario",
+    "holder_scenario",
+    "tdcsim_contract_scenario_id",
+    "tdcsim_contract_mapping_status",
+    "tdcsim_contract_version",
+    "tdcsim_contract_component_sum_error_bil",
+    "tdcsim_contract_overlap_identity_error_bil",
+    "tdc_full_bil",
+    "tdc_ex_direct_interest_overlap_bil",
+    "tdc_residual_not_tdc_object_note",
+    "tdc_deposit_balance_current_demand_conversion_assumption",
+    "legacy_inline_projected_tdc_change_bil",
+    "legacy_inline_projected_cumulative_tdc_level_bil",
+    "legacy_inline_conventional_drag_bil",
+    "legacy_scaffold_reference_status",
+    "tdc_proxy_vs_theoretical_gap_flag",
+    "nominal_gdp_bil",
+    "projected_debt_held_public_bil",
+    "projected_debt_growth_bil",
+    "projected_effective_interest_cashflow_rate",
+    "projected_total_interest_cashflow_bil",
+    "domestic_nonbank_holder_share",
+    "bank_holder_share",
+    "foreign_holder_share",
+    "central_bank_holder_share",
+    "holder_share_sum",
+    "holder_share_sum_status",
+    "domestic_nonbank_current_spend_share_assumption",
+    "bank_retained_margin_spend_share_assumption",
+    "tdcsim_projection_wam_years",
+    "simulated_primary_deficit_bil",
+    "simulated_total_deficit_financing_need_bil",
+    "simulated_principal_rollover_bil",
+    "simulated_gross_issuance_need_bil",
+    "tdc_fiscal_flow_bil",
+    "tdc_debt_service_principal_to_domestic_nonbanks_bil",
+    "tdc_debt_service_interest_to_domestic_nonbanks_bil",
+    "tdc_debt_service_total_to_domestic_nonbanks_bil",
+    "tdc_auction_absorption_bil",
+    "tdc_secondary_trades_bil",
+    "tdc_other_bil",
+    "tdcsim_projected_tdc_change_bil",
+    "tdcsim_projected_cumulative_tdc_level_bil",
+    "tdc_interest_debt_service_overlap_with_interest_income_bil",
+    "tdc_deposit_liquidity_base_ex_interest_bil",
+    "domestic_nonbank_interest_support_bil",
+    "bank_retained_margin_support_bil",
+    "interest_income_current_demand_support_bil",
+    "tdc_deposit_current_demand_support_bil",
+    "combined_current_demand_support_bil",
+    "conventional_drag_bil",
+    "interest_only_wall_ratio",
+    "holder_tdc_consistent_wall_ratio",
+    "gap_to_wall_interest_only_bil",
+    "gap_to_wall_holder_tdc_consistent_bil",
+    "wall_hit_interest_only",
+    "wall_hit_holder_tdc_consistent",
+    "consistency_status",
+    "double_count_prevention_rule",
+    "source_status",
+    "evidence_mode_enabled",
+    "enters_main_ratio",
+    "canonical_ratio_entry",
+    "claim_boundary",
+    "empirical_claim_enabled",
+    "policy_failure_claim_enabled",
+    "pricing_output_enabled",
+    "incidence_claim_enabled",
+    "welfare_claim_enabled",
+    "tax_output_enabled",
+    "mpc_output_enabled",
+    "holder_allocation_enabled",
+    "reset_calendar_construction_enabled",
+    "raw_rate_shock_enabled",
+    "causal_financialization_claim_enabled",
+]
+
+
+RATEWALL_TDC_MATERIALIZATION_SEMANTIC_SUMMARY_FIELDS = [
+    "semantic_summary_row_id",
+    "scenario_id",
+    "evaluation_period_label",
+    "evaluation_period_index",
+    "accounting_identity",
+    "coefficient_semantic_label",
+    "tdc_liquidity_state_input_share",
+    "base_tdc_materialization_coefficient",
+    "base_implied_non_tdc_deposit_offset_share_per_1_tdc",
+    "base_net_materialized_deposit_liquidity_effect_share",
+    "base_ratewall_offset_ratio",
+    "base_wall_hit_under_assumptions",
+    "variant_source_import_row_id",
+    "variant_sample_label",
+    "variant_tdc_materialization_coefficient",
+    "variant_implied_non_tdc_deposit_offset_share_per_1_tdc",
+    "variant_net_materialized_deposit_liquidity_effect_share",
+    "tdc_materialization_effect_delta_share",
+    "variant_ratewall_offset_ratio",
+    "delta_ratewall_offset_ratio",
+    "variant_wall_hit_under_assumptions",
+    "wall_hit_classification_changed",
+    "semantic_status",
+    "allowed_use",
+    "blocked_use",
+    "claim_boundary",
+    "scenario_default_allowed",
+    "runtime_scenario_selection_allowed",
+    "trigger_threshold_promotion_allowed",
+    "enters_main_ratio",
+    "evidence_mode_enabled",
+    "canonical_ratio_entry",
+    "denominator_prior_update_allowed",
+    "split_denominator_promotion_allowed",
+    "pricing_output_enabled",
+    "holder_allocation_enabled",
+    "raw_rate_shock_enabled",
+    "empirical_claim_enabled",
+    "policy_failure_claim_enabled",
+    "incidence_claim_enabled",
+    "welfare_claim_enabled",
+    "tax_output_enabled",
+    "mpc_output_enabled",
+    "reset_calendar_construction_enabled",
+    "causal_financialization_claim_enabled",
+]
+
+
+def _write_tdc_double_count_guardrail_table(
+    path: Path, rows: list[dict[str, str]]
+) -> None:
+    write_rows(path, rows, TDC_DOUBLE_COUNT_GUARDRAIL_FIELDS)
+
+
+def _write_forecast_holder_tdc_consistency_bridge_table(
+    path: Path, rows: list[dict[str, str]]
+) -> None:
+    write_rows(path, rows, FORECAST_HOLDER_TDC_CONSISTENCY_BRIDGE_FIELDS)
+
+
+def _write_ratewall_tdc_materialization_semantic_summary_table(
+    path: Path, rows: list[dict[str, str]]
+) -> None:
+    write_rows(path, rows, RATEWALL_TDC_MATERIALIZATION_SEMANTIC_SUMMARY_FIELDS)

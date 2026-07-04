@@ -1,0 +1,8 @@
+reference_rate_id,rate_family,driver_id,description
+treasury_safe,thirty_day_safe,treasury.bill_short,short safe Treasury reference path
+reserve_admin,overnight_administered,policy.iorb_rate,administered reserve reference path
+household_credit_ref,credit_reference,bank.prime_rate,household floating credit reference path
+firm_credit_ref,credit_reference,bank.loan_floating_sofr_prime,firm floating credit reference path
+deposit_admin,administered_nonmarket,deposit.savings_retail,deposit administered pass-through reference path
+fixed_contract,fixed_contract,fixed_contract,non-resetting fixed-rate reference path
+zero,zero,zero,zero-rate reference path

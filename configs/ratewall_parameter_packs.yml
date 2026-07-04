@@ -1,0 +1,1594 @@
+schema: ratewall.parameter_packs.v1
+generated_for_release: 24_assumption_mode
+description: Source-labeled parameter priors for speculative RateWall Assumption Mode. These ranges discipline scenarios but do not promote empirical threshold claims.
+claim_boundary: parameter_pack_context_not_empirical_threshold
+parameter_packs:
+  - parameter: public_impulse_multiplier
+    channel: public_liability_repricing
+    unit: multiplier
+    low: 1.00
+    base: 1.00
+    high: 1.00
+    source_status: deprecated_compatibility_context_only
+    rationale: Deprecated compatibility field retained so older YAML rows still load; operative public-cashflow math uses factored stock, repricing, rate-path, pass-through, and remittance-timing handles.
+    source_note: This field must not appear as a frontier, fragility, stacking, or headline driver. Use the factored public-liability handles instead.
+    literature_context: Historical composite handle now replaced for interpretation by public_debt_stock_scale, treasury_repricing_speed_share, rate_path_bps_year, treasury_repricing_pass_through, fed_liability_stock_scale, IORB/ON RRP pass-through, and remittance timing shares.
+    evidence_needed: None for this deprecated alias; live MSPD/security-level repricing, rate-path mapping, and Fed-liability bridge are needed for the factored handles.
+    review_priority: compatibility_only
+    model_use: Deprecated compatibility metadata only; must remain neutral at 1.00 and excluded from operative frontier, fragility, and prior-stack diagnostics.
+    review_question: Is any generated surface still mistakenly treating this deprecated field as load-bearing?
+    candidate_source_literature: not_applicable_deprecated_compatibility_field
+    citation_handle: deprecated_public_impulse_multiplier_neutral_guard
+    source_family: compatibility_metadata_only
+    identification_design: not_a_model_handle
+    horizon_relevance: not_applicable
+    uncertainty_status: no_uncertainty_range_allowed
+    evidence_strength: deprecated_field_must_remain_neutral
+    prior_basis: compatibility_only_not_prior
+    external_review_status: not_needed_deprecated_field
+    upgrade_gate: deprecated_field_must_remain_neutral
+    evidence_upgrade_blocker: use_factored_public_liability_handles_instead
+    plausibility_status: deprecated_context_only_not_frontier_driver
+  - parameter: public_debt_stock_scale
+    channel: public_liability_repricing_factor
+    unit: multiplier
+    low: 1.00
+    base: 2.00
+    high: 3.50
+    source_status: assumption_only_pending_repricing_ladder
+    rationale: Factored replacement handle for the stock of public liabilities exposed to a rate-path impulse.
+    source_note: Retains the old public-impulse scaling as an editable factor until live/security-level repricing evidence is available.
+    literature_context: Public-debt stock scale is the quantity side of the public-interest-income channel; it is not itself a demand conversion or incidence estimate.
+    evidence_needed: Marketable debt stock, repricing ladder, Fed-liability stock bridge, and reconciliation to the frozen backend impulse.
+    review_priority: high
+    model_use: Factored public-impulse handle; keeps the composite multiplier interpretable while preserving Assumption Mode.
+    review_question: How should the exposed liability stock be separated between Treasury securities, reserves, and ON RRP/MMF-linked claims?
+    candidate_source_literature: MSPD security detail; Treasury auction/maturity files; H.4.1 reserve and ON RRP balances.
+    citation_handle: public_liability_stock_repricing_bridge
+    source_family: treasury_mspd_fiscaldata_h41
+    identification_design: accounting_factorization_not_causal_identification
+    horizon_relevance: one_year_public_interest_cashflow_impulse
+    uncertainty_status: review_until_live_repricing_bridge
+    evidence_strength: weak_assumption_context_not_source_backed
+    prior_basis: factored_successor_to_public_impulse_multiplier
+    external_review_status: not_externally_reviewed
+    upgrade_gate: requires_live_or_reconciled_liability_stock_and_repricing_ladder
+    evidence_upgrade_blocker: MSPD Table 3 remains fallback/review
+    calibration_status: official_projection_context_not_formula_replacement
+    calibration_distribution:
+      shape: scenario_discrete
+      low: 1.00
+      base: 1.08
+      high: 1.20
+      formula: exposed public-liability stock path divided by baseline exposed stock; stress above 1.25 only.
+    source_gate_table: ratewall_dynamic_scenario_path_consistency_diagnostic.csv
+    allowed_model_use: scenario_path_context_only
+    scenario_implied_only: true
+    forbidden_claim_risk: medium
+    plausibility_status: review_until_live_security_level_mspd_passes
+  - parameter: treasury_repricing_speed_share
+    channel: treasury_repricing_factor
+    unit: share
+    low: 0.35
+    base: 0.55
+    high: 0.75
+    source_status: evidence_c_part2_treasury_cash_interest_accrual_speed_assumption_mode
+    rationale: Share of Treasury exposure assumed to reprice within the modeled horizon.
+    source_note: Evidence round C Part 2 #4 sets the 0.35/0.55/0.75 cash-interest accrual speed band; this is a calibrated Assumption-Mode timing factor, not live security-level reset-calendar evidence.
+    literature_context: Connects the RateWall public-interest channel to the speed of coupon/bill rollover and maturity structure.
+    evidence_needed: Security-level or auction-level maturity ladder with live/reconciled MSPD evidence.
+    review_priority: high
+    model_use: Separates repricing timing from public-liability stock scale.
+    review_question: How fast can public liabilities reprice over the one-year horizon under current maturity composition?
+    candidate_source_literature: Evidence round C Part 2 #4; Treasury MSPD; FiscalData auctions; Treasury refunding materials.
+    citation_handle: evidenceC_part2_treasury_cash_interest_accrual_speed
+    source_family: treasury_mspd_fiscaldata_auction_maturity
+    identification_design: accounting_repricing_ladder_not_monetary_shock
+    horizon_relevance: one_year_repricing_speed
+    uncertainty_status: review_until_security_level_ladder
+    evidence_strength: weak_assumption_context_not_source_backed
+    prior_basis: maturity_speed_factor_prior
+    external_review_status: evidence_c_part2_reviewed
+    upgrade_gate: requires_reconciled_security_or_auction_level_repricing_ladder
+    evidence_upgrade_blocker: MSPD Table 3 fallback blocks live security-level promotion
+    calibration_status: evidence_c_part2_literature_calibrated_assumption_mode
+    calibration_distribution:
+      shape: bounded_sensitivity
+      low: 0.35
+      base: 0.55
+      high: 0.75
+      formula: treasury_interest_impulse_bil * public_debt_stock_scale * treasury_repricing_speed_share * rate_path_scale * treasury_repricing_pass_through; speed and pass-through are distinct single-pass factors.
+    source_gate_table: ratewall_treasury_bucket_repricing_prior_bridge.csv
+    allowed_model_use: assumption_mode_headline_treasury_cashflow_timing_factor
+    scenario_implied_only: true
+    forbidden_claim_risk: medium_high
+    plausibility_status: evidence_c_part2_literature_calibrated_assumption_mode
+  - parameter: rate_path_bps_year
+    channel: rate_path_factor
+    unit: bps_year
+    low: 50
+    base: 100
+    high: 200
+    source_status: assumption_mode_rate_path_not_raw_shock
+    rationale: Converts a 100 bps-year normalized scenario into smaller or larger policy-rate path assumptions.
+    source_note: This is a scenario path scale only; it is not a raw rate-change monetary shock.
+    literature_context: Should eventually be tied to identified monetary-shock or scenario path design, not calendar policy moves.
+    evidence_needed: Explicit rate-path scenario design and separate admissible-shock evidence for empirical work.
+    review_priority: high
+    model_use: Factored public-impulse and denominator path handle.
+    review_question: Which rate-path horizon should define the professor-facing Assumption Mode examples?
+    candidate_source_literature: Monetary policy shock literature; FOMC path-factor event studies.
+    citation_handle: rate_path_bps_year_scenario_scale
+    source_family: scenario_design_and_monetary_shock_literature
+    identification_design: scenario_path_not_raw_rate_shock
+    horizon_relevance: one_year_rate_path_scale
+    uncertainty_status: assumption_mode_only
+    evidence_strength: weak_assumption_context_not_source_backed
+    prior_basis: scenario_path_scale_prior
+    external_review_status: not_externally_reviewed
+    upgrade_gate: requires_admissible_shock_or_explicit_scenario_path_gate
+    evidence_upgrade_blocker: raw policy-rate changes remain blocked as shocks
+    calibration_status: scenario_only_not_raw_rate_shock
+    calibration_distribution:
+      shape: scenario_discrete
+      low: 75
+      base: 100
+      high: 125
+      formula: research scenario bps-year amplitude-duration scale; not raw policy-rate shock identification.
+    source_gate_table: ratewall_dynamic_scenario_paths.csv
+    allowed_model_use: scenario_path_context_only
+    scenario_implied_only: true
+    forbidden_claim_risk: very_high
+    plausibility_status: assumption_mode_not_raw_rate_shock
+  - parameter: treasury_repricing_pass_through
+    channel: treasury_repricing_factor
+    unit: share
+    low: 0.50
+    base: 1.00
+    high: 1.00
+    source_status: assumption_only_pending_repricing_method
+    rationale: Pass-through from the modeled rate path to Treasury interest cashflows.
+    source_note: Kept explicit so repricing speed and rate-path scale do not silently imply full cashflow pass-through.
+    literature_context: Accounting bridge between rate-path assumptions and public-interest cashflows.
+    evidence_needed: Repricing method with maturity/coupon/bill rollover treatment.
+    review_priority: high
+    model_use: Treasury cashflow pass-through factor.
+    review_question: Should bill, coupon, FRN, and maturing coupon cashflows use distinct pass-through factors?
+    candidate_source_literature: Treasury security type and auction data; maturity ladder methods.
+    citation_handle: treasury_repricing_pass_through
+    source_family: treasury_security_repricing_method
+    identification_design: accounting_method_not_empirical_shock
+    horizon_relevance: one_year_cashflow_pass_through
+    uncertainty_status: review_until_repricing_method_gate
+    evidence_strength: weak_assumption_context_not_source_backed
+    prior_basis: cashflow_pass_through_prior
+    external_review_status: not_externally_reviewed
+    upgrade_gate: requires_security_type_repricing_method
+    evidence_upgrade_blocker: needs live/reconciled repricing method
+    plausibility_status: review_until_repricing_method_gate
+  - parameter: fed_liability_stock_scale
+    channel: fed_liability_repricing_factor
+    unit: multiplier
+    low: 1.00
+    base: 2.00
+    high: 3.50
+    source_status: assumption_only_pending_h41_bridge
+    rationale: Factored scale for IORB, ON RRP, and remittance-linked Fed liability cashflows.
+    source_note: Keeps Fed-liability quantities separate from Treasury repricing scale.
+    literature_context: Fed-liability interest payments have different recipient bases than Treasury coupons.
+    evidence_needed: H.4.1 reserve/ON RRP quantities and remittance timing bridge.
+    review_priority: high
+    model_use: Fed-liability stock scale factor for IORB/ON RRP/remittance components.
+    review_question: Should reserve balances, ON RRP, and remittance timing use separate stock-scale priors?
+    candidate_source_literature: Federal Reserve H.4.1; IORB documentation; ON RRP data.
+    citation_handle: fed_liability_stock_scale_h41
+    source_family: federal_reserve_h41_and_money_market_data
+    identification_design: accounting_stock_bridge_not_incidence
+    horizon_relevance: short_horizon_fed_liability_repricing
+    uncertainty_status: review_until_h41_bridge
+    evidence_strength: weak_assumption_context_not_source_backed
+    prior_basis: factored_successor_to_public_impulse_multiplier
+    external_review_status: not_externally_reviewed
+    upgrade_gate: requires_h41_fed_liability_bridge_and_pass_through_map
+    evidence_upgrade_blocker: needs reserve/on_rrp/remittance timing bridge
+    plausibility_status: review_until_fed_liability_bridge
+  - parameter: iorb_pass_through_scale
+    channel: fed_liability_repricing_factor
+    unit: share
+    low: 0.50
+    base: 1.00
+    high: 1.00
+    source_status: assumption_only_pending_bank_behavior_map
+    rationale: Cashflow pass-through from the rate path to IORB payments before bank behavior conversion.
+    source_note: Distinct from IORB recipient demand conversion.
+    literature_context: IORB payments accrue to banks before any final-demand channel.
+    evidence_needed: H.4.1 reserve balances and bank behavior/pass-through map.
+    review_priority: high
+    model_use: Mechanical IORB cashflow factor.
+    review_question: Should IORB be modeled as mechanical bank income, credit-supply attenuation, or both?
+    candidate_source_literature: H.4.1; bank Call Reports/Y-9C; IORB pass-through evidence.
+    citation_handle: iorb_cashflow_pass_through_scale
+    source_family: federal_reserve_h41_bank_balance_sheet_data
+    identification_design: accounting_cashflow_bridge_not_incidence
+    horizon_relevance: short_horizon_iorb_cashflow
+    uncertainty_status: review_until_bank_behavior_map
+    evidence_strength: weak_assumption_context_not_source_backed
+    prior_basis: fed_liability_cashflow_factor_prior
+    external_review_status: not_externally_reviewed
+    upgrade_gate: requires_bank_behavior_map
+    evidence_upgrade_blocker: needs IORB bank recipient/pass-through evidence
+    plausibility_status: review_until_bank_behavior_map
+  - parameter: on_rrp_pass_through_scale
+    channel: fed_liability_repricing_factor
+    unit: share
+    low: 0.50
+    base: 1.00
+    high: 1.00
+    source_status: assumption_only_pending_mmf_pass_through_map
+    rationale: Cashflow pass-through from the rate path to ON RRP/MMF-linked interest before investor conversion.
+    source_note: Distinct from ON RRP/MMF recipient demand conversion.
+    literature_context: ON RRP/MMF income depends on money-fund and investor structure.
+    evidence_needed: ON RRP stock, MMF pass-through, investor composition, and money-fund source bridge.
+    review_priority: high
+    model_use: Mechanical ON RRP/MMF cashflow factor.
+    review_question: How much ON RRP/MMF cashflow is mechanical versus investor-composition dependent?
+    candidate_source_literature: OFR MMF monitor; SEC N-MFP; ON RRP data.
+    citation_handle: on_rrp_mmf_cashflow_pass_through_scale
+    source_family: federal_reserve_on_rrp_mmf_data
+    identification_design: accounting_cashflow_bridge_not_holder_allocation
+    horizon_relevance: short_horizon_on_rrp_mmf_cashflow
+    uncertainty_status: review_until_mmf_pass_through_map
+    evidence_strength: weak_assumption_context_not_source_backed
+    prior_basis: fed_liability_cashflow_factor_prior
+    external_review_status: not_externally_reviewed
+    upgrade_gate: requires_on_rrp_mmf_bridge
+    evidence_upgrade_blocker: needs MMF investor/pass-through evidence
+    plausibility_status: review_until_mmf_pass_through_map
+  - parameter: current_remittance_timing_share
+    channel: remittance_timing_factor
+    unit: share
+    low: 0.00
+    base: 1.00
+    high: 1.00
+    source_status: assumption_only_pending_remittance_timing_bridge
+    rationale: Share of current remittance reduction treated as current-period timing context.
+    source_note: Current remittance timing is not incidence or fiscal-reaction evidence.
+    literature_context: Fed-Treasury remittance mechanics and deferred-asset accounting.
+    evidence_needed: H.4.1 remittance/deferred-asset bridge and Treasury cash timing treatment.
+    review_priority: medium
+    model_use: Current remittance timing factor in the staged public-finance block.
+    review_question: Should current remittance reduction be modeled as current cash support, timing memo, or fiscal absorber?
+    candidate_source_literature: H.4.1 remittance releases; Fed annual reports; Treasury cash balance context.
+    citation_handle: current_remittance_timing_share
+    source_family: fed_remittance_and_treasury_cash_timing
+    identification_design: accounting_timing_bridge_not_fiscal_reaction_estimate
+    horizon_relevance: current_horizon_public_finance_timing
+    uncertainty_status: review_until_remittance_bridge
+    evidence_strength: weak_assumption_context_not_source_backed
+    prior_basis: remittance_timing_prior
+    external_review_status: not_externally_reviewed
+    upgrade_gate: requires_remittance_timing_bridge
+    evidence_upgrade_blocker: needs current remittance and deferred asset mapping
+    calibration_status: state_context_available_formula_guard_needed
+    calibration_distribution:
+      shape: state_guard
+      low: 0
+      base: 0
+      high: 1
+      formula: if H.4.1 remittances due are positive, use observed timing; if deferred asset state is active, current positive offset remains zero.
+    source_gate_table: ratewall_public_finance_timing_bridge.csv
+    allowed_model_use: timing_context_only
+    scenario_implied_only: true
+    forbidden_claim_risk: medium_high
+    plausibility_status: timing_context_not_incidence
+  - parameter: future_remittance_drag_timing_share
+    channel: remittance_timing_factor
+    unit: share
+    low: 0.00
+    base: 1.00
+    high: 1.00
+    source_status: assumption_only_pending_future_drag_bridge
+    rationale: Share of future remittance drag kept as future public-finance drag rather than current private income.
+    source_note: The current model treats future remittance drag as future public-finance/timing context, not a positive current demand cashflow.
+    literature_context: Fed deferred-asset and future remittance mechanics.
+    evidence_needed: Deferred-asset unwind path and fiscal timing convention.
+    review_priority: medium
+    model_use: Future remittance drag timing factor in public-finance adjustment outputs.
+    review_question: Should future remittance drag stay a memo item, numerator subtraction, or denominator-side drag?
+    candidate_source_literature: Fed remittance/deferred asset accounting; H.4.1.
+    citation_handle: future_remittance_drag_timing_share
+    source_family: fed_remittance_deferred_asset_timing
+    identification_design: accounting_timing_bridge_not_current_demand_income
+    horizon_relevance: future_public_finance_drag
+    uncertainty_status: review_until_deferred_asset_bridge
+    evidence_strength: weak_assumption_context_not_source_backed
+    prior_basis: remittance_future_drag_prior
+    external_review_status: not_externally_reviewed
+    upgrade_gate: requires_deferred_asset_unwind_path
+    evidence_upgrade_blocker: needs future remittance drag timing convention
+    calibration_status: future_public_finance_memo_until_unwind_model
+    calibration_distribution:
+      shape: state_guard
+      low: 0
+      base: 0
+      high: 0
+      formula: current-period positive demand share of future remittance drag remains zero until an unwind/timing model passes.
+    source_gate_table: ratewall_public_finance_timing_bridge.csv
+    allowed_model_use: memo_only_timing_context
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: timing_context_not_current_cashflow
+  - parameter: current_remittance_demand_share
+    channel: remittance_signed_state_current_demand
+    unit: share
+    low: 0.00
+    base: 0.01
+    high: 0.03
+    source_status: evidence_c_exp7_signed_remittance_state_assumption_mode_not_evidence_promotion
+    rationale: Converts the signed current remittance state into a current demand subchannel without turning deferred-asset states into positive support.
+    source_note: Positive remittance-shortfall states can add support; negative/deferred-asset states produce negative current remittance drag. The legacy current_remittance_reduction_bil field is only the positive-branch alias.
+    literature_context: H.4.1 remittances due and deferred-asset mechanics distinguish positive remittances due from cumulative deferred-asset positions.
+    evidence_needed: Explicit remittance-state flow conversion before any Evidence-Mode or one-year deferred-asset stock treatment.
+    review_priority: high
+    model_use: Signed static remittance-state demand conversion in Assumption Mode only.
+    review_question: Does the model keep deferred-asset states from becoming positive current support and avoid double-counting future remittance drag?
+    candidate_source_literature: Federal Reserve H.4.1 remittance series; St. Louis Fed deferred-asset explainer; external T2.3 remittance sign-semantics research review.
+    citation_handle: evidenceC_exp7_current_remittance_demand_share_signed_state
+    source_family: fed_remittance_deferred_asset_timing
+    identification_design: signed_accounting_state_prior_not_fiscal_reaction_or_incidence_estimate
+    horizon_relevance: current_horizon_public_finance_timing
+    uncertainty_status: evidence_c_exp7_literature_calibrated_assumption_mode
+    evidence_strength: literature_calibrated_labeled_prior_not_source_promoted_estimate
+    prior_basis: evidence_c_exp7_current_remittance_demand_share_0_00_0_01_0_03
+    external_review_status: external_t2_3_reviewed
+    upgrade_gate: owner_gated_post_completion_remittance_state_flow_bridge
+    evidence_upgrade_blocker: needs explicit remittance-state flow bridge before deferred-asset stock conversion
+    calibration_status: evidence_c_exp7_signed_remittance_state_literature_calibrated_assumption_mode
+    calibration_distribution:
+      shape: bounded_sensitivity
+      low: 0.00
+      base: 0.01
+      high: 0.03
+      formula: signed_current_remittance_state_bil * current_remittance_demand_share; positive branch can support demand, negative deferred-asset branch remains negative.
+    source_gate_table: ratewall_public_finance_timing_bridge.csv
+    allowed_model_use: assumption_mode_signed_remittance_state_conversion_not_evidence_promotion
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: evidence_c_exp7_literature_calibrated_assumption_mode
+  - parameter: future_remittance_drag_demand_share
+    channel: remittance_future_public_finance_drag
+    unit: share
+    low: 0.02
+    base: 0.05
+    high: 0.10
+    source_status: evidence_c_exp7_future_remittance_drag_assumption_mode_not_evidence_promotion
+    rationale: Converts a bounded share of future remittance drag into a current negative demand offset while keeping the residual as public-finance timing memo.
+    source_note: Future remittance drag is separate from the signed current remittance state and must not reuse the same deferred-asset dollar.
+    literature_context: Deferred-asset unwind mechanics affect future remittances; this is a labeled timing prior, not a fiscal reaction estimate.
+    evidence_needed: Deferred-asset unwind timing model before stronger current-period treatment.
+    review_priority: high
+    model_use: Current negative demand-share conversion for future remittance drag in Assumption Mode only.
+    review_question: Does future remittance drag stay separate from signed current remittance-state support or drag?
+    candidate_source_literature: Federal Reserve H.4.1 remittance series; St. Louis Fed deferred-asset explainer; external T2.3 remittance sign-semantics research review.
+    citation_handle: evidenceC_exp7_future_remittance_drag_demand_share
+    source_family: fed_remittance_deferred_asset_timing
+    identification_design: future_public_finance_timing_prior_not_current_cashflow_estimate
+    horizon_relevance: future_public_finance_drag
+    uncertainty_status: evidence_c_exp7_literature_calibrated_assumption_mode
+    evidence_strength: literature_calibrated_labeled_prior_not_source_promoted_estimate
+    prior_basis: evidence_c_exp7_future_remittance_drag_demand_share_0_02_0_05_0_10
+    external_review_status: external_t2_3_reviewed
+    upgrade_gate: owner_gated_post_completion_deferred_asset_unwind_model
+    evidence_upgrade_blocker: needs deferred-asset unwind timing convention
+    calibration_status: evidence_c_exp7_future_remittance_drag_literature_calibrated_assumption_mode
+    calibration_distribution:
+      shape: bounded_sensitivity
+      low: 0.02
+      base: 0.05
+      high: 0.10
+      formula: -(future_remittance_drag_bil * future_remittance_drag_demand_share); residual remains public-finance timing memo.
+    source_gate_table: ratewall_public_finance_timing_bridge.csv
+    allowed_model_use: assumption_mode_future_remittance_drag_conversion_not_evidence_promotion
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: evidence_c_exp7_literature_calibrated_assumption_mode
+  - parameter: tdcsim_remittance_overlap_exclusion_share
+    channel: tdcsim_static_remittance_xor_invariant
+    unit: share
+    low: 1.00
+    base: 1.00
+    high: 1.00
+    source_status: evidence_c_exp7_xor_metadata_backed_by_tdcsim_remittance_component
+    rationale: Records the ratified hard exclusion share for static-vs-tdcsim remittance ownership without adding a static TDC hook.
+    source_note: tdcsim contract 0.1.1 exports central_bank_remittance_to_tga with no direct-interest or TDC-deposit support entry.
+    literature_context: Avoids double-counting remittance dollars across static public-finance timing and TDC-forward accounting.
+    evidence_needed: Keep tdcsim remittance component false/false in the forward component contract audit.
+    review_priority: high
+    model_use: TDC/static remittance overlap invariant metadata only; not a RateWallAssumptionSet formula input.
+    review_question: Does tdcsim expose remittance ownership rows so this invariant can be proved rather than assumed?
+    candidate_source_literature: External T2.3 remittance sign-semantics research review; tdcsim component contract.
+    citation_handle: evidenceC_exp7_tdcsim_remittance_overlap_exclusion_share
+    source_family: tdcsim_forward_component_contract
+    identification_design: component_ownership_xor_guardrail_not_static_tdc_formula
+    horizon_relevance: tdc_forward_remittance_overlap_guard
+    uncertainty_status: tdcsim_remittance_component_xor_proven
+    evidence_strength: source_backed_component_contract_invariant
+    prior_basis: evidence_c_exp7_hard_xor_1_00
+    external_review_status: external_t2_3_reviewed
+    upgrade_gate: keep_remittance_component_out_of_tdc_and_direct_interest_support
+    evidence_upgrade_blocker: none_for_static_xor; promotion_to_runtime_formula_still_forbidden
+    calibration_status: invariant_metadata_source_surface_verified
+    calibration_distribution:
+      shape: point_mass
+      low: 1.00
+      base: 1.00
+      high: 1.00
+      formula: static_engine_remittance_owner XOR tdcsim_remittance_owner; not consumed by assumption_engine.py.
+    source_gate_table: ratewall_tdc_forward_component_audit.csv
+    allowed_model_use: tdcsim_static_remittance_xor_invariant_only
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: tdcsim_remittance_component_xor_verified
+  - parameter: treasury_interest_demand_share
+    channel: treasury_interest_recipient_behavior
+    unit: share
+    low: 0.05
+    base: 0.12
+    high: 0.25
+    source_status: evidence1_literature_calibrated_assumption_mode_not_evidence_promotion
+    rationale: Evidence round 1 domestic Treasury interest current-spend share applied after the foreign-holder leakage haircut.
+    source_note: Evidence round 1 closes the prior blocked bridge as foreign_treasury_holder_leakage_share x domestic current-spend share; this remains a labeled Assumption-Mode conversion share, not incidence, MPC, welfare, or Evidence Mode.
+    literature_context: BEA personal interest income gives the cashflow scale; SCF/DFA skew and below-generic-MPC household consumption literature discipline the 0.05/0.12/0.25 current-spend band.
+    evidence_needed: Beneficial-owner and recipient-current-demand micro bridge only for post-completion Evidence-Mode promotion.
+    review_priority: high
+    model_use: Converts Treasury interest cashflows into a demand-side offset under explicit recipient behavior assumptions.
+    review_question: Does the wrapper keep this as a labeled Assumption-Mode conversion share with holder-allocation, incidence, MPC, welfare, and Evidence Mode disabled?
+    candidate_source_literature: BEA personal interest income; SCF/DFA holder skew; Jappelli-Pistaferri current-spend bounds; Fagereng-Holm-Natvik heterogeneity bounds
+    citation_handle: evidence1_interest_income_current_spend_share
+    source_family: public_interest_income_recipient_spending_literature
+    identification_design: labeled_assumption_mode_current_spend_share_not_incidence_or_mpc_output
+    horizon_relevance: current_period_public_interest_income_support
+    uncertainty_status: evidence1_literature_calibrated_assumption_mode
+    evidence_strength: literature_calibrated_labeled_prior_not_source_promoted_estimate
+    prior_basis: evidence1_interest_income_current_spend_share_0_05_0_12_0_25
+    external_review_status: evidence1_reviewed
+    upgrade_gate: owner_gated_post_completion_recipient_leakage_micro_bridge
+    evidence_upgrade_blocker: beneficial_owner_and_current_demand_micro_bridge_only_for_evidence_promotion
+    calibration_status: evidence1_literature_calibrated_recipient_leakage_bridge_closed
+    calibration_distribution:
+      shape: bounded_sensitivity
+      low: 0.05
+      base: 0.12
+      high: 0.25
+      formula: treasury_domestic_impulse_after_foreign_leakage * interest_income_current_spend_share; not incidence, MPC, welfare, or Evidence Mode.
+    source_gate_table: ratewall_assumption_mode_sidecar_channel_decision.csv
+    allowed_model_use: assumption_mode_canonical_conversion_share_not_evidence_promotion
+    scenario_implied_only: true
+    forbidden_claim_risk: medium_high
+    plausibility_status: evidence1_literature_calibrated_assumption
+  - parameter: iorb_recipient_demand_share
+    channel: iorb_bank_recipient_behavior
+    unit: share
+    low: 0.00
+    base: 0.03
+    high: 0.10
+    source_status: evidenceA_literature_calibrated_assumption_mode_not_evidence_promotion
+    rationale: IORB is received by banks; demand conversion is indirect and should remain lower until bank distribution/pass-through maps are built.
+    source_note: IORB accrues first to depository institutions, so any demand conversion must pass through bank income, deposit pricing, credit supply, dividends, compensation, or capital channels.
+    literature_context: Fed IORB mechanics, DSS deposit-channel evidence, FDIC deposit-beta evidence, and SFOS deposit-beta evidence discipline a low indirect current-demand conversion prior.
+    evidence_needed: Bank-level or bank-group IORB recipient/pass-through map using H.4.1, Call Report or Y-9C style evidence, and explicit non-incidence boundaries.
+    review_priority: high
+    model_use: Converts IORB payments to banks into an indirect demand-offset channel without treating banks as final incidence recipients.
+    review_question: Should IORB enter mostly through bank profits, deposit pass-through, credit supply, dividends, capital, or a separate bank-behavior block?
+    candidate_source_literature: Fed IORB mechanics; Drechsler-Savov-Schnabl deposits channel; FDIC deposit-beta evidence; Federal Reserve SFOS deposit-beta evidence.
+    citation_handle: evidenceA_iorb_bank_recipient_demand_share
+    calibration_status: evidenceA_literature_calibrated_assumption_mode
+    calibration_distribution:
+      shape: bounded_sensitivity
+      low: 0.00
+      base: 0.03
+      high: 0.10
+      formula: IORB cashflow to banks * indirect current-demand conversion share; labeled Assumption Mode prior, not bank incidence or Evidence Mode.
+    source_gate_table: ratewall_recipient_leakage_design_gate.csv
+    allowed_model_use: assumption_mode_canonical_component_recipient_share_not_evidence_promotion
+    scenario_implied_only: true
+    forbidden_claim_risk: medium_high
+    plausibility_status: evidenceA_literature_calibrated_assumption
+  - parameter: on_rrp_recipient_demand_share
+    channel: on_rrp_mmf_recipient_behavior
+    unit: share
+    low: 0.02
+    base: 0.06
+    high: 0.12
+    source_status: evidenceA_literature_calibrated_assumption_mode_not_evidence_promotion
+    rationale: ON RRP/MMF returns may pass through to money-fund investors, but recipient composition and liquidity behavior remain assumption-mode.
+    source_note: ON RRP/MMF income is not the same recipient base as Treasury coupons or IORB; pass-through depends on fund structure, investor type, and reinvestment behavior.
+    literature_context: OFR MMF Monitor, SEC N-MFP shareholder categories, ICI MMF statistics, and ON-RRP/MMF participation context discipline a modest current-demand prior.
+    evidence_needed: OFR/SEC N-MFP/ICI-style MMF recipient and pass-through bridge, separated from holder-allocation or incidence promotion.
+    review_priority: high
+    model_use: Converts ON RRP and money-fund return flows into a component-specific demand-offset channel.
+    review_question: How much of ON RRP/MMF income should be treated as pass-through to high-liquidity investors versus retained or reinvested in financial claims?
+    candidate_source_literature: OFR MMF Monitor; SEC Form N-MFP shareholder-category reporting; ICI money-market-fund statistics; OFR ON-RRP/MMF participation discussion.
+    citation_handle: evidenceA_on_rrp_mmf_recipient_demand_share
+    calibration_status: evidenceA_literature_calibrated_assumption_mode
+    calibration_distribution:
+      shape: bounded_sensitivity
+      low: 0.02
+      base: 0.06
+      high: 0.12
+      formula: ON-RRP/MMF return flow * current-demand conversion share; labeled Assumption Mode prior, not holder allocation or Evidence Mode.
+    source_gate_table: ratewall_recipient_leakage_design_gate.csv
+    allowed_model_use: assumption_mode_canonical_component_recipient_share_not_evidence_promotion
+    scenario_implied_only: true
+    forbidden_claim_risk: medium_high
+    plausibility_status: evidenceA_literature_calibrated_assumption
+  - parameter: fed_interest_demand_share
+    channel: fed_liability_context_aggregate
+    unit: share
+    low: 0.06
+    base: 0.22
+    high: 0.45
+    source_status: context_only_aggregate_not_formula_driver
+    rationale: Aggregate context handle for Fed-liability recipient behavior; main formula uses component IORB/ON RRP/remittance shares.
+    source_note: This aggregate exists for frontier comparison only and must not replace component-specific IORB, ON RRP, current-remittance, or future-drag assumptions.
+    literature_context: Useful as a compact sensitivity handle, not as an economic recipient map.
+    evidence_needed: Component maps must be complete before any aggregate Fed-recipient demand share can be promoted.
+    review_priority: medium
+    model_use: Archived context-only diagnostic handle; removed from core frontier ranking so it cannot masquerade as a formula driver.
+    review_question: Should this aggregate be deleted entirely once component-specific IORB and ON RRP pass-through maps are available?
+    plausibility_status: context_only_do_not_replace_component_maps
+  - parameter: firm_cash_attenuation_share
+    channel: firm_cash_buffer
+    unit: share
+    low: 0.03
+    base: 0.10
+    high: 0.20
+    source_status: evidence_g_direction_only_firm_cash_weakest_link_not_magnitude_grounded
+    rationale: Cash-rich firms may reduce the near-term bite of borrowing-cost shocks; this is an attenuation assumption, not a welfare claim.
+    source_note: Firm cash buffers are an attenuation channel because cash-rich firms may rely less on external finance when rates rise.
+    literature_context: Jeenas and Ottonello-Winberry support the direction/mechanism of firm liquidity attenuation, but Evidence round G demotes the 0.03/0.10/0.20 magnitudes to a weakest-link prior.
+    evidence_needed: Firm cash/cash-equivalent distribution, debt maturity, investment response, and shock-identification evidence that separates cash-rich and cash-poor firms.
+    review_priority: high
+    model_use: Attenuates conventional contractionary drag when cash-rich firms are less dependent on external finance.
+    review_question: Is this best modeled as a direct attenuation share, or should firm cash interact with sectoral investment sensitivity and debt maturity?
+    candidate_source_literature: Jeenas firm liquidity and monetary policy transmission; Ottonello-Winberry financial heterogeneity and investment channel.
+    citation_handle: evidenceA_firm_cash_attenuation_share
+    calibration_status: evidence_g_direction_only_weakest_link_labeled_prior
+    calibration_distribution:
+      shape: bounded_sensitivity
+      low: 0.03
+      base: 0.10
+      high: 0.20
+      formula: firm_cash_yield_base * firm_cash_attenuation_share; direction-only weakest-link prior, not magnitude-grounded literature calibration, firm incidence, or Evidence Mode.
+    robustness_run: literature_calibrated_base_zero_firm_cash_robustness
+    source_gate_table: ratewall_firm_cash_debt_maturity_evidence_gap.csv
+    allowed_model_use: assumption_mode_canonical_component_recipient_share_not_evidence_promotion
+    scenario_implied_only: true
+    forbidden_claim_risk: medium_high
+    plausibility_status: direction_only_weakest_link_not_magnitude_grounded
+  - parameter: firm_liquid_asset_stock_share_gdp
+    channel: firm_cash_buffer_stock_scale
+    unit: share_of_gdp
+    low: 0.20
+    base: 0.27
+    high: 0.35
+    source_status: evidence1_literature_calibrated_assumption_mode_not_evidence_promotion
+    rationale: Evidence round 1 stock-flow base for the firm-cash attenuation channel; explicit in canonical YAML so the channel cannot silently depend on a loader default.
+    source_note: Uses aggregate corporate liquid-asset/FoF context as a labeled stock-share scale only; firm behavior and investment response remain Assumption Mode.
+    literature_context: Flow-of-funds and firm liquid-asset context discipline the 0.20/0.27/0.35 stock-share band without making a causal firm-investment claim.
+    evidence_needed: Firm-level cash, debt maturity, interest expense, capex, and identified rate variation before any Evidence-Mode promotion.
+    review_priority: high
+    model_use: Stock-rate-flow base for firm_cash_attenuation_share and the independent cushion sidecar.
+    review_question: Is this kept as a stock scale separate from causal firm behavior or welfare claims?
+    candidate_source_literature: Flow of Funds corporate liquid assets; firm cash holding monetary-transmission literature
+    citation_handle: evidence1_firm_liquid_asset_stock_share_gdp
+    source_family: firm_liquid_asset_stock_context
+    identification_design: stock_flow_scale_assumption_not_firm_behavior_estimate
+    horizon_relevance: one_year_stock_rate_flow_firm_cash_offset
+    uncertainty_status: evidence1_literature_calibrated_assumption_mode
+    evidence_strength: literature_calibrated_labeled_prior_not_source_promoted_estimate
+    prior_basis: evidence1_firm_liquid_asset_stock_share_0_20_0_27_0_35
+    external_review_status: evidence1_reviewed
+    upgrade_gate: requires_firm_panel_cash_debt_maturity_and_real_outcome_bridge
+    evidence_upgrade_blocker: needs_firm_cash_debt_maturity_and_investment_response_mapping
+    calibration_status: evidence1_literature_calibrated_assumption_mode_base
+    calibration_distribution:
+      shape: bounded_sensitivity
+      low: 0.20
+      base: 0.27
+      high: 0.35
+      formula: gdp_bil * firm_liquid_asset_stock_share_gdp * rate_path_bps_year / 10000.
+    source_gate_table: ratewall_firm_cash_debt_maturity_evidence_gap.csv
+    allowed_model_use: assumption_mode_canonical_stock_scale_not_evidence_promotion
+    scenario_implied_only: true
+    forbidden_claim_risk: medium_high
+    plausibility_status: evidence1_literature_calibrated_assumption
+  - parameter: safe_asset_allocation_offset_share
+    channel: safe_yield_allocation
+    unit: share
+    low: 0.02
+    base: 0.06
+    high: 0.12
+    source_status: evidenceA_literature_calibrated_assumption_mode_not_evidence_promotion
+    rationale: Positive safe-asset income-support handle, separated from the negative real-investment hurdle/allocation-drag handle.
+    source_note: This is a theory-facing income-support margin, not a causal financialization result.
+    literature_context: Krishnamurthy-Vissing-Jorgensen and Nagel discipline a modest safe-yield support prior through liquidity and convenience-yield channels.
+    evidence_needed: Evidence linking safe-yield income to spending or liquidity support under admissible shocks, without treating real-investment diversion as a positive offset.
+    review_priority: high
+    model_use: Adds only the income-support side of safe-asset returns to the countervailing numerator.
+    review_question: How much of safe-yield income should be treated as current demand support once real-investment allocation drag is modeled separately?
+    candidate_source_literature: Krishnamurthy-Vissing-Jorgensen aggregate demand for Treasury debt; Nagel liquidity premium of near-money assets.
+    citation_handle: evidenceA_safe_asset_allocation_offset_share
+    calibration_status: evidenceA_literature_calibrated_assumption_mode
+    calibration_distribution:
+      shape: bounded_sensitivity
+      low: 0.02
+      base: 0.06
+      high: 0.12
+      formula: domestic_safe_interest_impulse * safe_asset_allocation_offset_share; paired with safe_asset_allocation_drag_share and not Evidence Mode.
+    source_gate_table: ratewall_safe_yield_offset_drag_pairing_gap.csv
+    allowed_model_use: assumption_mode_canonical_component_recipient_share_not_evidence_promotion
+    scenario_implied_only: true
+    forbidden_claim_risk: medium_high
+    plausibility_status: evidenceA_literature_calibrated_assumption
+  - parameter: safe_asset_allocation_drag_share
+    channel: safe_yield_real_investment_hurdle
+    unit: share
+    low: 0.02
+    base: 0.05
+    high: 0.12
+    source_status: evidenceA_literature_calibrated_assumption_mode_not_evidence_promotion
+    rationale: Negative safe-yield allocation/hurdle-rate drag that can offset the income-support side of safe-asset returns.
+    source_note: This term keeps the sign-fragile safe-yield channel from being treated as a one-way positive numerator offset.
+    literature_context: The same safe-asset/convenience-yield sources plus Jorgenson and Hall-Jorgenson user-cost logic discipline the paired hurdle-rate drag.
+    evidence_needed: Evidence separating safe-yield income support from real-investment deferral or portfolio reallocation under admissible shocks.
+    review_priority: high
+    model_use: Subtracts a review-status real-investment/allocation drag from the Assumption Mode countervailing numerator.
+    review_question: Should this drag be a numerator subtraction, a denominator component, or a separate stock-adjustment channel?
+    candidate_source_literature: Krishnamurthy-Vissing-Jorgensen and Nagel safe-asset convenience-yield evidence; Jorgenson and Hall-Jorgenson user-cost-of-capital tradition.
+    citation_handle: evidenceA_safe_asset_allocation_drag_share
+    calibration_status: evidenceA_literature_calibrated_assumption_mode
+    calibration_distribution:
+      shape: bounded_sensitivity
+      low: 0.02
+      base: 0.05
+      high: 0.12
+      formula: domestic_safe_interest_impulse * safe_asset_allocation_drag_share; paired with safe_asset_allocation_offset_share and not Evidence Mode.
+    source_gate_table: ratewall_safe_yield_offset_drag_pairing_gap.csv
+    allowed_model_use: assumption_mode_canonical_component_drag_share_not_evidence_promotion
+    scenario_implied_only: true
+    forbidden_claim_risk: medium_high
+    plausibility_status: evidenceA_literature_calibrated_assumption
+  - parameter: household_yield_optimization_share
+    channel: financialized_balance_sheet_household_yield_optimization
+    unit: share
+    low: 0.05
+    base: 0.20
+    high: 0.45
+    source_status: assumption_only_financialized_balance_sheet_prior
+    rationale: Share of households or consumer cash balances assumed to actively optimize into higher-yielding deposits, money-market funds, Treasury bills, or cash-management tools when rates rise.
+    source_note: This is a financialized-balance-sheet state variable. It can amplify RateWall offsets by raising pass-through of higher rates to household income, but it is not evidence that rate hikes causally financialize the economy.
+    literature_context: Connects to household portfolio attention, retail Treasury access, money-market fund adoption, cash-management platforms, and deposit-rate shopping behavior.
+    evidence_needed: Household account migration, high-yield savings adoption, retail Treasury/MMF participation, and rate-shopping evidence by liquidity class.
+    review_priority: medium
+    model_use: Optional pro-forma amplifier for household yield capture; it does not enter the main scalar offset ratio unless deliberately promoted by a later model gate.
+    review_question: How large can household yield optimization plausibly be once liquidity, income, attention, and account-access constraints are separated?
+    candidate_source_literature: Household portfolio attention; deposit beta and rate-shopping evidence; retail Treasury and MMF adoption data; Survey of Consumer Finances liquid-asset holdings.
+    citation_handle: household_portfolio_attention_deposit_shopping_mmf_access
+    source_family: household_financial_behavior_and_liquid_asset_data
+    identification_design: descriptive_assumption_prior_pending_household_liquid_asset_bridge
+    horizon_relevance: short_to_medium_horizon_interest_income_pass_through
+    uncertainty_status: optional_amplifier_prior_requires_external_review
+    evidence_strength: weak_assumption_context_not_source_backed
+    prior_basis: theory_motivated_financialized_balance_sheet_prior
+    external_review_status: not_externally_reviewed
+    upgrade_gate: requires_household_yield_optimization_data_bridge_and_nonpromotion_tests
+    evidence_upgrade_blocker: needs_household_liquidity_attention_and_account_migration_evidence
+    plausibility_status: optional_amplifier_not_causal_financialization
+  - parameter: household_interest_bearing_liquid_share
+    channel: financialized_balance_sheet_household_liquid_claims
+    unit: share
+    low: 0.10
+    base: 0.30
+    high: 0.60
+    source_status: assumption_only_pending_household_liquid_asset_bridge
+    rationale: Share of household liquid balances assumed to be positioned in interest-bearing claims that can receive higher-rate pass-through.
+    source_note: This parameter measures exposure to interest-bearing liquid claims, not final incidence or welfare.
+    literature_context: Should be disciplined by SCF, DFA, Flow of Funds, deposit/MMF/T-bill holding data, and account-type pass-through evidence.
+    evidence_needed: Household liquid-asset stock by account type, yield pass-through, and liquidity-class composition.
+    review_priority: medium
+    model_use: Optional pro-forma scale factor for household yield-optimization offsets.
+    review_question: Which household liquid-claim stocks should count as rate-sensitive, and how should non-interest checking/deposit balances be treated?
+    candidate_source_literature: SCF; Distributional Financial Accounts; Z.1 household deposits, money funds, and Treasury holdings; deposit-rate pass-through studies.
+    citation_handle: scf_dfa_household_liquid_claims_deposit_mmf_tbill
+    source_family: household_balance_sheet_data
+    identification_design: descriptive_stock_bridge_pending_distributional_liquidity_mapping
+    horizon_relevance: short_horizon_repricing_and_income_pass_through
+    uncertainty_status: optional_amplifier_prior_requires_distributional_review
+    evidence_strength: weak_assumption_context_not_source_backed
+    prior_basis: liquid_claim_stock_prior_pending_source_bridge
+    external_review_status: not_externally_reviewed
+    upgrade_gate: requires_household_liquid_asset_stock_bridge_and_fail_closed_tests
+    evidence_upgrade_blocker: needs_distributional_liquid_asset_and_yield_pass_through_mapping
+    plausibility_status: optional_amplifier_not_incidence
+  - parameter: deposit_beta_to_households
+    channel: financialized_balance_sheet_retail_rate_pass_through
+    unit: share
+    low: 0.05
+    base: 0.20
+    high: 0.45
+    source_status: literature_context_pending_retail_pass_through_review
+    rationale: Pass-through of higher policy/safe rates to household-held liquid balances through deposits, money-market funds, Treasury bills, or cash-management accounts.
+    source_note: The parameter is a pass-through prior, not a deposit pricing output.
+    literature_context: Related to deposit beta, rate-shopping, bank competition, MMF substitution, and cash-management platform evidence.
+    evidence_needed: Retail deposit/MMF/T-bill yield pass-through by product type and household access/attention class.
+    review_priority: medium
+    model_use: Optional pro-forma multiplier turning interest-sensitive liquid balances into household yield income.
+    review_question: Should retail pass-through be modeled as deposit beta only, or as a deposit/MMF/T-bill substitution system?
+    candidate_source_literature: Deposit beta studies; MMF substitution evidence; TreasuryDirect retail access data; bank competition and rate-shopping literature.
+    citation_handle: retail_deposit_beta_mmf_substitution_rate_shopping
+    source_family: deposit_pass_through_and_money_market_literature
+    identification_design: literature_context_prior_not_pricing_or_incidence_output
+    horizon_relevance: short_horizon_household_interest_income_transmission
+    uncertainty_status: optional_amplifier_prior_requires_pass_through_review
+    evidence_strength: weak_literature_context_not_source_backed
+    prior_basis: literature_motivated_pass_through_prior_pending_source_review
+    external_review_status: not_externally_reviewed
+    upgrade_gate: requires_retail_pass_through_source_gate_and_nonpricing_boundary
+    evidence_upgrade_blocker: needs_product_level_pass_through_and_household_access_mapping
+    plausibility_status: optional_amplifier_not_deposit_pricing_output
+  - parameter: tdc_total_deposit_beta
+    channel: treasury_deposit_channel_total_deposit_flow_beta
+    unit: share
+    low: 0.2479
+    base: 0.3249
+    high: 0.6163
+    source_status: evidence_g_internal_estimator_prior_pending_regression_artifacts_not_literature_grounded
+    rationale: Total deposit-flow materialization beta provenance retained as memo-only context; not consumed by threshold math, retail deposit pass-through, or denominator betas.
+    source_note: Evidence round G labels the beta triple as an internal-estimator prior until the regression artifact, vintages, and import contract reproduce it; it must not be used as deposit pricing, incidence, or a denominator beta.
+    literature_context: Deposit-channel and deposit-beta evidence is contextual only and does not literature-ground the 0.2479/0.3249/0.6163 materialization band.
+    evidence_needed: Regression artifact, vintages, and import contract that reproduce beta, plus Phase 3 canonical TDC channel wiring to tdc_change_ex_overlap_bil and then chi.
+    review_priority: high
+    model_use: Memo-only provenance for the Evidence round A beta triple; no live threshold, denominator, or pricing use.
+    review_question: Is the TDC support basis ex-overlap and non-stacked with direct interest support?
+    candidate_source_literature: Drechsler-Savov-Schnabl deposits channel; Federal Reserve SFOS deposit beta evidence; FDIC 2022-cycle implied deposit beta evidence.
+    citation_handle: evidenceA_tdc_total_deposit_beta
+    source_family: deposit_channel_and_deposit_beta_literature
+    identification_design: labeled_total_deposit_flow_beta_prior_not_deposit_pricing_output
+    horizon_relevance: one_year_tdc_deposit_flow_materialization
+    uncertainty_status: internal_estimator_prior_pending_reproduction
+    evidence_strength: internal_estimator_prior_not_literature_grounded
+    prior_basis: internal_estimator_prior_tdc_total_deposit_beta_0_2479_0_3249_0_6163_pending_artifact_vintages_import_contract
+    external_review_status: evidenceA_reviewed_memo_only
+    upgrade_gate: requires_explicit_owner_approved_consuming_formula
+    evidence_upgrade_blocker: requires_tdc_change_ex_overlap_bil_basis_and_no_double_count_interlock
+    calibration_status: internal_estimator_prior_pending_regression_reproduction_not_consumed
+    calibration_distribution:
+      shape: bounded_sensitivity
+      low: 0.2479
+      base: 0.3249
+      high: 0.6163
+      formula: memo-only internal-estimator beta triple pending regression artifact, vintages, and import contract; not consumed by threshold math or denominator/pricing paths.
+    source_gate_table: ratewall_tdc_double_count_guardrail.csv
+    allowed_model_use: memo_only_not_live_parameter
+    scenario_implied_only: true
+    forbidden_claim_risk: medium_high
+    plausibility_status: internal_estimator_prior_pending_reproduction_not_literature_grounded
+  - parameter: mmf_tbill_access_share
+    channel: financialized_balance_sheet_retail_safe_asset_access
+    unit: share
+    low: 0.05
+    base: 0.20
+    high: 0.40
+    source_status: assumption_only_pending_retail_safe_asset_access_bridge
+    rationale: Share of consumer liquid balances assumed able to access MMFs, Treasury bills, TreasuryDirect, brokerage cash sweeps, or similar high-yield safe-asset channels.
+    source_note: This parameter lets the model distinguish passive deposit holders from active safe-yield optimizers.
+    literature_context: Relevant evidence includes MMF flows, TreasuryDirect/retail bill access, brokerage cash sweep behavior, and household portfolio adoption.
+    evidence_needed: Retail MMF/T-bill participation and substitution evidence, ideally by household balance size and account access.
+    review_priority: medium
+    model_use: Optional pro-forma channel for retail safe-yield access; it does not imply holder allocation or incidence.
+    review_question: How much retail cash is realistically mobile into MMFs or T-bills during high-rate regimes?
+    candidate_source_literature: OFR/ICI MMF data; SEC N-MFP; TreasuryDirect retail context; household portfolio and brokerage cash-sweep evidence.
+    citation_handle: retail_mmf_tbill_access_cash_sweep_context
+    source_family: money_market_and_retail_safe_asset_access_data
+    identification_design: descriptive_access_prior_pending_retail_flow_bridge
+    horizon_relevance: short_horizon_safe_yield_access_and_rate_pass_through
+    uncertainty_status: optional_amplifier_prior_requires_retail_access_review
+    evidence_strength: weak_assumption_context_not_source_backed
+    prior_basis: theory_motivated_retail_access_prior
+    external_review_status: not_externally_reviewed
+    upgrade_gate: requires_retail_safe_asset_access_source_bridge_and_fail_closed_tests
+    evidence_upgrade_blocker: needs_retail_mmf_tbill_access_and_flow_mapping
+    plausibility_status: optional_amplifier_not_holder_allocation
+  - parameter: firm_liquid_asset_scale
+    channel: financialized_balance_sheet_firm_liquid_assets
+    unit: share
+    low: 0.05
+    base: 0.20
+    high: 0.45
+    source_status: literature_context_pending_firm_liquid_asset_panel
+    rationale: Scale of firm deposits, cash equivalents, Treasury bills, and money-market holdings that can cushion borrowing-cost and credit-supply tightening.
+    source_note: This is an optional amplifier for firm balance-sheet positioning, not a causal financialization estimate.
+    literature_context: Connects to firm cash holdings, debt maturity, financial constraints, treasury management, and investment-sensitivity evidence.
+    evidence_needed: Firm liquid-asset holdings by size/sector, debt maturity, external-finance dependence, and investment response under identified monetary shocks.
+    review_priority: high
+    model_use: Optional pro-forma firm liquid-asset amplifier layered on top of existing firm-cash attenuation for model review.
+    review_question: Should firm liquid assets amplify attenuation through financing constraints, interest income, or both, and how should double counting with existing firm-cash attenuation be prevented?
+    candidate_source_literature: Compustat firm cash holdings; Flow of Funds corporate liquid assets; firm-cash monetary transmission studies; debt-maturity and investment sensitivity evidence.
+    citation_handle: firm_cash_holdings_monetary_transmission_liquid_assets
+    source_family: firm_balance_sheet_and_monetary_transmission_literature
+    identification_design: literature_context_prior_pending_firm_panel_and_admissible_shock_evidence
+    horizon_relevance: short_to_medium_horizon_firm_investment_and_financing_response
+    uncertainty_status: optional_amplifier_prior_requires_double_count_review
+    evidence_strength: weak_literature_context_not_source_backed
+    prior_basis: theory_motivated_firm_liquid_asset_prior_pending_panel_review
+    external_review_status: not_externally_reviewed
+    upgrade_gate: requires_firm_liquid_asset_panel_and_double_count_gate
+    evidence_upgrade_blocker: needs_firm_cash_debt_maturity_and_investment_response_mapping
+    plausibility_status: optional_amplifier_not_causal_financialization
+  - parameter: fiscal_offset_share
+    channel: fiscal_reaction
+    unit: share
+    low: 0.00
+    base: 0.08
+    high: 0.20
+    source_status: evidenceA_literature_calibrated_assumption_mode_not_evidence_promotion
+    rationale: Fiscal offsets reduce the expansionary demand effect of public interest cashflows.
+    source_note: Fiscal reactions can absorb, tax, defer, or offset interest-income effects; this parameter is a policy-reaction prior.
+    literature_context: Bohn supports fiscal reaction over time, while Romer-Romer and Mertens-Ravn tax-shock evidence cautions against a large contemporaneous current-period clawback after separate tax-timing leakage.
+    evidence_needed: Explicit fiscal-reaction model or historical response evidence that separates current cash effects from future fiscal adjustment.
+    review_priority: medium
+    model_use: Reduces the net demand effect of public interest cashflows through taxes, spending restraint, issuance choices, or other fiscal reaction assumptions.
+    review_question: Should fiscal offset be contemporaneous, lagged, state-dependent, or split into tax, spending, and issuance-reaction terms?
+    candidate_source_literature: Bohn public debt and deficits fiscal reaction; Romer-Romer macroeconomic effects of tax changes; Mertens-Ravn dynamic effects of personal and corporate income tax changes.
+    citation_handle: evidenceA_fiscal_offset_share
+    calibration_status: evidenceA_literature_calibrated_assumption_mode
+    calibration_distribution:
+      shape: bounded_sensitivity
+      low: 0.00
+      base: 0.08
+      high: 0.20
+      formula: net_interest_before_fiscal_tga_offsets_bil * fiscal_offset_share; labeled current-period Assumption Mode fiscal reaction prior.
+    source_gate_table: ratewall_public_finance_timing_bridge.csv
+    allowed_model_use: assumption_mode_canonical_absorber_share_not_evidence_promotion
+    scenario_implied_only: true
+    forbidden_claim_risk: medium_high
+    plausibility_status: evidenceA_literature_calibrated_assumption
+  - parameter: tga_liquidity_offset_share
+    channel: tga_liquidity
+    unit: share
+    low: 0.00
+    base: 0.05
+    high: 0.20
+    source_status: evidenceA_literature_calibrated_assumption_mode_not_evidence_promotion
+    rationale: TGA builds can absorb liquidity while spend-down can release it; this pack treats offset shares as scenario inputs.
+    source_note: TGA offset signs depend on cash-balance path, financing source, and Treasury spending timing.
+    literature_context: Daily Treasury Statement, FRED/H.4.1 WDTGAL, and TGA/reserve-plumbing evidence discipline a small state-dependent liquidity absorber prior.
+    evidence_needed: DTS/H.4.1-aligned TGA path model with sign conventions, timing, and non-additivity checks against financing-source assumptions.
+    review_priority: medium
+    model_use: Represents liquidity absorption or release through Treasury cash-balance paths while preserving TGA non-additivity.
+    review_question: Should the TGA offset be tied to an explicit DTS cash-path scenario instead of a scalar share?
+    candidate_source_literature: Daily Treasury Statement; FRED/H.4.1 WDTGAL Treasury General Account series; Brauning Boston Fed TGA reserve-drain context.
+    citation_handle: evidenceA_tga_liquidity_offset_share
+    calibration_status: evidenceA_literature_calibrated_assumption_mode
+    calibration_distribution:
+      shape: bounded_sensitivity
+      low: 0.00
+      base: 0.05
+      high: 0.20
+      formula: net_interest_after_fiscal_offset_bil * tga_liquidity_offset_share; labeled current-period Assumption Mode liquidity prior.
+    source_gate_table: ratewall_public_finance_timing_bridge.csv
+    allowed_model_use: assumption_mode_canonical_absorber_share_not_evidence_promotion
+    scenario_implied_only: true
+    forbidden_claim_risk: medium_high
+    plausibility_status: evidenceA_literature_calibrated_assumption
+  - parameter: contractionary_drag_gdp_share
+    channel: conventional_tightening_benchmark
+    unit: gdp_share_per_100bp_year
+    low: 0.0035
+    base: 0.00776
+    high: 0.0130
+    source_status: assumption_irf_normalized_literature_prior; contractionary_drag_gdp_share low/base/high = 0.0035/0.00776/0.0130, representing the h≈12-month real-GDP-level drag per +100bp US monetary tightening; normalized from GK2015/BRW2019-21/RR2004/Coibion2012/JK2020/MAR2021; IP rows use IP→GDP scalar 0.40; labeled prior only, not a project re-estimation or identification claim.
+    rationale: Canonical Assumption-Mode annual-flow denominator anchor per 100bp-year.
+    source_note: This is the denominator of the wall ratio and is therefore decisive for hit/non-hit classification; Evidence round H keeps center 0.00776 and widens only the conservative tail.
+    literature_context: Report as about 0.776 pp GDP [0.35, 1.30] per 100bp-year; IP rows use IP→GDP scalar 0.40, while scalar 0.50 would push the upper tail toward about 0.0160.
+    evidence_needed: Admissible-shock design with support, pretrend/placebo, weak-IV/relevance, uncertainty, and horizon consistency diagnostics for Evidence Mode.
+    review_priority: high
+    model_use: Denominator of the offset ratio; it determines how large conventional tightening is relative to countervailing effects.
+    review_question: Should the denominator be split into borrowing-cost, asset-price, credit-supply, expectations, and exchange-rate components before professor-facing use?
+    calibration_status: assumption_irf_normalized_literature_prior
+    calibration_distribution:
+      shape: bounded_sensitivity
+      low: 0.0035
+      base: 0.00776
+      high: 0.0130
+      formula: gdp_bil * contractionary_drag_gdp_share_per_100bp_year * rate_path_bps_year / 100; h≈12-month real-GDP-level prior with IP→GDP scalar 0.40.
+    source_gate_table: ratewall_denominator_calibration_design_gate.csv
+    allowed_model_use: canonical_assumption_mode_denominator_not_evidence_promotion
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: assumption_irf_normalized_literature_prior_not_re_estimation
+  - parameter: debt_state_drag_multiplier
+    channel: conventional_tightening_benchmark
+    unit: multiplier
+    low: 0.95
+    base: 0.85
+    high: 0.70
+    source_status: evidence_g_direction_only_debt_state_sensitivity_not_headline
+    rationale: Direction-only debt-state attenuation sensitivity; canonical headline denominators are state-neutral until calibrated state-dependent IRFs are available.
+    source_note: Sensitivity-only D-side attenuator; high-debt public-interest cashflow already enters N through existing public-liability handles.
+    literature_context: KVJ, Greenwood-Vayanos, and Mian-Straub-Sufi motivate state-dependent monetary transmission attenuation under high debt but do not calibrate a one-year multiplier.
+    evidence_needed: Alpanda-Zubairy-style state-dependent monetary-shock estimates before any canonical, Evidence-Mode, or causal promotion.
+    review_priority: high
+    model_use: Scales conventional_contractionary_effect_bil only; no numerator lift or split-denominator promotion.
+    review_question: Does the denominator attenuator leave N_TDC, Treasury, and remittance rows unchanged?
+    candidate_source_literature: KVJ debt overhang and monetary transmission; Greenwood-Vayanos preferred habitat; Mian-Straub-Sufi debt and aggregate demand
+    citation_handle: evidenceC_exp4_debt_state_drag_multiplier
+    source_family: debt_state_monetary_transmission_literature
+    identification_design: labeled_state_dependent_prior_not_causal_estimate
+    horizon_relevance: one_year_conventional_drag_attenuation
+    uncertainty_status: evidence_g_direction_only_sensitivity
+    evidence_strength: direction_only_prior_not_magnitude_grounded
+    prior_basis: evidence_g_debt_state_sensitivity_0_95_0_85_0_70
+    external_review_status: evidence_c_reviewed
+    upgrade_gate: owner_gated_post_completion_state_dependent_monetary_shock_design
+    evidence_upgrade_blocker: admissible_state_dependent_monetary_transmission_estimates
+    calibration_status: sensitivity_only_not_canonical_headline
+    calibration_order: descending_attenuation
+    calibration_distribution:
+      shape: bounded_sensitivity
+      low: 0.95
+      base: 0.85
+      high: 0.70
+      formula: sensitivity-only conventional_contractionary_anchor_bil * debt_state_drag_multiplier; canonical headline uses 1.00 state-neutral denominator.
+    source_gate_table: ratewall_denominator_literature_matrix.csv
+    allowed_model_use: debt_state_sensitivity_table_not_canonical_headline
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: direction_only_sensitivity_not_magnitude_grounded
+  - parameter: split_denominator_total_drag_multiplier
+    channel: conventional_tightening_total_drag_amplitude
+    unit: multiplier
+    low: 0.70
+    base: 1.00
+    high: 1.40
+    source_status: split_denominator_assumption_prior
+    rationale: Explicit total-drag amplitude scaler separated from denominator component composition.
+    source_note: This prevents split-denominator shares from silently changing total denominator mass.
+    literature_context: Should be disciplined by admissible-shock estimates of total conventional tightening drag before stronger use.
+    evidence_needed: Source/literature range for total drag amplitude by horizon and policy shock scale.
+    review_priority: high
+    model_use: Scales the split-denominator total drag after denominator component shares have been normalized to sum to one.
+    review_question: Should total-drag amplitude vary by regime, or should scalar drag remain the only total conventional-drag benchmark?
+    candidate_source_literature: High-frequency monetary surprise local projections; narrative shock estimates; benchmark monetary transmission meta-ranges.
+    citation_handle: hfi_lp_total_drag_prior; narrative_monetary_shock_total_drag
+    source_family: monetary_transmission_total_effect_literature
+    identification_design: admissible_monetary_shock_total_effect_estimates_not_raw_rate_changes
+    horizon_relevance: one_year_to_medium_horizon_total_drag_scale
+    uncertainty_status: total_drag_amplitude_prior_requires_external_literature_review
+    evidence_strength: weak_literature_context_not_source_backed
+    prior_basis: explicit_total_drag_stress_range_pending_external_review
+    external_review_status: not_externally_reviewed
+    upgrade_gate: requires_admissible_shock_total_drag_range_and_fail_closed_tests
+    evidence_upgrade_blocker: needs_horizon_consistent_total_drag_estimates
+    plausibility_status: split_denominator_total_drag_prior_not_promoted
+  - parameter: borrowing_cost_drag_share
+    channel: conventional_drag_borrowing_cost
+    unit: share
+    low: 0.30
+    base: 0.35
+    high: 0.40
+    source_status: split_denominator_assumption_prior
+    rationale: Borrowing-cost effects are the direct household, firm, mortgage, and debt-service channel inside the split conventional-drag denominator.
+    source_note: This is a denominator-composition prior, not an estimated channel response.
+    literature_context: Connects to standard user-cost, debt-service, and interest-sensitive spending channels.
+    evidence_needed: Admissible-shock estimates or literature ranges separating borrowing-cost effects from asset-price, credit-supply, expectations, and external channels.
+    review_priority: high
+    model_use: Component share of the split conventional contractionary denominator.
+    review_question: Is borrowing-cost drag the largest conventional channel in the scenarios, or should credit-supply and asset-price channels dominate?
+    candidate_source_literature: HFI monetary surprises; local projections of interest-sensitive consumption, mortgage, durable spending, and firm investment; user-cost and debt-service transmission literature.
+    citation_handle: gertler_karadi_2015_hfi_lp; user_cost_debt_service_literature; interest_sensitive_spending_lp
+    source_family: monetary_transmission_literature_hfi_lp_user_cost
+    identification_design: high_frequency_policy_surprises_or_narrative_proxy_shocks_not_raw_rate_changes
+    horizon_relevance: short_to_medium_horizon_consumption_durables_mortgage_investment
+    uncertainty_status: denominator_component_prior_requires_external_literature_review
+    evidence_strength: weak_literature_context_not_source_backed
+    prior_basis: literature_motivated_assumption_range_pending_channel_estimates
+    external_review_status: not_externally_reviewed
+    upgrade_gate: requires_admissible_shock_channel_estimates_and_nonpromotion_tests
+    evidence_upgrade_blocker: needs_channel_separated_response_estimates_and_support_diagnostics
+    plausibility_status: split_denominator_prior_not_promoted
+  - parameter: credit_supply_drag_share
+    channel: conventional_drag_credit_supply
+    unit: share
+    low: 0.15
+    base: 0.20
+    high: 0.25
+    source_status: split_denominator_assumption_prior
+    rationale: Credit-supply effects capture bank and nonbank tightening beyond the pure user-cost channel.
+    source_note: This is a review-status denominator component and does not estimate bank credit supply.
+    literature_context: Related to bank lending, balance-sheet, and financial-accelerator monetary-transmission literatures.
+    evidence_needed: Shock-identified credit-supply response evidence separated from loan-demand and borrower-cost effects.
+    review_priority: high
+    model_use: Component share of the split conventional contractionary denominator.
+    review_question: Does the RateWall denominator need a stronger credit-supply block to avoid overstating countervailing income channels?
+    candidate_source_literature: H.8 bank credit; Senior Loan Officer Opinion Survey; bank lending channel and financial accelerator studies using identified monetary shocks.
+    citation_handle: bernanke_gertler_credit_channel; kashyap_stein_bank_lending; sloos_credit_supply_context
+    source_family: bank_lending_credit_supply_literature_and_credit_data
+    identification_design: identified_monetary_shock_with_loan_supply_demand_separation
+    horizon_relevance: short_to_medium_horizon_credit_quantity_and_spread_response
+    uncertainty_status: denominator_component_prior_requires_external_literature_review
+    evidence_strength: weak_literature_context_not_source_backed
+    prior_basis: literature_motivated_assumption_range_pending_credit_supply_identification
+    external_review_status: not_externally_reviewed
+    upgrade_gate: requires_identified_credit_supply_response_separated_from_loan_demand
+    evidence_upgrade_blocker: needs_bank_nonbank_supply_response_separated_from_borrower_demand
+    plausibility_status: split_denominator_prior_not_promoted
+  - parameter: asset_price_drag_share
+    channel: conventional_drag_asset_price
+    unit: share
+    low: 0.10
+    base: 0.20
+    high: 0.35
+    source_status: split_denominator_assumption_prior
+    rationale: Asset-price effects capture wealth, valuation, and collateral channels in conventional tightening.
+    source_note: This is a denominator-composition prior and not a pricing or valuation output.
+    literature_context: Related to wealth effects, discount-rate valuation, collateral, and Tobin-q transmission.
+    evidence_needed: Admissible-shock evidence separating asset-price effects from income, credit-supply, and expectations channels.
+    review_priority: medium
+    model_use: Component share of the split conventional contractionary denominator.
+    review_question: Should asset-price drag be represented as contemporaneous demand drag or as a slower balance-sheet/wealth mechanism?
+    candidate_source_literature: Z.1 household balance sheets; equity and housing price event-study responses; Tobin-q, collateral, and wealth-effect monetary-transmission literature.
+    citation_handle: tobin_q_wealth_collateral_channel; z1_balance_sheet_context; hfi_asset_price_event_studies
+    source_family: asset_price_wealth_collateral_transmission_literature
+    identification_design: admissible_monetary_shock_asset_price_response_linked_to_spending
+    horizon_relevance: short_asset_price_response_medium_demand_translation
+    uncertainty_status: denominator_component_prior_requires_external_literature_review
+    evidence_strength: weak_literature_context_not_source_backed
+    prior_basis: literature_motivated_assumption_range_pending_asset_response_estimates
+    external_review_status: not_externally_reviewed
+    upgrade_gate: requires_admissible_shock_asset_price_and_wealth_effect_bridge
+    evidence_upgrade_blocker: needs_bridge_from_asset_price_moves_to_demand_drag_without_pricing_output
+    plausibility_status: split_denominator_prior_not_pricing
+  - parameter: expectations_drag_share
+    channel: conventional_drag_expectations
+    unit: share
+    low: 0.05
+    base: 0.15
+    high: 0.30
+    source_status: split_denominator_assumption_prior
+    rationale: Expectations effects capture signaling, inflation expectations, confidence, and forward-looking demand channels.
+    source_note: This is a review-status denominator component and does not use raw rate changes as shocks.
+    literature_context: Related to high-frequency monetary surprises, central-bank information effects, and expectations channels.
+    evidence_needed: Shock decomposition that distinguishes policy surprises from central-bank information shocks and expectations responses.
+    review_priority: high
+    model_use: Component share of the split conventional contractionary denominator.
+    review_question: Should expectations be a denominator component, a modifier on all denominator channels, or a separate state variable?
+    candidate_source_literature: Survey of Consumer Expectations; SPF; TIPS breakevens; high-frequency policy/information shock decompositions.
+    citation_handle: gurkaynak_sack_swanson_2005; nakamura_steinsson_2018; jarocinski_karadi_policy_news
+    source_family: high_frequency_policy_surprise_and_information_effect_literature
+    identification_design: policy_surprise_information_effect_decomposition
+    horizon_relevance: announcement_to_short_medium_expectations_demand_response
+    uncertainty_status: denominator_component_prior_requires_external_literature_review
+    evidence_strength: weak_literature_context_not_source_backed
+    prior_basis: literature_motivated_assumption_range_pending_information_effect_split
+    external_review_status: not_externally_reviewed
+    upgrade_gate: requires_policy_surprise_information_effect_decomposition
+    evidence_upgrade_blocker: needs_policy_news_split_before_sign_or_weight_upgrade
+    plausibility_status: split_denominator_prior_not_raw_rate_shock
+  - parameter: exchange_rate_external_drag_share
+    channel: conventional_drag_exchange_rate_external
+    unit: share
+    low: 0.05
+    base: 0.10
+    high: 0.15
+    source_status: split_denominator_assumption_prior
+    rationale: External-demand and exchange-rate effects can contribute to conventional tightening through trade prices, dollar strength, and global demand spillovers.
+    source_note: This channel is optional for a closed-economy classroom version but useful for an open-economy robustness check.
+    literature_context: Related to exchange-rate and external-demand monetary-transmission channels.
+    evidence_needed: Evidence on exchange-rate/external-demand effects under admissible U.S. monetary shocks and horizon-consistent trade-price timing.
+    review_priority: medium
+    model_use: Component share of the split conventional contractionary denominator.
+    review_question: Should the first professor-facing chapter include this open-economy term or defer it as a robustness extension?
+    candidate_source_literature: Broad dollar indexes; exchange-rate event-study responses; import-price and net-export responses to identified U.S. monetary shocks.
+    citation_handle: monetary_shock_exchange_rate_event_studies; broad_dollar_import_price_net_export_literature
+    source_family: open_economy_monetary_transmission_literature
+    identification_design: identified_us_monetary_shocks_with_exchange_rate_trade_price_timing
+    horizon_relevance: short_exchange_rate_response_medium_trade_price_external_demand
+    uncertainty_status: denominator_component_prior_optional_open_economy_review
+    evidence_strength: weak_literature_context_not_source_backed
+    prior_basis: literature_motivated_assumption_range_pending_external_channel_estimates
+    external_review_status: not_externally_reviewed
+    upgrade_gate: requires_horizon_consistent_exchange_rate_external_demand_evidence
+    evidence_upgrade_blocker: needs_horizon_consistent_external_channel_estimates
+    plausibility_status: split_denominator_prior_optional_external_channel
+  - parameter: zero_interest_credit_attenuation_share
+    channel: zero_interest_credit_optional_extension
+    unit: share
+    low: 0.00
+    base: 0.01
+    high: 0.05
+    source_status: optional_minor_extension_assumption
+    rationale: Short BNPL/pay-in-four float value is usually small; longer 0% financing can matter more, but this remains a minor optional lane.
+    source_note: This extension illustrates embedded zero-interest credit but is not central to the RateWall mechanism.
+    literature_context: BNPL and promotional-finance work can inform duration and merchant-subsidy assumptions; short pay-in-four should stay small.
+    evidence_needed: Separate duration, uptake, merchant-fee/pass-through, and consumer-liquidity assumptions before this lane can become more than an illustrative extension.
+    review_priority: low
+    model_use: Minor optional attenuation lane for embedded zero-interest credit, mainly to show how promotional financing can be represented without driving the core model.
+    review_question: Should this remain a small appendix/prose extension unless longer-duration 0% financing assumptions are explicitly introduced?
+    calibration_status: context_only_minor_extension
+    calibration_distribution:
+      shape: bounded_sensitivity
+      low: 0.000
+      base: 0.005
+      high: 0.020
+      formula: BNPL/zero-interest float stays small unless aggregate scale, duration, and pass-through evidence passes.
+    source_gate_table: ratewall_bnpl_zero_interest_float_evidence_gap.csv
+    allowed_model_use: secondary_sensitivity_only
+    scenario_implied_only: true
+    forbidden_claim_risk: medium
+    plausibility_status: minor_extension_not_core_driver
+  - parameter: household_safe_asset_stock_share
+    channel: financialization_proxy_context
+    unit: share
+    low: 0.30
+    base: 0.45
+    high: 0.60
+    source_status: assumption_mode_formula_input_not_evidence_promotion
+    rationale: Explicit Assumption Mode stock-exposure parameter for household safe-yield capture; evidence promotion remains blocked.
+    source_note: Use ratewall_financialization_proxy_registry.csv and household safe-asset context tables for interpretation.
+    literature_context: Fed DFA, SCF, and Z.1 can describe exposure stocks but do not convert safe-yield income into current demand.
+    evidence_needed: Household/account-level realized-yield and current-demand bridge before any promotion.
+    review_priority: medium
+    model_use: Optional Assumption Mode formula input for household_safe_yield_capture; not Evidence Mode promotion.
+    review_question: Is safe-asset stock exposure being kept separate from spending conversion?
+    source_gate_table: ratewall_financialization_proxy_source_gate.csv
+    allowed_model_use: assumption_mode_formula_input_static_only
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: evidence_c_exp1_literature_calibrated_assumption_mode
+  - parameter: household_safe_asset_access_conditioner
+    channel: financialization_proxy_context
+    unit: share
+    low: 0.45
+    base: 0.65
+    high: 0.80
+    source_status: assumption_mode_formula_input_not_evidence_promotion
+    rationale: Explicit Assumption Mode access conditioner for household safe-yield capture; no composite financialization index.
+    source_note: Access/ownership context cannot imply final holder allocation or current demand.
+    literature_context: SCF and DFA account/balance context can condition scenario labels only.
+    evidence_needed: Linked account and spending data before stronger use.
+    review_priority: medium
+    model_use: Optional Assumption Mode formula input for household_safe_yield_capture.
+    review_question: Are stock exposure and account access still separate?
+    source_gate_table: ratewall_financialization_proxy_source_gate.csv
+    allowed_model_use: assumption_mode_formula_input_static_only
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: evidence_c_exp1_literature_calibrated_assumption_mode
+  - parameter: retail_safe_yield_pass_through_beta
+    channel: financialization_proxy_context
+    unit: share
+    low: 0.20
+    base: 0.40
+    high: 0.65
+    source_status: assumption_mode_formula_input_not_evidence_promotion
+    rationale: Explicit Assumption Mode pass-through conditioner for safe-yield and deposit/MMF terms; not a deposit-pricing model.
+    source_note: FDIC, FRED SNDR, H.8, and FFIEC context can describe rates and balances but not incidence or MPC.
+    literature_context: Deposit-rate pass-through conditions safe-yield capture but requires household/account bridge for demand conversion.
+    evidence_needed: Realized pass-through and current-demand bridge.
+    review_priority: medium
+    model_use: Optional Assumption Mode formula input for household_safe_yield_capture and deposit_mmf_substitution_offset.
+    review_question: Is deposit pass-through kept context-only unless a promotion gate passes?
+    source_gate_table: ratewall_financialization_proxy_source_gate.csv
+    allowed_model_use: assumption_mode_formula_input_static_only
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: evidence_c_exp1_literature_calibrated_assumption_mode
+  - parameter: household_safe_yield_current_spend_share
+    channel: financialization_assumption_mode_safe_yield_capture
+    unit: share
+    low: 0.04
+    base: 0.08
+    high: 0.13
+    source_status: evidence_g_proxy_grounded_measurement_weak_link_not_us_evidence_mode
+    rationale: Explicit Assumption Mode conversion parameter for the share of captured safe-yield income treated as current spending support.
+    source_note: Evidence round G treats this as the model's primary data-availability and measurement weak link; the BoE NMG proxy suggests about 7-13%, not U.S. Evidence Mode.
+    literature_context: Should eventually be disciplined by U.S. household/account realized-yield and spending microdata, not aggregate safe-asset stocks or incidence claims.
+    evidence_needed: Linked realized yield, account wrapper, tax status, and current-spending bridge.
+    review_priority: high
+    model_use: Optional Assumption Mode formula input for household_safe_yield_capture and deposit_mmf_substitution_offset.
+    review_question: Is current-spending conversion kept explicit rather than inferred from safe-asset balances?
+    source_gate_table: ratewall_assumption_mode_channel_promotion_decision.csv
+    allowed_model_use: assumption_mode_formula_input_static_only
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: proxy_grounded_measurement_weak_link_not_us_evidence_mode
+  - parameter: deposit_mmf_substitution_conditioner
+    channel: financialization_proxy_context
+    unit: share
+    low: 0.10
+    base: 0.25
+    high: 0.45
+    source_status: assumption_mode_formula_input_not_evidence_promotion
+    rationale: Explicit Assumption Mode conditioner for deposit-to-MMF substitution and safe-yield access.
+    source_note: MMF AUM and holdings do not identify household final holders or current-demand conversion.
+    literature_context: OFR, SEC N-MFP, ICI, and H.8 context should enter only as paired offset/drag conditioning.
+    evidence_needed: Holder-allocation and spending-timing bridge.
+    review_priority: medium
+    model_use: Optional Assumption Mode formula input for deposit_mmf_substitution_offset.
+    review_question: Are MMF substitution rows paired with bank-funding or allocation drag?
+    source_gate_table: ratewall_financialization_proxy_source_gate.csv
+    allowed_model_use: assumption_mode_formula_input_static_only
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: evidence_c_exp1_literature_calibrated_assumption_mode
+  - parameter: deposit_mmf_substitution_drag_share
+    channel: financialization_assumption_mode_deposit_mmf_pair
+    unit: share
+    low: 0.05
+    base: 0.10
+    high: 0.20
+    source_status: assumption_mode_formula_input_not_evidence_promotion
+    rationale: Explicit paired drag parameter so deposit/MMF/T-bill substitution cannot enter only as a household safe-yield offset.
+    source_note: This is a deterministic Assumption Mode drag share, not a bank-funding or credit-supply causal estimate.
+    literature_context: Should eventually be disciplined by bank funding, deposit migration, and credit-supply designs.
+    evidence_needed: Paired migration and bank/credit outcome bridge with double-count checks.
+    review_priority: high
+    model_use: Optional Assumption Mode formula input for deposit_mmf_substitution_drag.
+    review_question: Is MMF/T-bill substitution paired with a drag side before use?
+    source_gate_table: ratewall_assumption_mode_channel_promotion_decision.csv
+    allowed_model_use: assumption_mode_formula_input_static_only
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: evidence_c_exp1_literature_calibrated_assumption_mode
+  - parameter: deposit_competition_conditioner
+    channel: financialization_proxy_context
+    unit: share
+    low: 0.00
+    base: 0.00
+    high: 1.00
+    source_status: metadata_hook_not_formula_input
+    rationale: Metadata hook for local deposit-market structure conditioning.
+    source_note: Summary of Deposits/Call Report context cannot by itself support bank-competition causal claims.
+    literature_context: Deposit-market concentration may condition pass-through but does not replace identification.
+    evidence_needed: Identified pass-through design with household/account outcome bridge.
+    review_priority: low
+    model_use: Context conditioner only.
+    review_question: Is competition context kept out of formula handles?
+    source_gate_table: ratewall_financialization_proxy_source_gate.csv
+    allowed_model_use: metadata_hook_only_not_formula_input
+    scenario_implied_only: true
+    forbidden_claim_risk: medium_high
+    plausibility_status: context_proxy_only_not_prior
+  - parameter: firm_liquid_asset_cushion_share
+    channel: financialization_proxy_context
+    unit: share
+    low: 0.02
+    base: 0.05
+    high: 0.10
+    source_status: assumption_mode_formula_input_not_evidence_promotion
+    rationale: Evidence round C EXP-8 replacement-only firm liquid-asset cushion diagnostic, used only when the generic firm-cash attenuation share is zero.
+    source_note: Public aggregate liquidity does not identify investment or employment response.
+    literature_context: Z.1/FRED and QFR context can describe cushions but not causal firm behavior.
+    evidence_needed: Firm panel with cash, debt, interest, capex, and identified rate variation.
+    review_priority: medium
+    model_use: Optional Assumption Mode diagnostic for firm_liquid_asset_cushion; signed headline contribution stays zero until owner gate passes.
+    review_question: Does the double-count audit block reuse of the same cash stock?
+    source_gate_table: ratewall_financialization_double_count_audit.csv
+    allowed_model_use: assumption_mode_formula_input_static_only
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: evidence_c_exp8_diagnostic_only_non_promoted
+  - parameter: firm_net_interest_cushion_share
+    channel: financialization_proxy_context
+    unit: share
+    low: 0.00
+    base: 0.00
+    high: 1.00
+    source_status: metadata_hook_not_formula_input
+    rationale: Metadata hook for paired firm interest-received and interest-paid context.
+    source_note: Firm interest cushion is two-sided and cannot be used as a pure offset.
+    literature_context: Public firm cashflow context should be paired with rollover and real-investment drag surfaces.
+    evidence_needed: Firm-level net-interest and investment outcome panel.
+    review_priority: medium
+    model_use: Paired context hook only.
+    review_question: Are firm support and drag sides shown together?
+    source_gate_table: ratewall_financialization_proxy_source_gate.csv
+    allowed_model_use: metadata_hook_only_not_formula_input
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: context_proxy_only_not_prior
+  - parameter: firm_rollover_pressure_share
+    channel: financialization_proxy_context
+    unit: share
+    low: 0.05
+    base: 0.12
+    high: 0.25
+    source_status: assumption_mode_formula_input_not_evidence_promotion
+    rationale: Evidence round C EXP-8 nonfinancial corporate rollover-pressure diagnostic paired with the firm liquid-asset cushion.
+    source_note: Aggregate rollover pressure is not a firm-level refinancing outcome.
+    literature_context: QFR and Call Report context can anchor pressure but not promotion.
+    evidence_needed: Firm/loan-level maturity, floating-rate, refinancing, and outcome bridge.
+    review_priority: medium
+    model_use: Optional Assumption Mode diagnostic for firm_rollover_pressure_drag; signed headline contribution stays zero until owner gate passes.
+    review_question: Is borrower fragility kept separate from safe-yield capture?
+    source_gate_table: ratewall_financialization_proxy_source_gate.csv
+    allowed_model_use: assumption_mode_formula_input_static_only
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: evidence_c_exp8_diagnostic_only_non_promoted
+  - parameter: firm_short_rate_exposure_share
+    channel: financialization_proxy_context
+    unit: share
+    low: 0.00
+    base: 0.00
+    high: 1.00
+    source_status: metadata_hook_not_formula_input
+    rationale: Metadata hook for firm short-rate or floating-rate exposure design.
+    source_note: Public aggregates only anchor the proxy; promotion requires licensed debt schedule data.
+    literature_context: Floating-rate debt can move RateWall farther from the wall through borrower stress.
+    evidence_needed: Firm-level reference-rate, maturity, interest expense, and real-outcome panel.
+    review_priority: medium
+    model_use: Restricted-design context hook only.
+    review_question: Is short-rate exposure blocked from promotion without a licensed panel?
+    source_gate_table: ratewall_financialization_proxy_source_gate.csv
+    allowed_model_use: metadata_hook_only_not_formula_input
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: context_proxy_only_not_prior
+  - parameter: foreign_treasury_holder_leakage_share
+    channel: assumption_mode_recipient_leakage
+    unit: share
+    low: 0.22
+    base: 0.28
+    high: 0.32
+    source_status: evidence1_literature_calibrated_assumption_mode_not_evidence_promotion
+    rationale: Canonical Assumption-Mode Treasury demand-conversion haircut for foreign-holder leakage.
+    source_note: TIC/FRED holder share times current-window recycle haircut; custodial limits disclosed.
+    hold_note: "Existing foreign leakage (0.28 base) already removes non-U.S. demand; recycling is second-order and too close to holder-allocation/incidence for closure."
+    literature_context: About 30-32 percent of marketable Treasury holdings accrue abroad; recycle-to-US-demand remains labeled.
+    evidence_needed: Beneficial-owner and current-demand recycling bridge for any Evidence-Mode promotion.
+    review_priority: high
+    model_use: Labeled Assumption-Mode canonical haircut; not holder-allocation, incidence, welfare, or tax output.
+    review_question: Does the wrapper leave holder-allocation and Evidence Mode disabled?
+    source_gate_table: ratewall_assumption_mode_sidecar_channel_decision.csv
+    allowed_model_use: assumption_mode_canonical_haircut_not_evidence_promotion
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: evidence1_literature_calibrated_assumption
+  - parameter: interest_income_tax_timing_leakage_share
+    channel: assumption_mode_recipient_leakage
+    unit: share
+    low: 0.08
+    base: 0.18
+    high: 0.30
+    source_status: evidence1_literature_calibrated_assumption_mode_not_evidence_promotion
+    rationale: Evidence round 1 current-period timing haircut on remaining domestic public-interest offsets.
+    source_note: Timing haircut only; does not enable tax output, incidence, MPC, or welfare claims.
+    hold_note: "The canonical timing haircut is already calibrated; a recipient-weight diagnostic adds transparency only and is not needed for closure."
+    literature_context: Evidence round 1 constrains the live timing haircut to 0.08/0.18/0.30 while preserving non-incidence boundaries.
+    evidence_needed: Linked account, payer, tax-status, and spending bridge only for post-completion Evidence-Mode promotion.
+    review_priority: high
+    model_use: Canonical Assumption-Mode current-period timing haircut, not a tax-incidence or welfare output.
+    review_question: Is tax timing kept outside tax-incidence, tax-output, MPC, and welfare outputs?
+    candidate_source_literature: evidence1 timing-haircut calibration; public tax aggregate timing context
+    citation_handle: evidence1_interest_income_tax_timing_leakage_share
+    source_family: public_interest_income_timing_haircut_literature
+    identification_design: timing_haircut_not_tax_incidence_or_welfare
+    horizon_relevance: current_period_interest_income_timing_haircut
+    uncertainty_status: evidence1_literature_calibrated_assumption_mode
+    evidence_strength: literature_calibrated_labeled_prior_not_source_promoted_estimate
+    prior_basis: evidence1_tax_timing_haircut_0_08_0_18_0_30
+    external_review_status: evidence1_reviewed
+    upgrade_gate: owner_gated_post_completion_tax_status_and_spending_bridge
+    evidence_upgrade_blocker: tax_status_and_spending_micro_bridge_only_for_evidence_promotion
+    calibration_status: evidence1_literature_calibrated_timing_haircut
+    calibration_distribution:
+      shape: bounded_sensitivity
+      low: 0.08
+      base: 0.18
+      high: 0.30
+      formula: timing haircut on remaining domestic public-interest current-spend offset; not tax incidence, MPC, welfare, or Evidence Mode.
+    source_gate_table: ratewall_assumption_mode_sidecar_channel_decision.csv
+    allowed_model_use: assumption_mode_canonical_timing_haircut_not_tax_output
+    scenario_implied_only: true
+    forbidden_claim_risk: medium_high
+    plausibility_status: evidence1_literature_calibrated_assumption
+  - parameter: rate_sensitive_consumer_credit_stock_share_gdp
+    channel: assumption_mode_denominator_sidecar
+    unit: share_of_gdp
+    low: 0.00
+    base: 0.00
+    high: 0.08
+    source_status: assumption_mode_sidecar_not_evidence_promotion
+    rationale: Sidecar-only rate-sensitive consumer-credit stock scale for fast-repricing drag sensitivity.
+    source_note: Public aggregates do not promote consumer-credit demand incidence.
+    hold_note: "Even with EXP-6 satisfied, current consumer-credit sidecar rows are stale/out-of-band (β 0.90 vs Evidence round C high 0.80); keep zero for closure rather than introduce a last-minute D-side feature."
+    literature_context: Consumer credit can move RateWall farther from the wall but needs restricted account data for promotion.
+    evidence_needed: Account-level balance, APR reset, payment, delinquency, and spending bridge.
+    review_priority: high
+    model_use: Denominator sidecar only, excluded from canonical ratio.
+    review_question: Does consumer-credit stress leave the public source gate fail-closed?
+    source_gate_table: ratewall_assumption_mode_sidecar_channel_decision.csv
+    allowed_model_use: assumption_mode_sidecar_only_not_canonical_ratio
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: documented_hold_consumer_credit_sidecar_not_activated
+  - parameter: consumer_credit_reprice_beta
+    channel: assumption_mode_denominator_sidecar
+    unit: share
+    low: 0.00
+    base: 0.00
+    high: 1.00
+    source_status: assumption_mode_sidecar_not_evidence_promotion
+    rationale: Sidecar-only consumer-credit repricing sensitivity.
+    source_note: This is not a pricing model or APR pass-through estimate.
+    hold_note: "Even with EXP-6 satisfied, current consumer-credit sidecar rows are stale/out-of-band (β 0.90 vs Evidence round C high 0.80); keep zero for closure rather than introduce a last-minute D-side feature."
+    literature_context: Repricing beta remains speculative without account-level reset data.
+    evidence_needed: Account-level rate reset and payment response bridge.
+    review_priority: high
+    model_use: Denominator sidecar only, excluded from canonical ratio.
+    review_question: Are pricing outputs still disabled?
+    source_gate_table: ratewall_assumption_mode_sidecar_channel_decision.csv
+    allowed_model_use: assumption_mode_sidecar_only_not_canonical_ratio
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: documented_hold_consumer_credit_sidecar_not_activated
+  - parameter: consumer_credit_cashflow_drag_conversion
+    channel: assumption_mode_denominator_sidecar
+    unit: share
+    low: 0.00
+    base: 0.00
+    high: 0.90
+    source_status: assumption_mode_sidecar_not_evidence_promotion
+    rationale: Sidecar-only conversion from repriced consumer-credit cashflow to denominator drag.
+    source_note: Does not enable MPC, welfare, or incidence claims.
+    hold_note: "Even with EXP-6 satisfied, current consumer-credit sidecar rows are stale/out-of-band (β 0.90 vs Evidence round C high 0.80); keep zero for closure rather than introduce a last-minute D-side feature."
+    literature_context: Conversion requires linked payment and spending data.
+    evidence_needed: Restricted consumer-credit and spending panel.
+    review_priority: high
+    model_use: Denominator sidecar only, excluded from canonical ratio.
+    review_question: Is conversion explicitly speculative?
+    source_gate_table: ratewall_assumption_mode_sidecar_channel_decision.csv
+    allowed_model_use: assumption_mode_sidecar_only_not_canonical_ratio
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: documented_hold_consumer_credit_sidecar_not_activated
+  - parameter: cre_refi_drag_gdp_share_per_100bp_year
+    channel: assumption_mode_denominator_sidecar
+    unit: share_of_gdp_per_100bp_year
+    low: 0.00000
+    base: 0.00000
+    high: 0.00080
+    source_status: assumption_mode_sidecar_not_evidence_promotion
+    rationale: Sidecar-only CRE refinancing pressure sensitivity.
+    source_note: Public CRE aggregates do not identify representative refinancing outcomes.
+    literature_context: CRE refi pressure stays restricted-data design for promotion.
+    evidence_needed: Loan/property maturity, DSCR, NOI, refinancing, and outcome panel.
+    review_priority: high
+    model_use: Denominator sidecar only, excluded from canonical ratio.
+    review_question: Does public CRE context remain fail-closed?
+    source_gate_table: ratewall_assumption_mode_sidecar_channel_decision.csv
+    allowed_model_use: assumption_mode_sidecar_only_not_canonical_ratio
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: assumption_mode_sidecar_only
+  - parameter: private_credit_ndfi_credit_drag_share
+    channel: assumption_mode_denominator_sidecar
+    unit: share
+    low: 0.00
+    base: 0.00
+    high: 0.25
+    source_status: assumption_mode_sidecar_not_evidence_promotion
+    rationale: Sidecar-only nonbank/private-credit stress share of credit-supply drag.
+    source_note: Public BDC markers are labels, not representative private-credit weights.
+    literature_context: Private-credit promotion requires loan-level restricted data.
+    evidence_needed: Representative private-credit loan panel with borrower outcomes.
+    review_priority: high
+    model_use: Denominator sidecar only, excluded from canonical ratio.
+    review_question: Does the sidecar avoid using BDC rows as weights?
+    source_gate_table: ratewall_assumption_mode_sidecar_channel_decision.csv
+    allowed_model_use: assumption_mode_sidecar_only_not_canonical_ratio
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: assumption_mode_sidecar_only
+  - parameter: denominator_sidecar_overlap_discount_share
+    channel: assumption_mode_denominator_sidecar_overlap_guardrail
+    unit: share
+    low: 0.00
+    base: 0.00
+    high: 0.50
+    source_status: assumption_mode_sidecar_not_evidence_promotion
+    rationale: Explicit discount applied only when multiple denominator-drag sidecars are active, preventing silent one-for-one stacking across consumer-credit, CRE, and private-credit stress.
+    source_note: This is an overlap guardrail, not empirical covariance or joint-default evidence.
+    literature_context: Combined denominator-sidecar stress can double-count shared credit conditions unless overlap is surfaced.
+    evidence_needed: Joint micro/panel design linking consumer, CRE, and private-credit stress without duplicate real-activity mapping.
+    review_priority: high
+    model_use: Denominator sidecar overlap guardrail only, excluded from canonical ratio.
+    review_question: Are combined sidecars visibly discounted or labeled before comparison?
+    source_gate_table: ratewall_assumption_mode_sidecar_reasonableness_audit.csv
+    allowed_model_use: assumption_mode_sidecar_only_not_canonical_ratio
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: assumption_mode_sidecar_overlap_guardrail_only
+  - parameter: fixed_mortgage_payment_shield_share_of_household_borrowing_drag
+    channel: assumption_mode_denominator_sidecar
+    unit: share
+    low: 0.00
+    base: 0.00
+    high: 0.35
+    source_status: assumption_mode_sidecar_not_evidence_promotion
+    rationale: Sidecar-only housing lock-in payment-shield attenuation of household borrowing drag.
+    source_note: Does not construct reset calendars or housing price outputs.
+    hold_note: "Evidence round C's mortgage shield requires a household-borrowing component; the current formula applies to generic borrowing drag (`assumption_engine.py:808-810`), so zero is safer than activating a mis-scoped attenuation."
+    literature_context: Fixed-rate mortgage shelter can attenuate cashflow drag but cannot support welfare or mobility claims here.
+    evidence_needed: Loan-level reset/payment and household cashflow bridge.
+    review_priority: medium
+    model_use: Denominator sidecar only, excluded from canonical ratio.
+    review_question: Are reset-calendar and borrower-incidence outputs disabled?
+    source_gate_table: ratewall_assumption_mode_sidecar_channel_decision.csv
+    allowed_model_use: assumption_mode_sidecar_only_not_canonical_ratio
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: documented_hold_fixed_mortgage_shield_not_activated
+  - parameter: pension_contribution_relief_gdp_share_per_100bp_year
+    channel: assumption_mode_dynamic_sidecar
+    unit: share_of_gdp_per_100bp_year
+    low: 0.00000
+    base: 0.00000
+    high: 0.00035
+    source_status: assumption_mode_dynamic_sidecar_not_evidence_promotion
+    rationale: Dynamic-only pension/insurance contribution-relief sensitivity.
+    source_note: Does not enable beneficiary incidence, welfare, or liability valuation output.
+    hold_note: "Lagged institutional pass-through is defensible as zero in a one-year static/current-demand closure surface; activating it would add a dynamic timing claim."
+    literature_context: Institutional asset/liability timing is lagged and two-sided.
+    evidence_needed: Institution-level asset, liability, contribution, and distribution timing data.
+    review_priority: medium
+    model_use: Dynamic sidecar only, excluded from static canonical ratio.
+    review_question: Does institutional timing remain lagged and noncanonical?
+    source_gate_table: ratewall_assumption_mode_dynamic_sidecar_paths.csv
+    allowed_model_use: assumption_mode_dynamic_sidecar_only
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: documented_hold_pension_insurance_not_activated
+  - parameter: retirement_insurance_yield_spend_conversion_share
+    channel: assumption_mode_dynamic_sidecar
+    unit: share
+    low: 0.000
+    base: 0.000
+    high: 0.060
+    source_status: assumption_mode_dynamic_sidecar_not_evidence_promotion
+    rationale: Dynamic-only retirement/insurance yield-spend conversion sensitivity.
+    source_note: Does not identify beneficiary incidence or MPC.
+    hold_note: "Lagged institutional pass-through is defensible as zero in a one-year static/current-demand closure surface; activating it would add a dynamic timing claim."
+    literature_context: Yield pass-through to current spending needs microdata.
+    evidence_needed: Beneficiary distribution, account yield, and spending bridge.
+    review_priority: medium
+    model_use: Dynamic sidecar only, excluded from static canonical ratio.
+    review_question: Are MPC and welfare outputs still disabled?
+    source_gate_table: ratewall_assumption_mode_dynamic_sidecar_paths.csv
+    allowed_model_use: assumption_mode_dynamic_sidecar_only
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: documented_hold_pension_insurance_not_activated
+  - parameter: pension_insurance_pass_through_lag_years
+    channel: assumption_mode_dynamic_sidecar
+    unit: years
+    low: 0
+    base: 0
+    high: 10
+    source_status: assumption_mode_dynamic_sidecar_not_evidence_promotion
+    rationale: Dynamic-only positive-lag marker for pension/insurance pass-through.
+    source_note: Lag marker prevents static current-demand interpretation.
+    hold_note: "Lagged institutional pass-through is defensible as zero in a one-year static/current-demand closure surface; activating it would add a dynamic timing claim."
+    literature_context: Institutional asset/liability channels are not immediate household demand channels.
+    evidence_needed: Institution and beneficiary timing data.
+    review_priority: medium
+    model_use: Dynamic sidecar only, excluded from static canonical ratio.
+    review_question: Does the dynamic sidecar avoid static ratio entry?
+    source_gate_table: ratewall_assumption_mode_dynamic_sidecar_paths.csv
+    allowed_model_use: assumption_mode_dynamic_sidecar_only
+    scenario_implied_only: true
+    forbidden_claim_risk: high
+    plausibility_status: documented_hold_pension_insurance_not_activated

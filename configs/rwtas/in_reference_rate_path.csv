@@ -1,0 +1,15 @@
+scenario_id,month,reference_rate_id,annual_rate,shock_pass_through_multiplier,shock_eligible_flag
+baseline,2026-01,treasury_safe,0,1,true
+plus_100bp_year,2026-01,treasury_safe,0.0100,1,true
+baseline,2026-01,reserve_admin,0,1,true
+plus_100bp_year,2026-01,reserve_admin,0.0100,1,true
+baseline,2026-01,household_credit_ref,0,1,true
+plus_100bp_year,2026-01,household_credit_ref,0.0100,1,true
+baseline,2026-01,firm_credit_ref,0,1,true
+plus_100bp_year,2026-01,firm_credit_ref,0.0100,1,true
+baseline,2026-01,deposit_admin,0,0.4,true
+plus_100bp_year,2026-01,deposit_admin,0.0040,0.4,true
+baseline,2026-01,fixed_contract,0,0,false
+plus_100bp_year,2026-01,fixed_contract,0,0,false
+baseline,2026-01,zero,0,0,false
+plus_100bp_year,2026-01,zero,0,0,false

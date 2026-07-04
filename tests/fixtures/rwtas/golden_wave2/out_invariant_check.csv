@@ -1,0 +1,53 @@
+check_id,status,message
+T25_files,pass,all required pack CSVs load
+T25_bounds,pass,all pack rows satisfy low<=base<=high
+T25_labels,pass,all parameter rows carry input_basis_label
+T25_phase6_files,pass,Phase 6 pack CSVs load
+T25_phase6_bounds,pass,Phase 6 rows satisfy low<=base<=high
+T25_phase6_labels,pass,Phase 6 rows carry input_basis_label
+T25_phase6_include0,pass,include_flag=0 rows load for diagnostics
+T25_household_stock_splits_auto_installment_debt,pass,household_stock_splits auto_installment_debt base shares sum to 1
+T25_household_stock_splits_bond_equity_funds_lookthrough,pass,household_stock_splits bond_equity_funds_lookthrough base shares sum to 1
+T25_household_stock_splits_cds_time_deposits,pass,household_stock_splits cds_time_deposits base shares sum to 1
+T25_household_stock_splits_checking_savings_mmda_deposits,pass,household_stock_splits checking_savings_mmda_deposits base shares sum to 1
+T25_household_stock_splits_consumer_installment_debt_all,pass,household_stock_splits consumer_installment_debt_all base shares sum to 1
+T25_household_stock_splits_credit_card_revolving_balances,pass,household_stock_splits credit_card_revolving_balances base shares sum to 1
+T25_household_stock_splits_dc_pension_assets,pass,household_stock_splits dc_pension_assets base shares sum to 1
+T25_household_stock_splits_deposits_checkable,pass,household_stock_splits deposits_checkable base shares sum to 1
+T25_household_stock_splits_deposits_savings_mmda,pass,household_stock_splits deposits_savings_mmda base shares sum to 1
+T25_household_stock_splits_deposits_time_cds,pass,household_stock_splits deposits_time_cds base shares sum to 1
+T25_household_stock_splits_mmf_shares,pass,household_stock_splits mmf_shares base shares sum to 1
+T25_household_stock_splits_mortgages_arm_heloc,pass,household_stock_splits mortgages_arm_heloc base shares sum to 1
+T25_household_stock_splits_mortgages_fixed,pass,household_stock_splits mortgages_fixed base shares sum to 1
+T25_household_stock_splits_personal_installment_debt,pass,household_stock_splits personal_installment_debt base shares sum to 1
+T25_household_stock_splits_student_installment_debt,pass,household_stock_splits student_installment_debt base shares sum to 1
+T25_household_stock_splits_treasuries_direct,pass,household_stock_splits treasuries_direct base shares sum to 1
+T25_lookthrough_shares_banks_retained_margin,pass,lookthrough_shares banks_retained_margin base shares sum to 1
+T25_lookthrough_shares_db_pensions,pass,lookthrough_shares db_pensions base shares sum to 1
+T25_lookthrough_shares_dc_pensions,pass,lookthrough_shares dc_pensions base shares sum to 1
+T25_lookthrough_shares_insurers,pass,lookthrough_shares insurers base shares sum to 1
+T25_lookthrough_shares_mmfs,pass,lookthrough_shares mmfs base shares sum to 0.999999999999999976
+T25_lookthrough_shares_mutual_funds_etfs,pass,lookthrough_shares mutual_funds_etfs base shares sum to 1
+T26_all_marketable_treasuries,pass,all_marketable_treasuries shares sum to 1.000000000000000025 including unallocated
+T26_treasury_bills,pass,treasury_bills shares sum to 0.999999999999999912 including unallocated
+T26_treasury_notes_bonds_tips,pass,treasury_notes_bonds_tips shares sum to 0.999999999999999994 including unallocated
+T27_treasury_stock,pass,bills=6819.3 coupons=23822.3 total=30641.6
+T28,pass,look-through shares sum to 1 and route once
+T29,pass,remittance/deferred asset logic is nonnegative where required
+T30,pass,120-month RW sums N and D; year5 gov interest > year1
+T31,pass,headline carries ricardian columns and L/B/H rows
+T32,pass,legacy comparator emitted as comparator_only
+T33,pass,retiree collapse diagnostic emitted
+T34,pass,calibrated reward-vs-avoided-interest fungibility uses same cell nets
+T35,pass,A1 deposit family split and beta ordering enforced
+T36,pass,A2 mortgage interest paid equals holder receipts
+T37,pass,A6 MMF asset closure and pass-through enforced
+T38,pass,Phase 6 waterfall scaffold is additive and labeled
+T39,pass,Phase 6 overlap registry prevents double assignment
+T40,pass,year-1 RW_full D is within legacy scalar completeness gate
+T41,pass,deposit holder rows route exactly once and match bank payment
+T42,pass,additive waterfall inputs have no exposure-level duplicates
+T43,pass,cashflow leg-gross net reconciles to headline net
+T44,pass,CRE cashflow routing closes payer and holder legs
+T53,pass,TDCSim measured coupon-roll schedule is intact and steepens base path
+T55,pass,diagnostic/scenario tables are isolated from headline additive rows

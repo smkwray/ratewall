@@ -1,0 +1,5 @@
+calendar_year,asset_weighted_average_mmf_expense_ratio_pct,money_market_fund_expenses_waived_bil,funds_offering_waivers_pct,waiver_share_timing,source_id,notes
+2021,0.11,8.4,97,year-end 2021,ICI_EXPENSES_FEES_2023;ICI_EXPENSES_FEES_2024,ICI says waivers put in place in 2020/2021 were pared back as rates rose; 2023 and 2024 reports cite 2021 starting point.
+2022,0.13,4.1,74,December 2022,ICI_EXPENSES_FEES_2022,ICI 2022 expense report: waivers decreased from $8.4bn in 2021 to $4.1bn in 2022; waiver share declined from 96% in February 2022 to 74% in December 2022; average expense ratio rose 2 bp to 0.13%.
+2023,0.22,1.6,65,year-end 2023,ICI_EXPENSES_FEES_2023,ICI 2023 expense report: average expense ratio rose 9 bp to 0.22%; waivers down to $1.6bn; waiver share 65% by year-end 2023.
+2024,0.22,1.5,64,year-end 2024,ICI_EXPENSES_FEES_2024,ICI 2024 expense report: average expense ratio remained 0.22%; waivers down to $1.5bn; waiver share 64% by year-end 2024.

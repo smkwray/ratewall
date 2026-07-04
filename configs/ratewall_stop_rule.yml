@@ -1,0 +1,58 @@
+schema: ratewall.stop_rule.v1
+minimum_treadmill_categories: 3
+
+meaningful_change_paths:
+  - src/ratewall/accounting/assumption_engine.py
+  - src/ratewall/accounting/ratewall_threshold.py
+  - src/ratewall/accounting/scenarios.py
+  - src/ratewall/databook/path_ratio_program.py
+  - src/ratewall/databook/spine_*.py
+  - configs/ratewall_assumption_sets.yml
+  - configs/ratewall_parameter_packs.yml
+  - configs/ratewall_keep_tables_*.yml
+  - tests/econ/*.py
+
+waiver_paths:
+  - notes/stop_rule_waivers/*.md
+
+categories:
+  context_table:
+    path_globs:
+      - "**/*_context*.csv"
+      - "**/*_source_contract*.csv"
+      - "**/*_queue*.csv"
+      - "**/*_blocker*.csv"
+  gate_table:
+    path_globs:
+      - "**/*_gate*.csv"
+      - "**/*_claim_gate*.csv"
+      - "**/*_readiness*.csv"
+  audit_table:
+    path_globs:
+      - "**/*_audit*.csv"
+      - "**/*_invariant*.csv"
+      - "**/*_preflight*.csv"
+  disabled_switch_test:
+    path_globs:
+      - "tests/**/*disabled*switch*.py"
+      - "tests/**/*forbidden*switch*.py"
+      - "tests/**/*holder_allocation*.py"
+      - "tests/**/*evidence_mode*.py"
+    content_regexes:
+      - "disabled[_ -]?switch"
+      - "forbidden[_ -]?switch"
+      - "holder_allocation"
+      - "evidence_mode_enabled"
+  memo_workplan:
+    path_globs:
+      - "**/*memo*.md"
+      - "**/*workplan*.md"
+      - "**/*action_plan*.md"
+      - "**/*handoff*.md"
+      - "**/*blocker*.md"
+
+message: >-
+  Stop-rule violation: this diff adds the fail-closed treadmill pattern
+  without a real spine/calibration/paper/economic-test change. Denominator
+  hardening remains allowed as a result or explicit decision, not another
+  context/gate/audit/test/memo layer on an already recorded blocker.

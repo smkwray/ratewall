@@ -1,0 +1,4 @@
+tenor,old_empirical_impulse_beta_bp_per_100bp,project_12m_rectangular_expectations_bp,market_perceived_expectations_hl9m_bp,market_perceived_expectations_hl12m_base_bp,market_perceived_expectations_hl15m_bp,base_delta_tp_bp,reconstructed_beta_base_bp,empirical_minus_reconstructed_bp,verdict
+2y,55.0,50.0,45.58,54.1,60.42,2.0,56.1,-1.1,closes
+10y,20.0,10.0,10.82,14.41,17.96,6.0,20.41,-0.41,closes
+30y,13.0,3.33,3.61,4.81,6.01,8.0,12.81,0.19,closes

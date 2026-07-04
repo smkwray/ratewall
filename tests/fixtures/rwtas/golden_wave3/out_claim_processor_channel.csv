@@ -1,0 +1,511 @@
+year,band,band_label,channel_id,rule_id,instrument_family,gross_flow_delta_bil,converted_net_bil,basis
+2026,low,low_sensitivity_corner,cashflow_core,deposits_checkable_interest,deposits_checkable,0,0,opening-stock holder rows plus bank payment row
+2026,low,low_sensitivity_corner,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,7.7337,1.120311749999999975638845,opening-stock holder rows plus bank payment row
+2026,low,low_sensitivity_corner,cashflow_core,deposits_time_cds_interest,deposits_time_cds,12.885,1.44559049999999995941225,opening-stock holder rows plus bank payment row
+2026,low,low_sensitivity_corner,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,40.171,3.5537200752977455617957,A6 short-funding receiver plus incidence split
+2026,low,low_sensitivity_corner,cashflow_core,mortgages_fixed_interest,mortgages_fixed,0.433951,-0.1005721520777070061517602468,A2 mortgage payer plus holder decomposition
+2026,low,low_sensitivity_corner,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-1.679819591082802543801098726,A2 mortgage payer plus holder decomposition
+2026,low,low_sensitivity_corner,cashflow_core,heloc_interest,heloc,4.46,-0.957116,household floating credit
+2026,low,low_sensitivity_corner,cashflow_core,credit_card_revolving_interest,credit_card_revolving,5.1052,-2.24067228,household revolving credit
+2026,low,low_sensitivity_corner,cashflow_core,auto_installment_debt_interest,auto_installment_debt,0.249616,-0.0920334192,consumer new-flow repricing
+2026,low,low_sensitivity_corner,cashflow_core,student_loans_private_interest,student_loans_private,0,0,consumer new-flow repricing
+2026,low,low_sensitivity_corner,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.059328,-0.0224675136,consumer new-flow repricing
+2026,low,low_sensitivity_corner,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,15.21381,-1.6628694329999999520764985,issuer-to-holder private credit route
+2026,low,low_sensitivity_corner,cashflow_core,syndicated_loans_interest,syndicated_loans,5.9347,-0.7359028,issuer-to-holder private credit route
+2026,low,low_sensitivity_corner,cashflow_core,corporate_bonds_interest,corporate_bonds,0.75109,-0.0842433713999999996282223,issuer-to-holder private credit route
+2026,low,low_sensitivity_corner,cashflow_core,municipal_securities_interest,municipal_securities,0.1853436,-0.0612511076243966400005661,issuer-to-holder private credit route
+2026,low,low_sensitivity_corner,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,12.24,-2.088755999999999980722,CRE owner payer routes plus holder split
+2026,low,low_sensitivity_corner,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,0.1728,-0.02948831999999999972784,CRE owner payer routes plus holder split
+2027,low,low_sensitivity_corner,cashflow_core,deposits_checkable_interest,deposits_checkable,0,0,opening-stock holder rows plus bank payment row
+2027,low,low_sensitivity_corner,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,7.7337,1.120311749999999975638845,opening-stock holder rows plus bank payment row
+2027,low,low_sensitivity_corner,cashflow_core,deposits_time_cds_interest,deposits_time_cds,12.885,1.44559049999999995941225,opening-stock holder rows plus bank payment row
+2027,low,low_sensitivity_corner,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,40.171,3.5537200752977455617957,A6 short-funding receiver plus incidence split
+2027,low,low_sensitivity_corner,cashflow_core,mortgages_fixed_interest,mortgages_fixed,0.433951,-0.1005721520777070061517602468,A2 mortgage payer plus holder decomposition
+2027,low,low_sensitivity_corner,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-1.679819591082802543801098726,A2 mortgage payer plus holder decomposition
+2027,low,low_sensitivity_corner,cashflow_core,heloc_interest,heloc,4.46,-0.957116,household floating credit
+2027,low,low_sensitivity_corner,cashflow_core,credit_card_revolving_interest,credit_card_revolving,5.1052,-2.24067228,household revolving credit
+2027,low,low_sensitivity_corner,cashflow_core,auto_installment_debt_interest,auto_installment_debt,0.499232,-0.1840668384,consumer new-flow repricing
+2027,low,low_sensitivity_corner,cashflow_core,student_loans_private_interest,student_loans_private,0,0,consumer new-flow repricing
+2027,low,low_sensitivity_corner,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.118656,-0.0449350272,consumer new-flow repricing
+2027,low,low_sensitivity_corner,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,15.21381,-1.6628694329999999520764985,issuer-to-holder private credit route
+2027,low,low_sensitivity_corner,cashflow_core,syndicated_loans_interest,syndicated_loans,5.9347,-0.7359028,issuer-to-holder private credit route
+2027,low,low_sensitivity_corner,cashflow_core,corporate_bonds_interest,corporate_bonds,3.00436,-0.3369734855999999985128892,issuer-to-holder private credit route
+2027,low,low_sensitivity_corner,cashflow_core,municipal_securities_interest,municipal_securities,0.7413744,-0.2450044304975865600022644,issuer-to-holder private credit route
+2027,low,low_sensitivity_corner,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,12.24,-2.088755999999999980722,CRE owner payer routes plus holder split
+2027,low,low_sensitivity_corner,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,0.6912,-0.11795327999999999891136,CRE owner payer routes plus holder split
+2028,low,low_sensitivity_corner,cashflow_core,deposits_checkable_interest,deposits_checkable,0,0,opening-stock holder rows plus bank payment row
+2028,low,low_sensitivity_corner,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,7.7337,1.120311749999999975638845,opening-stock holder rows plus bank payment row
+2028,low,low_sensitivity_corner,cashflow_core,deposits_time_cds_interest,deposits_time_cds,12.885,1.44559049999999995941225,opening-stock holder rows plus bank payment row
+2028,low,low_sensitivity_corner,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,40.171,3.5537200752977455617957,A6 short-funding receiver plus incidence split
+2028,low,low_sensitivity_corner,cashflow_core,mortgages_fixed_interest,mortgages_fixed,0.433951,-0.1005721520777070061517602468,A2 mortgage payer plus holder decomposition
+2028,low,low_sensitivity_corner,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-1.679819591082802543801098726,A2 mortgage payer plus holder decomposition
+2028,low,low_sensitivity_corner,cashflow_core,heloc_interest,heloc,4.46,-0.957116,household floating credit
+2028,low,low_sensitivity_corner,cashflow_core,credit_card_revolving_interest,credit_card_revolving,5.1052,-2.24067228,household revolving credit
+2028,low,low_sensitivity_corner,cashflow_core,auto_installment_debt_interest,auto_installment_debt,0.499232,-0.1840668384,consumer new-flow repricing
+2028,low,low_sensitivity_corner,cashflow_core,student_loans_private_interest,student_loans_private,0,0,consumer new-flow repricing
+2028,low,low_sensitivity_corner,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.118656,-0.0449350272,consumer new-flow repricing
+2028,low,low_sensitivity_corner,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,15.21381,-1.6628694329999999520764985,issuer-to-holder private credit route
+2028,low,low_sensitivity_corner,cashflow_core,syndicated_loans_interest,syndicated_loans,5.9347,-0.7359028,issuer-to-holder private credit route
+2028,low,low_sensitivity_corner,cashflow_core,corporate_bonds_interest,corporate_bonds,4.50654,-0.5054602283999999977693338,issuer-to-holder private credit route
+2028,low,low_sensitivity_corner,cashflow_core,municipal_securities_interest,municipal_securities,1.1120616,-0.3675066457463798400033966,issuer-to-holder private credit route
+2028,low,low_sensitivity_corner,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,12.24,-2.088755999999999980722,CRE owner payer routes plus holder split
+2028,low,low_sensitivity_corner,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,1.0368,-0.17692991999999999836704,CRE owner payer routes plus holder split
+2029,low,low_sensitivity_corner,cashflow_core,deposits_checkable_interest,deposits_checkable,0,0,opening-stock holder rows plus bank payment row
+2029,low,low_sensitivity_corner,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,7.7337,1.120311749999999975638845,opening-stock holder rows plus bank payment row
+2029,low,low_sensitivity_corner,cashflow_core,deposits_time_cds_interest,deposits_time_cds,12.885,1.44559049999999995941225,opening-stock holder rows plus bank payment row
+2029,low,low_sensitivity_corner,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,40.171,3.5537200752977455617957,A6 short-funding receiver plus incidence split
+2029,low,low_sensitivity_corner,cashflow_core,mortgages_fixed_interest,mortgages_fixed,0.433951,-0.1005721520777070061517602468,A2 mortgage payer plus holder decomposition
+2029,low,low_sensitivity_corner,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-1.679819591082802543801098726,A2 mortgage payer plus holder decomposition
+2029,low,low_sensitivity_corner,cashflow_core,heloc_interest,heloc,4.46,-0.957116,household floating credit
+2029,low,low_sensitivity_corner,cashflow_core,credit_card_revolving_interest,credit_card_revolving,5.1052,-2.24067228,household revolving credit
+2029,low,low_sensitivity_corner,cashflow_core,auto_installment_debt_interest,auto_installment_debt,0.499232,-0.1840668384,consumer new-flow repricing
+2029,low,low_sensitivity_corner,cashflow_core,student_loans_private_interest,student_loans_private,0,0,consumer new-flow repricing
+2029,low,low_sensitivity_corner,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.118656,-0.0449350272,consumer new-flow repricing
+2029,low,low_sensitivity_corner,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,15.21381,-1.6628694329999999520764985,issuer-to-holder private credit route
+2029,low,low_sensitivity_corner,cashflow_core,syndicated_loans_interest,syndicated_loans,5.9347,-0.7359028,issuer-to-holder private credit route
+2029,low,low_sensitivity_corner,cashflow_core,corporate_bonds_interest,corporate_bonds,6.00872,-0.6739469711999999970257784,issuer-to-holder private credit route
+2029,low,low_sensitivity_corner,cashflow_core,municipal_securities_interest,municipal_securities,1.4827488,-0.4900088609951731200045288,issuer-to-holder private credit route
+2029,low,low_sensitivity_corner,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,12.24,-2.088755999999999980722,CRE owner payer routes plus holder split
+2029,low,low_sensitivity_corner,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,1.3824,-0.23590655999999999782272,CRE owner payer routes plus holder split
+2030,low,low_sensitivity_corner,cashflow_core,deposits_checkable_interest,deposits_checkable,0,0,opening-stock holder rows plus bank payment row
+2030,low,low_sensitivity_corner,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,7.7337,1.120311749999999975638845,opening-stock holder rows plus bank payment row
+2030,low,low_sensitivity_corner,cashflow_core,deposits_time_cds_interest,deposits_time_cds,12.885,1.44559049999999995941225,opening-stock holder rows plus bank payment row
+2030,low,low_sensitivity_corner,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,40.171,3.5537200752977455617957,A6 short-funding receiver plus incidence split
+2030,low,low_sensitivity_corner,cashflow_core,mortgages_fixed_interest,mortgages_fixed,0.433951,-0.1005721520777070061517602468,A2 mortgage payer plus holder decomposition
+2030,low,low_sensitivity_corner,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-1.679819591082802543801098726,A2 mortgage payer plus holder decomposition
+2030,low,low_sensitivity_corner,cashflow_core,heloc_interest,heloc,4.46,-0.957116,household floating credit
+2030,low,low_sensitivity_corner,cashflow_core,credit_card_revolving_interest,credit_card_revolving,5.1052,-2.24067228,household revolving credit
+2030,low,low_sensitivity_corner,cashflow_core,auto_installment_debt_interest,auto_installment_debt,0.499232,-0.1840668384,consumer new-flow repricing
+2030,low,low_sensitivity_corner,cashflow_core,student_loans_private_interest,student_loans_private,0,0,consumer new-flow repricing
+2030,low,low_sensitivity_corner,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.118656,-0.0449350272,consumer new-flow repricing
+2030,low,low_sensitivity_corner,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,15.21381,-1.6628694329999999520764985,issuer-to-holder private credit route
+2030,low,low_sensitivity_corner,cashflow_core,syndicated_loans_interest,syndicated_loans,5.9347,-0.7359028,issuer-to-holder private credit route
+2030,low,low_sensitivity_corner,cashflow_core,corporate_bonds_interest,corporate_bonds,7.5109,-0.842433713999999996282223,issuer-to-holder private credit route
+2030,low,low_sensitivity_corner,cashflow_core,municipal_securities_interest,municipal_securities,1.853436,-0.612511076243966400005661,issuer-to-holder private credit route
+2030,low,low_sensitivity_corner,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,12.24,-2.088755999999999980722,CRE owner payer routes plus holder split
+2030,low,low_sensitivity_corner,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,1.728,-0.2948831999999999972784,CRE owner payer routes plus holder split
+2031,low,low_sensitivity_corner,cashflow_core,deposits_checkable_interest,deposits_checkable,0,0,opening-stock holder rows plus bank payment row
+2031,low,low_sensitivity_corner,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,7.7337,1.120311749999999975638845,opening-stock holder rows plus bank payment row
+2031,low,low_sensitivity_corner,cashflow_core,deposits_time_cds_interest,deposits_time_cds,12.885,1.44559049999999995941225,opening-stock holder rows plus bank payment row
+2031,low,low_sensitivity_corner,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,40.171,3.5537200752977455617957,A6 short-funding receiver plus incidence split
+2031,low,low_sensitivity_corner,cashflow_core,mortgages_fixed_interest,mortgages_fixed,0.433951,-0.1005721520777070061517602468,A2 mortgage payer plus holder decomposition
+2031,low,low_sensitivity_corner,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-1.679819591082802543801098726,A2 mortgage payer plus holder decomposition
+2031,low,low_sensitivity_corner,cashflow_core,heloc_interest,heloc,4.46,-0.957116,household floating credit
+2031,low,low_sensitivity_corner,cashflow_core,credit_card_revolving_interest,credit_card_revolving,5.1052,-2.24067228,household revolving credit
+2031,low,low_sensitivity_corner,cashflow_core,auto_installment_debt_interest,auto_installment_debt,0.499232,-0.1840668384,consumer new-flow repricing
+2031,low,low_sensitivity_corner,cashflow_core,student_loans_private_interest,student_loans_private,0,0,consumer new-flow repricing
+2031,low,low_sensitivity_corner,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.118656,-0.0449350272,consumer new-flow repricing
+2031,low,low_sensitivity_corner,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,15.21381,-1.6628694329999999520764985,issuer-to-holder private credit route
+2031,low,low_sensitivity_corner,cashflow_core,syndicated_loans_interest,syndicated_loans,5.9347,-0.7359028,issuer-to-holder private credit route
+2031,low,low_sensitivity_corner,cashflow_core,corporate_bonds_interest,corporate_bonds,9.01308,-1.0109204567999999955386676,issuer-to-holder private credit route
+2031,low,low_sensitivity_corner,cashflow_core,municipal_securities_interest,municipal_securities,2.2241232,-0.7350132914927596800067932,issuer-to-holder private credit route
+2031,low,low_sensitivity_corner,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,12.24,-2.088755999999999980722,CRE owner payer routes plus holder split
+2031,low,low_sensitivity_corner,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,2.0736,-0.35385983999999999673408,CRE owner payer routes plus holder split
+2032,low,low_sensitivity_corner,cashflow_core,deposits_checkable_interest,deposits_checkable,0,0,opening-stock holder rows plus bank payment row
+2032,low,low_sensitivity_corner,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,7.7337,1.120311749999999975638845,opening-stock holder rows plus bank payment row
+2032,low,low_sensitivity_corner,cashflow_core,deposits_time_cds_interest,deposits_time_cds,12.885,1.44559049999999995941225,opening-stock holder rows plus bank payment row
+2032,low,low_sensitivity_corner,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,40.171,3.5537200752977455617957,A6 short-funding receiver plus incidence split
+2032,low,low_sensitivity_corner,cashflow_core,mortgages_fixed_interest,mortgages_fixed,0.433951,-0.1005721520777070061517602468,A2 mortgage payer plus holder decomposition
+2032,low,low_sensitivity_corner,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-1.679819591082802543801098726,A2 mortgage payer plus holder decomposition
+2032,low,low_sensitivity_corner,cashflow_core,heloc_interest,heloc,4.46,-0.957116,household floating credit
+2032,low,low_sensitivity_corner,cashflow_core,credit_card_revolving_interest,credit_card_revolving,5.1052,-2.24067228,household revolving credit
+2032,low,low_sensitivity_corner,cashflow_core,auto_installment_debt_interest,auto_installment_debt,0.499232,-0.1840668384,consumer new-flow repricing
+2032,low,low_sensitivity_corner,cashflow_core,student_loans_private_interest,student_loans_private,0,0,consumer new-flow repricing
+2032,low,low_sensitivity_corner,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.118656,-0.0449350272,consumer new-flow repricing
+2032,low,low_sensitivity_corner,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,15.21381,-1.6628694329999999520764985,issuer-to-holder private credit route
+2032,low,low_sensitivity_corner,cashflow_core,syndicated_loans_interest,syndicated_loans,5.9347,-0.7359028,issuer-to-holder private credit route
+2032,low,low_sensitivity_corner,cashflow_core,corporate_bonds_interest,corporate_bonds,10.51526,-1.1794071995999999947951122,issuer-to-holder private credit route
+2032,low,low_sensitivity_corner,cashflow_core,municipal_securities_interest,municipal_securities,2.5948104,-0.8575155067415529600079254,issuer-to-holder private credit route
+2032,low,low_sensitivity_corner,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,12.24,-2.088755999999999980722,CRE owner payer routes plus holder split
+2032,low,low_sensitivity_corner,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,2.4192,-0.41283647999999999618976,CRE owner payer routes plus holder split
+2033,low,low_sensitivity_corner,cashflow_core,deposits_checkable_interest,deposits_checkable,0,0,opening-stock holder rows plus bank payment row
+2033,low,low_sensitivity_corner,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,7.7337,1.120311749999999975638845,opening-stock holder rows plus bank payment row
+2033,low,low_sensitivity_corner,cashflow_core,deposits_time_cds_interest,deposits_time_cds,12.885,1.44559049999999995941225,opening-stock holder rows plus bank payment row
+2033,low,low_sensitivity_corner,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,40.171,3.5537200752977455617957,A6 short-funding receiver plus incidence split
+2033,low,low_sensitivity_corner,cashflow_core,mortgages_fixed_interest,mortgages_fixed,0.433951,-0.1005721520777070061517602468,A2 mortgage payer plus holder decomposition
+2033,low,low_sensitivity_corner,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-1.679819591082802543801098726,A2 mortgage payer plus holder decomposition
+2033,low,low_sensitivity_corner,cashflow_core,heloc_interest,heloc,4.46,-0.957116,household floating credit
+2033,low,low_sensitivity_corner,cashflow_core,credit_card_revolving_interest,credit_card_revolving,5.1052,-2.24067228,household revolving credit
+2033,low,low_sensitivity_corner,cashflow_core,auto_installment_debt_interest,auto_installment_debt,0.499232,-0.1840668384,consumer new-flow repricing
+2033,low,low_sensitivity_corner,cashflow_core,student_loans_private_interest,student_loans_private,0,0,consumer new-flow repricing
+2033,low,low_sensitivity_corner,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.118656,-0.0449350272,consumer new-flow repricing
+2033,low,low_sensitivity_corner,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,15.21381,-1.6628694329999999520764985,issuer-to-holder private credit route
+2033,low,low_sensitivity_corner,cashflow_core,syndicated_loans_interest,syndicated_loans,5.9347,-0.7359028,issuer-to-holder private credit route
+2033,low,low_sensitivity_corner,cashflow_core,corporate_bonds_interest,corporate_bonds,12.01744,-1.3478939423999999940515568,issuer-to-holder private credit route
+2033,low,low_sensitivity_corner,cashflow_core,municipal_securities_interest,municipal_securities,2.9654976,-0.9800177219903462400090576,issuer-to-holder private credit route
+2033,low,low_sensitivity_corner,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,12.24,-2.088755999999999980722,CRE owner payer routes plus holder split
+2033,low,low_sensitivity_corner,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,2.7648,-0.47181311999999999564544,CRE owner payer routes plus holder split
+2034,low,low_sensitivity_corner,cashflow_core,deposits_checkable_interest,deposits_checkable,0,0,opening-stock holder rows plus bank payment row
+2034,low,low_sensitivity_corner,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,7.7337,1.120311749999999975638845,opening-stock holder rows plus bank payment row
+2034,low,low_sensitivity_corner,cashflow_core,deposits_time_cds_interest,deposits_time_cds,12.885,1.44559049999999995941225,opening-stock holder rows plus bank payment row
+2034,low,low_sensitivity_corner,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,40.171,3.5537200752977455617957,A6 short-funding receiver plus incidence split
+2034,low,low_sensitivity_corner,cashflow_core,mortgages_fixed_interest,mortgages_fixed,0.433951,-0.1005721520777070061517602468,A2 mortgage payer plus holder decomposition
+2034,low,low_sensitivity_corner,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-1.679819591082802543801098726,A2 mortgage payer plus holder decomposition
+2034,low,low_sensitivity_corner,cashflow_core,heloc_interest,heloc,4.46,-0.957116,household floating credit
+2034,low,low_sensitivity_corner,cashflow_core,credit_card_revolving_interest,credit_card_revolving,5.1052,-2.24067228,household revolving credit
+2034,low,low_sensitivity_corner,cashflow_core,auto_installment_debt_interest,auto_installment_debt,0.499232,-0.1840668384,consumer new-flow repricing
+2034,low,low_sensitivity_corner,cashflow_core,student_loans_private_interest,student_loans_private,0,0,consumer new-flow repricing
+2034,low,low_sensitivity_corner,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.118656,-0.0449350272,consumer new-flow repricing
+2034,low,low_sensitivity_corner,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,15.21381,-1.6628694329999999520764985,issuer-to-holder private credit route
+2034,low,low_sensitivity_corner,cashflow_core,syndicated_loans_interest,syndicated_loans,5.9347,-0.7359028,issuer-to-holder private credit route
+2034,low,low_sensitivity_corner,cashflow_core,corporate_bonds_interest,corporate_bonds,13.51962,-1.5163806851999999933080014,issuer-to-holder private credit route
+2034,low,low_sensitivity_corner,cashflow_core,municipal_securities_interest,municipal_securities,3.3361848,-1.1025199372391395200101898,issuer-to-holder private credit route
+2034,low,low_sensitivity_corner,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,12.24,-2.088755999999999980722,CRE owner payer routes plus holder split
+2034,low,low_sensitivity_corner,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,3.1104,-0.53078975999999999510112,CRE owner payer routes plus holder split
+2035,low,low_sensitivity_corner,cashflow_core,deposits_checkable_interest,deposits_checkable,0,0,opening-stock holder rows plus bank payment row
+2035,low,low_sensitivity_corner,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,7.7337,1.120311749999999975638845,opening-stock holder rows plus bank payment row
+2035,low,low_sensitivity_corner,cashflow_core,deposits_time_cds_interest,deposits_time_cds,12.885,1.44559049999999995941225,opening-stock holder rows plus bank payment row
+2035,low,low_sensitivity_corner,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,40.171,3.5537200752977455617957,A6 short-funding receiver plus incidence split
+2035,low,low_sensitivity_corner,cashflow_core,mortgages_fixed_interest,mortgages_fixed,0.433951,-0.1005721520777070061517602468,A2 mortgage payer plus holder decomposition
+2035,low,low_sensitivity_corner,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-1.679819591082802543801098726,A2 mortgage payer plus holder decomposition
+2035,low,low_sensitivity_corner,cashflow_core,heloc_interest,heloc,4.46,-0.957116,household floating credit
+2035,low,low_sensitivity_corner,cashflow_core,credit_card_revolving_interest,credit_card_revolving,5.1052,-2.24067228,household revolving credit
+2035,low,low_sensitivity_corner,cashflow_core,auto_installment_debt_interest,auto_installment_debt,0.499232,-0.1840668384,consumer new-flow repricing
+2035,low,low_sensitivity_corner,cashflow_core,student_loans_private_interest,student_loans_private,0,0,consumer new-flow repricing
+2035,low,low_sensitivity_corner,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.118656,-0.0449350272,consumer new-flow repricing
+2035,low,low_sensitivity_corner,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,15.21381,-1.6628694329999999520764985,issuer-to-holder private credit route
+2035,low,low_sensitivity_corner,cashflow_core,syndicated_loans_interest,syndicated_loans,5.9347,-0.7359028,issuer-to-holder private credit route
+2035,low,low_sensitivity_corner,cashflow_core,corporate_bonds_interest,corporate_bonds,15.0218,-1.684867427999999992564446,issuer-to-holder private credit route
+2035,low,low_sensitivity_corner,cashflow_core,municipal_securities_interest,municipal_securities,3.706872,-1.225022152487932800011322,issuer-to-holder private credit route
+2035,low,low_sensitivity_corner,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,12.24,-2.088755999999999980722,CRE owner payer routes plus holder split
+2035,low,low_sensitivity_corner,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,3.456,-0.5897663999999999945568,CRE owner payer routes plus holder split
+2026,base,base,cashflow_core,deposits_checkable_interest,deposits_checkable,6.213,0.74549915,opening-stock holder rows plus bank payment row
+2026,base,base,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,22.673875,3.6403050625,opening-stock holder rows plus bank payment row
+2026,base,base,cashflow_core,deposits_time_cds_interest,deposits_time_cds,29.346375,3.1784935125,opening-stock holder rows plus bank payment row
+2026,base,base,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,44.897,5.1115917947484977146311,A6 short-funding receiver plus incidence split
+2026,base,base,cashflow_core,mortgages_fixed_interest,mortgages_fixed,3.037657,-0.955215738358,A2 mortgage payer plus holder decomposition
+2026,base,base,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-2.301059316,A2 mortgage payer plus holder decomposition
+2026,base,base,cashflow_core,heloc_interest,heloc,4.46,-1.32908,household floating credit
+2026,base,base,cashflow_core,credit_card_revolving_interest,credit_card_revolving,9.57225,-4.988099475,household revolving credit
+2026,base,base,cashflow_core,auto_installment_debt_interest,auto_installment_debt,0.5850375,-0.26584104,consumer new-flow repricing
+2026,base,base,cashflow_core,student_loans_private_interest,student_loans_private,0.01962,-0.010375056,consumer new-flow repricing
+2026,base,base,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.13905,-0.06649371,consumer new-flow repricing
+2026,base,base,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,20.8817,-1.69350587,issuer-to-holder private credit route
+2026,base,base,cashflow_core,syndicated_loans_interest,syndicated_loans,6.982,-0.865768,issuer-to-holder private credit route
+2026,base,base,cashflow_core,corporate_bonds_interest,corporate_bonds,1.3144075,-0.11830075355,issuer-to-holder private credit route
+2026,base,base,cashflow_core,municipal_securities_interest,municipal_securities,0.4455375,-0.13789745703732983541028375,issuer-to-holder private credit route
+2026,base,base,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,18,-2.8179,CRE owner payer routes plus holder split
+2026,base,base,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,0.594,-0.0929907,CRE owner payer routes plus holder split
+2027,base,base,cashflow_core,deposits_checkable_interest,deposits_checkable,6.213,0.74549915,opening-stock holder rows plus bank payment row
+2027,base,base,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,22.673875,3.6403050625,opening-stock holder rows plus bank payment row
+2027,base,base,cashflow_core,deposits_time_cds_interest,deposits_time_cds,29.346375,3.1784935125,opening-stock holder rows plus bank payment row
+2027,base,base,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,44.897,5.1115917947484977146311,A6 short-funding receiver plus incidence split
+2027,base,base,cashflow_core,mortgages_fixed_interest,mortgages_fixed,3.037657,-0.955215738358,A2 mortgage payer plus holder decomposition
+2027,base,base,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-2.301059316,A2 mortgage payer plus holder decomposition
+2027,base,base,cashflow_core,heloc_interest,heloc,4.46,-1.32908,household floating credit
+2027,base,base,cashflow_core,credit_card_revolving_interest,credit_card_revolving,9.57225,-4.988099475,household revolving credit
+2027,base,base,cashflow_core,auto_installment_debt_interest,auto_installment_debt,1.170075,-0.53168208,consumer new-flow repricing
+2027,base,base,cashflow_core,student_loans_private_interest,student_loans_private,0.03924,-0.020750112,consumer new-flow repricing
+2027,base,base,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.2781,-0.13298742,consumer new-flow repricing
+2027,base,base,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,20.8817,-1.69350587,issuer-to-holder private credit route
+2027,base,base,cashflow_core,syndicated_loans_interest,syndicated_loans,6.982,-0.865768,issuer-to-holder private credit route
+2027,base,base,cashflow_core,corporate_bonds_interest,corporate_bonds,5.25763,-0.4732030142,issuer-to-holder private credit route
+2027,base,base,cashflow_core,municipal_securities_interest,municipal_securities,1.78215,-0.551589828149319341641135,issuer-to-holder private credit route
+2027,base,base,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,18,-2.8179,CRE owner payer routes plus holder split
+2027,base,base,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,2.376,-0.3719628,CRE owner payer routes plus holder split
+2028,base,base,cashflow_core,deposits_checkable_interest,deposits_checkable,6.213,0.74549915,opening-stock holder rows plus bank payment row
+2028,base,base,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,22.673875,3.6403050625,opening-stock holder rows plus bank payment row
+2028,base,base,cashflow_core,deposits_time_cds_interest,deposits_time_cds,29.346375,3.1784935125,opening-stock holder rows plus bank payment row
+2028,base,base,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,44.897,5.1115917947484977146311,A6 short-funding receiver plus incidence split
+2028,base,base,cashflow_core,mortgages_fixed_interest,mortgages_fixed,3.037657,-0.955215738358,A2 mortgage payer plus holder decomposition
+2028,base,base,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-2.301059316,A2 mortgage payer plus holder decomposition
+2028,base,base,cashflow_core,heloc_interest,heloc,4.46,-1.32908,household floating credit
+2028,base,base,cashflow_core,credit_card_revolving_interest,credit_card_revolving,9.57225,-4.988099475,household revolving credit
+2028,base,base,cashflow_core,auto_installment_debt_interest,auto_installment_debt,1.170075,-0.53168208,consumer new-flow repricing
+2028,base,base,cashflow_core,student_loans_private_interest,student_loans_private,0.03924,-0.020750112,consumer new-flow repricing
+2028,base,base,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.2781,-0.13298742,consumer new-flow repricing
+2028,base,base,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,20.8817,-1.69350587,issuer-to-holder private credit route
+2028,base,base,cashflow_core,syndicated_loans_interest,syndicated_loans,6.982,-0.865768,issuer-to-holder private credit route
+2028,base,base,cashflow_core,corporate_bonds_interest,corporate_bonds,7.886445,-0.7098045213,issuer-to-holder private credit route
+2028,base,base,cashflow_core,municipal_securities_interest,municipal_securities,2.673225,-0.8273847422239790124617025,issuer-to-holder private credit route
+2028,base,base,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,18,-2.8179,CRE owner payer routes plus holder split
+2028,base,base,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,3.564,-0.5579442,CRE owner payer routes plus holder split
+2029,base,base,cashflow_core,deposits_checkable_interest,deposits_checkable,6.213,0.74549915,opening-stock holder rows plus bank payment row
+2029,base,base,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,22.673875,3.6403050625,opening-stock holder rows plus bank payment row
+2029,base,base,cashflow_core,deposits_time_cds_interest,deposits_time_cds,29.346375,3.1784935125,opening-stock holder rows plus bank payment row
+2029,base,base,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,44.897,5.1115917947484977146311,A6 short-funding receiver plus incidence split
+2029,base,base,cashflow_core,mortgages_fixed_interest,mortgages_fixed,3.037657,-0.955215738358,A2 mortgage payer plus holder decomposition
+2029,base,base,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-2.301059316,A2 mortgage payer plus holder decomposition
+2029,base,base,cashflow_core,heloc_interest,heloc,4.46,-1.32908,household floating credit
+2029,base,base,cashflow_core,credit_card_revolving_interest,credit_card_revolving,9.57225,-4.988099475,household revolving credit
+2029,base,base,cashflow_core,auto_installment_debt_interest,auto_installment_debt,1.170075,-0.53168208,consumer new-flow repricing
+2029,base,base,cashflow_core,student_loans_private_interest,student_loans_private,0.03924,-0.020750112,consumer new-flow repricing
+2029,base,base,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.2781,-0.13298742,consumer new-flow repricing
+2029,base,base,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,20.8817,-1.69350587,issuer-to-holder private credit route
+2029,base,base,cashflow_core,syndicated_loans_interest,syndicated_loans,6.982,-0.865768,issuer-to-holder private credit route
+2029,base,base,cashflow_core,corporate_bonds_interest,corporate_bonds,10.51526,-0.9464060284,issuer-to-holder private credit route
+2029,base,base,cashflow_core,municipal_securities_interest,municipal_securities,3.5643,-1.10317965629863868328227,issuer-to-holder private credit route
+2029,base,base,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,18,-2.8179,CRE owner payer routes plus holder split
+2029,base,base,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,4.752,-0.7439256,CRE owner payer routes plus holder split
+2030,base,base,cashflow_core,deposits_checkable_interest,deposits_checkable,6.213,0.74549915,opening-stock holder rows plus bank payment row
+2030,base,base,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,22.673875,3.6403050625,opening-stock holder rows plus bank payment row
+2030,base,base,cashflow_core,deposits_time_cds_interest,deposits_time_cds,29.346375,3.1784935125,opening-stock holder rows plus bank payment row
+2030,base,base,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,44.897,5.1115917947484977146311,A6 short-funding receiver plus incidence split
+2030,base,base,cashflow_core,mortgages_fixed_interest,mortgages_fixed,3.037657,-0.955215738358,A2 mortgage payer plus holder decomposition
+2030,base,base,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-2.301059316,A2 mortgage payer plus holder decomposition
+2030,base,base,cashflow_core,heloc_interest,heloc,4.46,-1.32908,household floating credit
+2030,base,base,cashflow_core,credit_card_revolving_interest,credit_card_revolving,9.57225,-4.988099475,household revolving credit
+2030,base,base,cashflow_core,auto_installment_debt_interest,auto_installment_debt,1.170075,-0.53168208,consumer new-flow repricing
+2030,base,base,cashflow_core,student_loans_private_interest,student_loans_private,0.03924,-0.020750112,consumer new-flow repricing
+2030,base,base,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.2781,-0.13298742,consumer new-flow repricing
+2030,base,base,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,20.8817,-1.69350587,issuer-to-holder private credit route
+2030,base,base,cashflow_core,syndicated_loans_interest,syndicated_loans,6.982,-0.865768,issuer-to-holder private credit route
+2030,base,base,cashflow_core,corporate_bonds_interest,corporate_bonds,13.144075,-1.1830075355,issuer-to-holder private credit route
+2030,base,base,cashflow_core,municipal_securities_interest,municipal_securities,4.455375,-1.3789745703732983541028375,issuer-to-holder private credit route
+2030,base,base,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,18,-2.8179,CRE owner payer routes plus holder split
+2030,base,base,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,5.94,-0.929907,CRE owner payer routes plus holder split
+2031,base,base,cashflow_core,deposits_checkable_interest,deposits_checkable,6.213,0.74549915,opening-stock holder rows plus bank payment row
+2031,base,base,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,22.673875,3.6403050625,opening-stock holder rows plus bank payment row
+2031,base,base,cashflow_core,deposits_time_cds_interest,deposits_time_cds,29.346375,3.1784935125,opening-stock holder rows plus bank payment row
+2031,base,base,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,44.897,5.1115917947484977146311,A6 short-funding receiver plus incidence split
+2031,base,base,cashflow_core,mortgages_fixed_interest,mortgages_fixed,3.037657,-0.955215738358,A2 mortgage payer plus holder decomposition
+2031,base,base,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-2.301059316,A2 mortgage payer plus holder decomposition
+2031,base,base,cashflow_core,heloc_interest,heloc,4.46,-1.32908,household floating credit
+2031,base,base,cashflow_core,credit_card_revolving_interest,credit_card_revolving,9.57225,-4.988099475,household revolving credit
+2031,base,base,cashflow_core,auto_installment_debt_interest,auto_installment_debt,1.170075,-0.53168208,consumer new-flow repricing
+2031,base,base,cashflow_core,student_loans_private_interest,student_loans_private,0.03924,-0.020750112,consumer new-flow repricing
+2031,base,base,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.2781,-0.13298742,consumer new-flow repricing
+2031,base,base,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,20.8817,-1.69350587,issuer-to-holder private credit route
+2031,base,base,cashflow_core,syndicated_loans_interest,syndicated_loans,6.982,-0.865768,issuer-to-holder private credit route
+2031,base,base,cashflow_core,corporate_bonds_interest,corporate_bonds,15.77289,-1.4196090426,issuer-to-holder private credit route
+2031,base,base,cashflow_core,municipal_securities_interest,municipal_securities,5.34645,-1.654769484447958024923405,issuer-to-holder private credit route
+2031,base,base,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,18,-2.8179,CRE owner payer routes plus holder split
+2031,base,base,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,7.128,-1.1158884,CRE owner payer routes plus holder split
+2032,base,base,cashflow_core,deposits_checkable_interest,deposits_checkable,6.213,0.74549915,opening-stock holder rows plus bank payment row
+2032,base,base,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,22.673875,3.6403050625,opening-stock holder rows plus bank payment row
+2032,base,base,cashflow_core,deposits_time_cds_interest,deposits_time_cds,29.346375,3.1784935125,opening-stock holder rows plus bank payment row
+2032,base,base,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,44.897,5.1115917947484977146311,A6 short-funding receiver plus incidence split
+2032,base,base,cashflow_core,mortgages_fixed_interest,mortgages_fixed,3.037657,-0.955215738358,A2 mortgage payer plus holder decomposition
+2032,base,base,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-2.301059316,A2 mortgage payer plus holder decomposition
+2032,base,base,cashflow_core,heloc_interest,heloc,4.46,-1.32908,household floating credit
+2032,base,base,cashflow_core,credit_card_revolving_interest,credit_card_revolving,9.57225,-4.988099475,household revolving credit
+2032,base,base,cashflow_core,auto_installment_debt_interest,auto_installment_debt,1.170075,-0.53168208,consumer new-flow repricing
+2032,base,base,cashflow_core,student_loans_private_interest,student_loans_private,0.03924,-0.020750112,consumer new-flow repricing
+2032,base,base,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.2781,-0.13298742,consumer new-flow repricing
+2032,base,base,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,20.8817,-1.69350587,issuer-to-holder private credit route
+2032,base,base,cashflow_core,syndicated_loans_interest,syndicated_loans,6.982,-0.865768,issuer-to-holder private credit route
+2032,base,base,cashflow_core,corporate_bonds_interest,corporate_bonds,18.401705,-1.6562105497,issuer-to-holder private credit route
+2032,base,base,cashflow_core,municipal_securities_interest,municipal_securities,6.237525,-1.9305643985226176957439725,issuer-to-holder private credit route
+2032,base,base,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,18,-2.8179,CRE owner payer routes plus holder split
+2032,base,base,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,8.316,-1.3018698,CRE owner payer routes plus holder split
+2033,base,base,cashflow_core,deposits_checkable_interest,deposits_checkable,6.213,0.74549915,opening-stock holder rows plus bank payment row
+2033,base,base,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,22.673875,3.6403050625,opening-stock holder rows plus bank payment row
+2033,base,base,cashflow_core,deposits_time_cds_interest,deposits_time_cds,29.346375,3.1784935125,opening-stock holder rows plus bank payment row
+2033,base,base,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,44.897,5.1115917947484977146311,A6 short-funding receiver plus incidence split
+2033,base,base,cashflow_core,mortgages_fixed_interest,mortgages_fixed,3.037657,-0.955215738358,A2 mortgage payer plus holder decomposition
+2033,base,base,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-2.301059316,A2 mortgage payer plus holder decomposition
+2033,base,base,cashflow_core,heloc_interest,heloc,4.46,-1.32908,household floating credit
+2033,base,base,cashflow_core,credit_card_revolving_interest,credit_card_revolving,9.57225,-4.988099475,household revolving credit
+2033,base,base,cashflow_core,auto_installment_debt_interest,auto_installment_debt,1.170075,-0.53168208,consumer new-flow repricing
+2033,base,base,cashflow_core,student_loans_private_interest,student_loans_private,0.03924,-0.020750112,consumer new-flow repricing
+2033,base,base,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.2781,-0.13298742,consumer new-flow repricing
+2033,base,base,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,20.8817,-1.69350587,issuer-to-holder private credit route
+2033,base,base,cashflow_core,syndicated_loans_interest,syndicated_loans,6.982,-0.865768,issuer-to-holder private credit route
+2033,base,base,cashflow_core,corporate_bonds_interest,corporate_bonds,21.03052,-1.8928120568,issuer-to-holder private credit route
+2033,base,base,cashflow_core,municipal_securities_interest,municipal_securities,7.1286,-2.20635931259727736656454,issuer-to-holder private credit route
+2033,base,base,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,18,-2.8179,CRE owner payer routes plus holder split
+2033,base,base,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,9.504,-1.4878512,CRE owner payer routes plus holder split
+2034,base,base,cashflow_core,deposits_checkable_interest,deposits_checkable,6.213,0.74549915,opening-stock holder rows plus bank payment row
+2034,base,base,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,22.673875,3.6403050625,opening-stock holder rows plus bank payment row
+2034,base,base,cashflow_core,deposits_time_cds_interest,deposits_time_cds,29.346375,3.1784935125,opening-stock holder rows plus bank payment row
+2034,base,base,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,44.897,5.1115917947484977146311,A6 short-funding receiver plus incidence split
+2034,base,base,cashflow_core,mortgages_fixed_interest,mortgages_fixed,3.037657,-0.955215738358,A2 mortgage payer plus holder decomposition
+2034,base,base,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-2.301059316,A2 mortgage payer plus holder decomposition
+2034,base,base,cashflow_core,heloc_interest,heloc,4.46,-1.32908,household floating credit
+2034,base,base,cashflow_core,credit_card_revolving_interest,credit_card_revolving,9.57225,-4.988099475,household revolving credit
+2034,base,base,cashflow_core,auto_installment_debt_interest,auto_installment_debt,1.170075,-0.53168208,consumer new-flow repricing
+2034,base,base,cashflow_core,student_loans_private_interest,student_loans_private,0.03924,-0.020750112,consumer new-flow repricing
+2034,base,base,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.2781,-0.13298742,consumer new-flow repricing
+2034,base,base,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,20.8817,-1.69350587,issuer-to-holder private credit route
+2034,base,base,cashflow_core,syndicated_loans_interest,syndicated_loans,6.982,-0.865768,issuer-to-holder private credit route
+2034,base,base,cashflow_core,corporate_bonds_interest,corporate_bonds,23.659335,-2.1294135639,issuer-to-holder private credit route
+2034,base,base,cashflow_core,municipal_securities_interest,municipal_securities,8.019675,-2.4821542266719370373851075,issuer-to-holder private credit route
+2034,base,base,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,18,-2.8179,CRE owner payer routes plus holder split
+2034,base,base,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,10.692,-1.6738326,CRE owner payer routes plus holder split
+2035,base,base,cashflow_core,deposits_checkable_interest,deposits_checkable,6.213,0.74549915,opening-stock holder rows plus bank payment row
+2035,base,base,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,22.673875,3.6403050625,opening-stock holder rows plus bank payment row
+2035,base,base,cashflow_core,deposits_time_cds_interest,deposits_time_cds,29.346375,3.1784935125,opening-stock holder rows plus bank payment row
+2035,base,base,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,44.897,5.1115917947484977146311,A6 short-funding receiver plus incidence split
+2035,base,base,cashflow_core,mortgages_fixed_interest,mortgages_fixed,3.037657,-0.955215738358,A2 mortgage payer plus holder decomposition
+2035,base,base,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-2.301059316,A2 mortgage payer plus holder decomposition
+2035,base,base,cashflow_core,heloc_interest,heloc,4.46,-1.32908,household floating credit
+2035,base,base,cashflow_core,credit_card_revolving_interest,credit_card_revolving,9.57225,-4.988099475,household revolving credit
+2035,base,base,cashflow_core,auto_installment_debt_interest,auto_installment_debt,1.170075,-0.53168208,consumer new-flow repricing
+2035,base,base,cashflow_core,student_loans_private_interest,student_loans_private,0.03924,-0.020750112,consumer new-flow repricing
+2035,base,base,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.2781,-0.13298742,consumer new-flow repricing
+2035,base,base,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,20.8817,-1.69350587,issuer-to-holder private credit route
+2035,base,base,cashflow_core,syndicated_loans_interest,syndicated_loans,6.982,-0.865768,issuer-to-holder private credit route
+2035,base,base,cashflow_core,corporate_bonds_interest,corporate_bonds,26.28815,-2.366015071,issuer-to-holder private credit route
+2035,base,base,cashflow_core,municipal_securities_interest,municipal_securities,8.91075,-2.757949140746596708205675,issuer-to-holder private credit route
+2035,base,base,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,18,-2.8179,CRE owner payer routes plus holder split
+2035,base,base,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,11.88,-1.859814,CRE owner payer routes plus holder split
+2026,high,stress_corner_envelope,cashflow_core,deposits_checkable_interest,deposits_checkable,19.62,2.37375,opening-stock holder rows plus bank payment row
+2026,high,stress_corner_envelope,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,47.30715,7.898877225,opening-stock holder rows plus bank payment row
+2026,high,stress_corner_envelope,cashflow_core,deposits_time_cds_interest,deposits_time_cds,53.56,5.3103,opening-stock holder rows plus bank payment row
+2026,high,stress_corner_envelope,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,47.26,7.27288474913713985224,A6 short-funding receiver plus incidence split
+2026,high,stress_corner_envelope,cashflow_core,mortgages_fixed_interest,mortgages_fixed,7.377167,-2.926148846473493975903614458,A2 mortgage payer plus holder decomposition
+2026,high,stress_corner_envelope,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-2.918282732530120481927710844,A2 mortgage payer plus holder decomposition
+2026,high,stress_corner_envelope,cashflow_core,heloc_interest,heloc,4.46,-1.701044,household floating credit
+2026,high,stress_corner_envelope,cashflow_core,credit_card_revolving_interest,credit_card_revolving,13.40115,-8.084913795,household revolving credit
+2026,high,stress_corner_envelope,cashflow_core,auto_installment_debt_interest,auto_installment_debt,0.982863,-0.5308443063,consumer new-flow repricing
+2026,high,stress_corner_envelope,cashflow_core,student_loans_private_interest,student_loans_private,0.06867,-0.041648355,consumer new-flow repricing
+2026,high,stress_corner_envelope,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.233604,-0.1349530308,consumer new-flow repricing
+2026,high,stress_corner_envelope,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,27.44452,-1.38594826,issuer-to-holder private credit route
+2026,high,stress_corner_envelope,cashflow_core,syndicated_loans_interest,syndicated_loans,8.0293,-0.9956332,issuer-to-holder private credit route
+2026,high,stress_corner_envelope,cashflow_core,corporate_bonds_interest,corporate_bonds,2.478597,-0.1364939089799999987675094,issuer-to-holder private credit route
+2026,high,stress_corner_envelope,cashflow_core,municipal_securities_interest,municipal_securities,0.748503,-0.205568569432592574487356,issuer-to-holder private credit route
+2026,high,stress_corner_envelope,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,25.2,-3.5595,CRE owner payer routes plus holder split
+2026,high,stress_corner_envelope,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,1.5552,-0.219672,CRE owner payer routes plus holder split
+2027,high,stress_corner_envelope,cashflow_core,deposits_checkable_interest,deposits_checkable,19.62,2.37375,opening-stock holder rows plus bank payment row
+2027,high,stress_corner_envelope,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,47.30715,7.898877225,opening-stock holder rows plus bank payment row
+2027,high,stress_corner_envelope,cashflow_core,deposits_time_cds_interest,deposits_time_cds,53.56,5.3103,opening-stock holder rows plus bank payment row
+2027,high,stress_corner_envelope,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,47.26,7.27288474913713985224,A6 short-funding receiver plus incidence split
+2027,high,stress_corner_envelope,cashflow_core,mortgages_fixed_interest,mortgages_fixed,7.377167,-2.926148846473493975903614458,A2 mortgage payer plus holder decomposition
+2027,high,stress_corner_envelope,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-2.918282732530120481927710844,A2 mortgage payer plus holder decomposition
+2027,high,stress_corner_envelope,cashflow_core,heloc_interest,heloc,4.46,-1.701044,household floating credit
+2027,high,stress_corner_envelope,cashflow_core,credit_card_revolving_interest,credit_card_revolving,13.40115,-8.084913795,household revolving credit
+2027,high,stress_corner_envelope,cashflow_core,auto_installment_debt_interest,auto_installment_debt,1.965726,-1.0616886126,consumer new-flow repricing
+2027,high,stress_corner_envelope,cashflow_core,student_loans_private_interest,student_loans_private,0.13734,-0.08329671,consumer new-flow repricing
+2027,high,stress_corner_envelope,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.467208,-0.2699060616,consumer new-flow repricing
+2027,high,stress_corner_envelope,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,27.44452,-1.38594826,issuer-to-holder private credit route
+2027,high,stress_corner_envelope,cashflow_core,syndicated_loans_interest,syndicated_loans,8.0293,-0.9956332,issuer-to-holder private credit route
+2027,high,stress_corner_envelope,cashflow_core,corporate_bonds_interest,corporate_bonds,9.914388,-0.5459756359199999950700376,issuer-to-holder private credit route
+2027,high,stress_corner_envelope,cashflow_core,municipal_securities_interest,municipal_securities,2.994012,-0.822274277730370297949424,issuer-to-holder private credit route
+2027,high,stress_corner_envelope,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,25.2,-3.5595,CRE owner payer routes plus holder split
+2027,high,stress_corner_envelope,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,6.2208,-0.878688,CRE owner payer routes plus holder split
+2028,high,stress_corner_envelope,cashflow_core,deposits_checkable_interest,deposits_checkable,19.62,2.37375,opening-stock holder rows plus bank payment row
+2028,high,stress_corner_envelope,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,47.30715,7.898877225,opening-stock holder rows plus bank payment row
+2028,high,stress_corner_envelope,cashflow_core,deposits_time_cds_interest,deposits_time_cds,53.56,5.3103,opening-stock holder rows plus bank payment row
+2028,high,stress_corner_envelope,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,47.26,7.27288474913713985224,A6 short-funding receiver plus incidence split
+2028,high,stress_corner_envelope,cashflow_core,mortgages_fixed_interest,mortgages_fixed,7.377167,-2.926148846473493975903614458,A2 mortgage payer plus holder decomposition
+2028,high,stress_corner_envelope,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-2.918282732530120481927710844,A2 mortgage payer plus holder decomposition
+2028,high,stress_corner_envelope,cashflow_core,heloc_interest,heloc,4.46,-1.701044,household floating credit
+2028,high,stress_corner_envelope,cashflow_core,credit_card_revolving_interest,credit_card_revolving,13.40115,-8.084913795,household revolving credit
+2028,high,stress_corner_envelope,cashflow_core,auto_installment_debt_interest,auto_installment_debt,1.965726,-1.0616886126,consumer new-flow repricing
+2028,high,stress_corner_envelope,cashflow_core,student_loans_private_interest,student_loans_private,0.13734,-0.08329671,consumer new-flow repricing
+2028,high,stress_corner_envelope,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.467208,-0.2699060616,consumer new-flow repricing
+2028,high,stress_corner_envelope,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,27.44452,-1.38594826,issuer-to-holder private credit route
+2028,high,stress_corner_envelope,cashflow_core,syndicated_loans_interest,syndicated_loans,8.0293,-0.9956332,issuer-to-holder private credit route
+2028,high,stress_corner_envelope,cashflow_core,corporate_bonds_interest,corporate_bonds,14.871582,-0.8189634538799999926050564,issuer-to-holder private credit route
+2028,high,stress_corner_envelope,cashflow_core,municipal_securities_interest,municipal_securities,4.491018,-1.233411416595555446924136,issuer-to-holder private credit route
+2028,high,stress_corner_envelope,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,25.2,-3.5595,CRE owner payer routes plus holder split
+2028,high,stress_corner_envelope,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,9.3312,-1.318032,CRE owner payer routes plus holder split
+2029,high,stress_corner_envelope,cashflow_core,deposits_checkable_interest,deposits_checkable,19.62,2.37375,opening-stock holder rows plus bank payment row
+2029,high,stress_corner_envelope,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,47.30715,7.898877225,opening-stock holder rows plus bank payment row
+2029,high,stress_corner_envelope,cashflow_core,deposits_time_cds_interest,deposits_time_cds,53.56,5.3103,opening-stock holder rows plus bank payment row
+2029,high,stress_corner_envelope,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,47.26,7.27288474913713985224,A6 short-funding receiver plus incidence split
+2029,high,stress_corner_envelope,cashflow_core,mortgages_fixed_interest,mortgages_fixed,7.377167,-2.926148846473493975903614458,A2 mortgage payer plus holder decomposition
+2029,high,stress_corner_envelope,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-2.918282732530120481927710844,A2 mortgage payer plus holder decomposition
+2029,high,stress_corner_envelope,cashflow_core,heloc_interest,heloc,4.46,-1.701044,household floating credit
+2029,high,stress_corner_envelope,cashflow_core,credit_card_revolving_interest,credit_card_revolving,13.40115,-8.084913795,household revolving credit
+2029,high,stress_corner_envelope,cashflow_core,auto_installment_debt_interest,auto_installment_debt,1.965726,-1.0616886126,consumer new-flow repricing
+2029,high,stress_corner_envelope,cashflow_core,student_loans_private_interest,student_loans_private,0.13734,-0.08329671,consumer new-flow repricing
+2029,high,stress_corner_envelope,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.467208,-0.2699060616,consumer new-flow repricing
+2029,high,stress_corner_envelope,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,27.44452,-1.38594826,issuer-to-holder private credit route
+2029,high,stress_corner_envelope,cashflow_core,syndicated_loans_interest,syndicated_loans,8.0293,-0.9956332,issuer-to-holder private credit route
+2029,high,stress_corner_envelope,cashflow_core,corporate_bonds_interest,corporate_bonds,19.828776,-1.0919512718399999901400752,issuer-to-holder private credit route
+2029,high,stress_corner_envelope,cashflow_core,municipal_securities_interest,municipal_securities,5.988024,-1.644548555460740595898848,issuer-to-holder private credit route
+2029,high,stress_corner_envelope,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,25.2,-3.5595,CRE owner payer routes plus holder split
+2029,high,stress_corner_envelope,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,12.4416,-1.757376,CRE owner payer routes plus holder split
+2030,high,stress_corner_envelope,cashflow_core,deposits_checkable_interest,deposits_checkable,19.62,2.37375,opening-stock holder rows plus bank payment row
+2030,high,stress_corner_envelope,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,47.30715,7.898877225,opening-stock holder rows plus bank payment row
+2030,high,stress_corner_envelope,cashflow_core,deposits_time_cds_interest,deposits_time_cds,53.56,5.3103,opening-stock holder rows plus bank payment row
+2030,high,stress_corner_envelope,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,47.26,7.27288474913713985224,A6 short-funding receiver plus incidence split
+2030,high,stress_corner_envelope,cashflow_core,mortgages_fixed_interest,mortgages_fixed,7.377167,-2.926148846473493975903614458,A2 mortgage payer plus holder decomposition
+2030,high,stress_corner_envelope,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-2.918282732530120481927710844,A2 mortgage payer plus holder decomposition
+2030,high,stress_corner_envelope,cashflow_core,heloc_interest,heloc,4.46,-1.701044,household floating credit
+2030,high,stress_corner_envelope,cashflow_core,credit_card_revolving_interest,credit_card_revolving,13.40115,-8.084913795,household revolving credit
+2030,high,stress_corner_envelope,cashflow_core,auto_installment_debt_interest,auto_installment_debt,1.965726,-1.0616886126,consumer new-flow repricing
+2030,high,stress_corner_envelope,cashflow_core,student_loans_private_interest,student_loans_private,0.13734,-0.08329671,consumer new-flow repricing
+2030,high,stress_corner_envelope,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.467208,-0.2699060616,consumer new-flow repricing
+2030,high,stress_corner_envelope,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,27.44452,-1.38594826,issuer-to-holder private credit route
+2030,high,stress_corner_envelope,cashflow_core,syndicated_loans_interest,syndicated_loans,8.0293,-0.9956332,issuer-to-holder private credit route
+2030,high,stress_corner_envelope,cashflow_core,corporate_bonds_interest,corporate_bonds,24.78597,-1.364939089799999987675094,issuer-to-holder private credit route
+2030,high,stress_corner_envelope,cashflow_core,municipal_securities_interest,municipal_securities,7.48503,-2.05568569432592574487356,issuer-to-holder private credit route
+2030,high,stress_corner_envelope,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,25.2,-3.5595,CRE owner payer routes plus holder split
+2030,high,stress_corner_envelope,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,15.552,-2.19672,CRE owner payer routes plus holder split
+2031,high,stress_corner_envelope,cashflow_core,deposits_checkable_interest,deposits_checkable,19.62,2.37375,opening-stock holder rows plus bank payment row
+2031,high,stress_corner_envelope,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,47.30715,7.898877225,opening-stock holder rows plus bank payment row
+2031,high,stress_corner_envelope,cashflow_core,deposits_time_cds_interest,deposits_time_cds,53.56,5.3103,opening-stock holder rows plus bank payment row
+2031,high,stress_corner_envelope,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,47.26,7.27288474913713985224,A6 short-funding receiver plus incidence split
+2031,high,stress_corner_envelope,cashflow_core,mortgages_fixed_interest,mortgages_fixed,7.377167,-2.926148846473493975903614458,A2 mortgage payer plus holder decomposition
+2031,high,stress_corner_envelope,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-2.918282732530120481927710844,A2 mortgage payer plus holder decomposition
+2031,high,stress_corner_envelope,cashflow_core,heloc_interest,heloc,4.46,-1.701044,household floating credit
+2031,high,stress_corner_envelope,cashflow_core,credit_card_revolving_interest,credit_card_revolving,13.40115,-8.084913795,household revolving credit
+2031,high,stress_corner_envelope,cashflow_core,auto_installment_debt_interest,auto_installment_debt,1.965726,-1.0616886126,consumer new-flow repricing
+2031,high,stress_corner_envelope,cashflow_core,student_loans_private_interest,student_loans_private,0.13734,-0.08329671,consumer new-flow repricing
+2031,high,stress_corner_envelope,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.467208,-0.2699060616,consumer new-flow repricing
+2031,high,stress_corner_envelope,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,27.44452,-1.38594826,issuer-to-holder private credit route
+2031,high,stress_corner_envelope,cashflow_core,syndicated_loans_interest,syndicated_loans,8.0293,-0.9956332,issuer-to-holder private credit route
+2031,high,stress_corner_envelope,cashflow_core,corporate_bonds_interest,corporate_bonds,29.743164,-1.6379269077599999852101128,issuer-to-holder private credit route
+2031,high,stress_corner_envelope,cashflow_core,municipal_securities_interest,municipal_securities,8.982036,-2.466822833191110893848272,issuer-to-holder private credit route
+2031,high,stress_corner_envelope,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,25.2,-3.5595,CRE owner payer routes plus holder split
+2031,high,stress_corner_envelope,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,18.6624,-2.636064,CRE owner payer routes plus holder split
+2032,high,stress_corner_envelope,cashflow_core,deposits_checkable_interest,deposits_checkable,19.62,2.37375,opening-stock holder rows plus bank payment row
+2032,high,stress_corner_envelope,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,47.30715,7.898877225,opening-stock holder rows plus bank payment row
+2032,high,stress_corner_envelope,cashflow_core,deposits_time_cds_interest,deposits_time_cds,53.56,5.3103,opening-stock holder rows plus bank payment row
+2032,high,stress_corner_envelope,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,47.26,7.27288474913713985224,A6 short-funding receiver plus incidence split
+2032,high,stress_corner_envelope,cashflow_core,mortgages_fixed_interest,mortgages_fixed,7.377167,-2.926148846473493975903614458,A2 mortgage payer plus holder decomposition
+2032,high,stress_corner_envelope,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-2.918282732530120481927710844,A2 mortgage payer plus holder decomposition
+2032,high,stress_corner_envelope,cashflow_core,heloc_interest,heloc,4.46,-1.701044,household floating credit
+2032,high,stress_corner_envelope,cashflow_core,credit_card_revolving_interest,credit_card_revolving,13.40115,-8.084913795,household revolving credit
+2032,high,stress_corner_envelope,cashflow_core,auto_installment_debt_interest,auto_installment_debt,1.965726,-1.0616886126,consumer new-flow repricing
+2032,high,stress_corner_envelope,cashflow_core,student_loans_private_interest,student_loans_private,0.13734,-0.08329671,consumer new-flow repricing
+2032,high,stress_corner_envelope,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.467208,-0.2699060616,consumer new-flow repricing
+2032,high,stress_corner_envelope,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,27.44452,-1.38594826,issuer-to-holder private credit route
+2032,high,stress_corner_envelope,cashflow_core,syndicated_loans_interest,syndicated_loans,8.0293,-0.9956332,issuer-to-holder private credit route
+2032,high,stress_corner_envelope,cashflow_core,corporate_bonds_interest,corporate_bonds,34.700358,-1.9109147257199999827451316,issuer-to-holder private credit route
+2032,high,stress_corner_envelope,cashflow_core,municipal_securities_interest,municipal_securities,10.479042,-2.877959972056296042822984,issuer-to-holder private credit route
+2032,high,stress_corner_envelope,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,25.2,-3.5595,CRE owner payer routes plus holder split
+2032,high,stress_corner_envelope,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,21.7728,-3.075408,CRE owner payer routes plus holder split
+2033,high,stress_corner_envelope,cashflow_core,deposits_checkable_interest,deposits_checkable,19.62,2.37375,opening-stock holder rows plus bank payment row
+2033,high,stress_corner_envelope,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,47.30715,7.898877225,opening-stock holder rows plus bank payment row
+2033,high,stress_corner_envelope,cashflow_core,deposits_time_cds_interest,deposits_time_cds,53.56,5.3103,opening-stock holder rows plus bank payment row
+2033,high,stress_corner_envelope,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,47.26,7.27288474913713985224,A6 short-funding receiver plus incidence split
+2033,high,stress_corner_envelope,cashflow_core,mortgages_fixed_interest,mortgages_fixed,7.377167,-2.926148846473493975903614458,A2 mortgage payer plus holder decomposition
+2033,high,stress_corner_envelope,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-2.918282732530120481927710844,A2 mortgage payer plus holder decomposition
+2033,high,stress_corner_envelope,cashflow_core,heloc_interest,heloc,4.46,-1.701044,household floating credit
+2033,high,stress_corner_envelope,cashflow_core,credit_card_revolving_interest,credit_card_revolving,13.40115,-8.084913795,household revolving credit
+2033,high,stress_corner_envelope,cashflow_core,auto_installment_debt_interest,auto_installment_debt,1.965726,-1.0616886126,consumer new-flow repricing
+2033,high,stress_corner_envelope,cashflow_core,student_loans_private_interest,student_loans_private,0.13734,-0.08329671,consumer new-flow repricing
+2033,high,stress_corner_envelope,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.467208,-0.2699060616,consumer new-flow repricing
+2033,high,stress_corner_envelope,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,27.44452,-1.38594826,issuer-to-holder private credit route
+2033,high,stress_corner_envelope,cashflow_core,syndicated_loans_interest,syndicated_loans,8.0293,-0.9956332,issuer-to-holder private credit route
+2033,high,stress_corner_envelope,cashflow_core,corporate_bonds_interest,corporate_bonds,39.657552,-2.1839025436799999802801504,issuer-to-holder private credit route
+2033,high,stress_corner_envelope,cashflow_core,municipal_securities_interest,municipal_securities,11.976048,-3.289097110921481191797696,issuer-to-holder private credit route
+2033,high,stress_corner_envelope,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,25.2,-3.5595,CRE owner payer routes plus holder split
+2033,high,stress_corner_envelope,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,24.8832,-3.514752,CRE owner payer routes plus holder split
+2034,high,stress_corner_envelope,cashflow_core,deposits_checkable_interest,deposits_checkable,19.62,2.37375,opening-stock holder rows plus bank payment row
+2034,high,stress_corner_envelope,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,47.30715,7.898877225,opening-stock holder rows plus bank payment row
+2034,high,stress_corner_envelope,cashflow_core,deposits_time_cds_interest,deposits_time_cds,53.56,5.3103,opening-stock holder rows plus bank payment row
+2034,high,stress_corner_envelope,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,47.26,7.27288474913713985224,A6 short-funding receiver plus incidence split
+2034,high,stress_corner_envelope,cashflow_core,mortgages_fixed_interest,mortgages_fixed,7.377167,-2.926148846473493975903614458,A2 mortgage payer plus holder decomposition
+2034,high,stress_corner_envelope,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-2.918282732530120481927710844,A2 mortgage payer plus holder decomposition
+2034,high,stress_corner_envelope,cashflow_core,heloc_interest,heloc,4.46,-1.701044,household floating credit
+2034,high,stress_corner_envelope,cashflow_core,credit_card_revolving_interest,credit_card_revolving,13.40115,-8.084913795,household revolving credit
+2034,high,stress_corner_envelope,cashflow_core,auto_installment_debt_interest,auto_installment_debt,1.965726,-1.0616886126,consumer new-flow repricing
+2034,high,stress_corner_envelope,cashflow_core,student_loans_private_interest,student_loans_private,0.13734,-0.08329671,consumer new-flow repricing
+2034,high,stress_corner_envelope,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.467208,-0.2699060616,consumer new-flow repricing
+2034,high,stress_corner_envelope,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,27.44452,-1.38594826,issuer-to-holder private credit route
+2034,high,stress_corner_envelope,cashflow_core,syndicated_loans_interest,syndicated_loans,8.0293,-0.9956332,issuer-to-holder private credit route
+2034,high,stress_corner_envelope,cashflow_core,corporate_bonds_interest,corporate_bonds,41.30995,-2.27489848299999997945849,issuer-to-holder private credit route
+2034,high,stress_corner_envelope,cashflow_core,municipal_securities_interest,municipal_securities,12.47505,-3.4261428238765429081226,issuer-to-holder private credit route
+2034,high,stress_corner_envelope,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,25.2,-3.5595,CRE owner payer routes plus holder split
+2034,high,stress_corner_envelope,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,25.92,-3.6612,CRE owner payer routes plus holder split
+2035,high,stress_corner_envelope,cashflow_core,deposits_checkable_interest,deposits_checkable,19.62,2.37375,opening-stock holder rows plus bank payment row
+2035,high,stress_corner_envelope,cashflow_core,deposits_savings_mmda_interest,deposits_savings_mmda,47.30715,7.898877225,opening-stock holder rows plus bank payment row
+2035,high,stress_corner_envelope,cashflow_core,deposits_time_cds_interest,deposits_time_cds,53.56,5.3103,opening-stock holder rows plus bank payment row
+2035,high,stress_corner_envelope,cashflow_core,mmf_short_funding_assets_interest,mmf_short_funding_assets,47.26,7.27288474913713985224,A6 short-funding receiver plus incidence split
+2035,high,stress_corner_envelope,cashflow_core,mortgages_fixed_interest,mortgages_fixed,7.377167,-2.926148846473493975903614458,A2 mortgage payer plus holder decomposition
+2035,high,stress_corner_envelope,cashflow_core,mortgages_arm_interest,mortgages_arm,7.914,-2.918282732530120481927710844,A2 mortgage payer plus holder decomposition
+2035,high,stress_corner_envelope,cashflow_core,heloc_interest,heloc,4.46,-1.701044,household floating credit
+2035,high,stress_corner_envelope,cashflow_core,credit_card_revolving_interest,credit_card_revolving,13.40115,-8.084913795,household revolving credit
+2035,high,stress_corner_envelope,cashflow_core,auto_installment_debt_interest,auto_installment_debt,1.965726,-1.0616886126,consumer new-flow repricing
+2035,high,stress_corner_envelope,cashflow_core,student_loans_private_interest,student_loans_private,0.13734,-0.08329671,consumer new-flow repricing
+2035,high,stress_corner_envelope,cashflow_core,personal_installment_debt_interest,personal_installment_debt,0.467208,-0.2699060616,consumer new-flow repricing
+2035,high,stress_corner_envelope,cashflow_core,c_and_i_depository_loans_interest,c_and_i_depository_loans,27.44452,-1.38594826,issuer-to-holder private credit route
+2035,high,stress_corner_envelope,cashflow_core,syndicated_loans_interest,syndicated_loans,8.0293,-0.9956332,issuer-to-holder private credit route
+2035,high,stress_corner_envelope,cashflow_core,corporate_bonds_interest,corporate_bonds,41.30995,-2.27489848299999997945849,issuer-to-holder private credit route
+2035,high,stress_corner_envelope,cashflow_core,municipal_securities_interest,municipal_securities,12.47505,-3.4261428238765429081226,issuer-to-holder private credit route
+2035,high,stress_corner_envelope,cashflow_core,cre_mortgages_floating_interest,cre_mortgages_floating,25.2,-3.5595,CRE owner payer routes plus holder split
+2035,high,stress_corner_envelope,cashflow_core,cre_mortgages_fixed_interest,cre_mortgages_fixed,25.92,-3.6612,CRE owner payer routes plus holder split
