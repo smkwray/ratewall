@@ -1,0 +1,13 @@
+holder,treasury_holder_matrix_share,opening_stock_implied_share,opening_stock_bil,lineage_note
+rest_of_world,0.30407158280645613,0.3040702835361077750509111796,9317.2,opening_stocks is the counted stock matrix; treasury_holder_matrix is emitted as holder-share lineage to avoid double counting
+federal_reserve,0.13055541449798816,0.1305545402328860111743512088,4000.4,opening_stocks is the counted stock matrix; treasury_holder_matrix is emitted as holder-share lineage to avoid double counting
+banks,0.06688875509814321,0.06688945746958383374236332306,2049.6,opening_stocks is the counted stock matrix; treasury_holder_matrix is emitted as holder-share lineage to avoid double counting
+mmfs,0.11182323425696378,0.1118218369797921779541538301,3426.4,opening_stocks is the counted stock matrix; treasury_holder_matrix is emitted as holder-share lineage to avoid double counting
+mutual_funds_etfs,0.08078609474952114,0.08078559866325518249699754582,2475.4,opening_stocks is the counted stock matrix; treasury_holder_matrix is emitted as holder-share lineage to avoid double counting
+pensions,0.039262017702238805,0.0392636154769985901519502898,1203.1,opening_stocks is the counted stock matrix; treasury_holder_matrix is emitted as holder-share lineage to avoid double counting
+insurers,0.019513733444537464,0.01951268863244739178110803613,597.9,opening_stocks is the counted stock matrix; treasury_holder_matrix is emitted as holder-share lineage to avoid double counting
+state_local,0.0509266698927874,0.05092749725862879223017074826,1560.5,opening_stocks is the counted stock matrix; treasury_holder_matrix is emitted as holder-share lineage to avoid double counting
+nonfinancial_firms,0.007330112695350771,0.007329904443632186308808939481,224.6,opening_stocks is the counted stock matrix; treasury_holder_matrix is emitted as holder-share lineage to avoid double counting
+households_direct,0.09432751243507671,0.09432927784449898177640854263,2890.4,opening_stocks is the counted stock matrix; treasury_holder_matrix is emitted as holder-share lineage to avoid double counting
+other_nonbank_finance,0.032698054288902115,0.03269737872695942770612500653,1001.9,opening_stocks is the counted stock matrix; treasury_holder_matrix is emitted as holder-share lineage to avoid double counting
+unallocated_line_mapping_residual,0.06181681813203434,0.0618179207352096496266513498,1894.2,opening_stocks is the counted stock matrix; treasury_holder_matrix is emitted as holder-share lineage to avoid double counting

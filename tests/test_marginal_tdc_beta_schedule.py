@@ -150,6 +150,120 @@ def test_beta_sensitivity_panel_marks_only_selected_central(tmp_path: Path) -> N
     } == {"true"}
 
 
+def test_flooded_beta_assumptions_extend_schedule_without_legacy_selection(tmp_path: Path) -> None:
+    _write_anchor_inputs(tmp_path, source_grade=True)
+    _write_flooded_assumptions(tmp_path)
+
+    rows = build_beta_schedule(
+        denominator_rows=_denominator_rows(),
+        historical_window_rows=_historical_window_rows(),
+        project_root=tmp_path,
+        tdcest_proxy_path="tdcest_proxy.csv",
+    )
+
+    flooded = {
+        row["demand_conversion_case"]: row
+        for row in rows
+        if row["period_object"] == "scenario_state"
+    }
+    assert flooded["flooded_persistence_0q"]["beta_selected"] == "0.7"
+    assert flooded["held_standard_anchor"]["beta_selected"] == "0.530751"
+    assert flooded["held_standard_anchor"]["beta_selected"] != "0.34201759129420367"
+    assert flooded["flooded_persistence_0q"]["assumption_caveat"].startswith(
+        "assumption band, not estimated dynamics"
+    )
+
+
+def test_live_flooded_beta_assumptions_pin_reversion_semantics() -> None:
+    project_root = Path(__file__).resolve().parents[1]
+
+    rows = build_beta_schedule(
+        denominator_rows=[],
+        historical_window_rows=[],
+        project_root=project_root,
+    )
+
+    by_key = {
+        (row["object_id"], row["period"], row["demand_conversion_case"]): row
+        for row in rows
+        if row["period_object"] == "scenario_state"
+    }
+    standard_anchor = "0.5307509589554447"
+    flooded_cases = (
+        "flooded_persistence_0q",
+        "flooded_persistence_4q",
+        "flooded_persistence_8q",
+    )
+    for case in flooded_cases:
+        row = by_key[("RW_M_PLUS_100BP_YEAR", "2028", case)]
+        assert row["beta_selected"] == "0.7"
+        assert row["beta_projection_method"].startswith(
+            "acute_flooded_window_beta_2028Q1_2028Q4"
+        )
+    assert (
+        by_key[("RW_M_PLUS_100BP_YEAR", "2028", "held_standard_anchor")][
+            "beta_selected"
+        ]
+        == standard_anchor
+    )
+
+    assert (
+        by_key[("RW_M_PLUS_100BP_YEAR", "2029", "flooded_persistence_0q")][
+            "beta_selected"
+        ]
+        == standard_anchor
+    )
+    assert (
+        by_key[("RW_M_PLUS_100BP_YEAR", "2029", "flooded_persistence_0q")][
+            "beta_projection_method"
+        ]
+        == "reverted_to_standard_anchor_after_2028Q4"
+    )
+    assert (
+        by_key[("RW_M_PLUS_100BP_YEAR", "2029", "flooded_persistence_4q")][
+            "beta_selected"
+        ]
+        == "0.7"
+    )
+    assert (
+        by_key[("RW_M_PLUS_100BP_YEAR", "2029", "flooded_persistence_8q")][
+            "beta_selected"
+        ]
+        == "0.7"
+    )
+
+    for case in flooded_cases:
+        assert (
+            by_key[("RW_M_PLUS_100BP_YEAR", "2031", case)]["beta_selected"]
+            == standard_anchor
+        )
+    assert (
+        by_key[("RW_M_PLUS_100BP_YEAR", "2031", "flooded_persistence_4q")][
+            "beta_projection_method"
+        ]
+        == "reverted_to_standard_anchor_after_2029Q4"
+    )
+    assert (
+        by_key[("RW_M_PLUS_100BP_YEAR", "2031", "flooded_persistence_8q")][
+            "beta_projection_method"
+        ]
+        == "reverted_to_standard_anchor_after_2030Q4"
+    )
+
+    for case in flooded_cases:
+        injection_row = by_key[("TDC_FISCAL_INJECTION_2028", "2028", case)]
+        assert injection_row["beta_selected"] == "0.7"
+        assert injection_row["beta_projection_method"].startswith(
+            "injection_window_2028Q1_2028Q4"
+        )
+    assert (
+        by_key[("TDC_FISCAL_INJECTION_2028", "2028", "held_standard_anchor")][
+            "beta_selected"
+        ]
+        == standard_anchor
+    )
+
+
 def _write_anchor_inputs(root: Path, *, source_grade: bool) -> None:
     _write_csv(
         root / "configs/assumption_mode/ratewall_tdc_beta_anchor_override.csv",
@@ -245,6 +359,53 @@ def _historical_window_rows() -> list[dict[str, str]]:
             "selection_gate_status": "pending_source_grade_pair",
         }
     ]
+
+
+def _write_flooded_assumptions(root: Path) -> None:
+    _write_csv(
+        root / "configs/assumption_mode/ratewall_flooded_tdc_beta_assumptions.csv",
+        [
+            {
+                "period": "2028",
+                "state_id": "flooded_state::2028",
+                "object_id": "RW_M_PLUS_100BP_YEAR",
+                "shock_path_id": "plus_100bp_year",
+                "shock_bps_year": "100",
+                "demand_conversion_case": "flooded_persistence_0q",
+                "beta_assumption_id": "OWNER_ASSUMPTION_EXOGENOUS_SHOCK_2021_LIKE",
+                "beta_selected": "0.7",
+                "beta_low": "0.7",
+                "beta_high": "0.7",
+                "beta_source_status": "owner_assumption_historical_anchor_not_estimated_dynamics",
+                "beta_selection_status": "selected_owner_assumption_exogenous_shock_sensitivity",
+                "beta_method": "realized_flooded_state_beta_2020_0p651_2021_0p829",
+                "beta_projection_method": "acute_flooded_window_then_revert_0q",
+                "claim_boundary": "scenario_support_assumption_mode_not_evidence_not_selected_headline",
+                "assumption_caveat": (
+                    "assumption band, not estimated dynamics; state-classifier validation "
+                    "unrun; empirical object is binary flooded/normal"
+                ),
+            },
+            {
+                "period": "2028",
+                "state_id": "flooded_state::2028",
+                "object_id": "RW_M_PLUS_100BP_YEAR",
+                "shock_path_id": "plus_100bp_year",
+                "shock_bps_year": "100",
+                "demand_conversion_case": "held_standard_anchor",
+                "beta_assumption_id": "beta_ea_tdc_rolling_h0_matched_total_deposits_v1",
+                "beta_selected": "STANDARD_ANCHOR",
+                "beta_low": "STANDARD_ANCHOR",
+                "beta_high": "STANDARD_ANCHOR",
+                "beta_source_status": "source_grade_ea_tdc_rolling_beta_flat_forecast",
+                "beta_selection_status": "selected_standard_anchor_ablation",
+                "beta_method": "ea_tdc_rolling_selected_credit_rate_lags_rank_aware",
+                "beta_projection_method": "flat_carry_forward_from_latest_rolling_window_2026Q2",
+                "claim_boundary": "standard_anchor_ablation_not_flooded_assumption",
+                "assumption_caveat": "held ablation uses the schedule standard central, not legacy scaffold",
+            },
+        ],
+    )
 
 
 def _write_csv(path: Path, rows: list[dict[str, str]]) -> None:

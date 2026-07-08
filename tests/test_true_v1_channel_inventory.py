@@ -45,7 +45,7 @@ def test_true_v1_inventory_slots_match_theoretical_object() -> None:
 
     assert by_id["tdc_ex_overlap_beta_chi"]["selected_slot"] == "Delta_N_selected"
     assert by_id["tdc_ex_overlap_beta_chi"]["overlap_policy"] == (
-        "subtract_overlap_before_beta_and_chi"
+        "park_income_addendum_when_tdcsim_ex_overlap_collides_with_direct_interest"
     )
     assert by_id["d1_safe_yield_payer_flow"]["selected_slot"] == "Delta_N_selected"
     assert by_id["residual_mmf_tbill_sidecars"]["selected_slot"] == (

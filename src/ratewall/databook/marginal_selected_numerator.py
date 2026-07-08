@@ -149,7 +149,8 @@ def marginal_selected_numerator_rows(
                 "selected_marginal_n_bil": _fmt(n_value) if allowed else "",
                 "selected_marginal_n_allowed": str(allowed).lower(),
                 "selected_n_formula": (
-                    "delta_public_interest_net_block_bil + marginal_tdc_support_bil + "
+                    "delta_public_interest_net_block_bil + "
+                    "tdc_income_addendum_or_fail_closed_zero_bil + "
                     "delta_safe_yield_bil + delta_other_admitted_disjoint_bil"
                 ),
                 "safe_yield_component_status": safe_yield_status,
@@ -279,12 +280,7 @@ def _selected_public_interest_by_key(path: Path) -> dict[tuple[str, str, str, st
 def _tdc_support_by_key(path: Path) -> dict[tuple[str, str, str, str, str], Mapping[str, str]]:
     if not path.exists():
         return {}
-    rows = [
-        row
-        for row in _read_csv(path)
-        if row.get("selected_tdc_formula_pass") == "true"
-        and row.get("enters_selected_rw_m") == "true"
-    ]
+    rows = [row for row in _read_csv(path) if _tdc_row_available_for_selected_n(row)]
     keyed: dict[tuple[str, str, str, str, str], Mapping[str, str]] = {}
     for row in rows:
         if row.get("state_id", "").startswith("cbo_baseline_state::") and row.get("source_grade_status") != "pass_forecast_rollforward_source_grade":
@@ -302,6 +298,23 @@ def _tdc_support_by_key(path: Path) -> dict[tuple[str, str, str, str, str], Mapp
             raise MarginalSelectedNumeratorError("duplicate marginal TDC full key")
         keyed[key] = row
     return keyed
+
+
+def _tdc_row_available_for_selected_n(row: Mapping[str, str]) -> bool:
+    if (
+        row.get("selected_tdc_formula_pass") == "true"
+        and row.get("enters_selected_rw_m") == "true"
+    ):
+        return True
+    if (
+        row.get("selected_tdc_formula_pass") == "false"
+        and row.get("enters_selected_rw_m") == "false"
+        and row.get("marginal_tdc_support_bil") == "0"
+        and "retired_chi_support_zero" in row.get("support_formula", "")
+        and "income_addendum" in row.get("blocked_use", "")
+    ):
+        return True
+    return False
 
 
 def _historical_selected_periods(path: Path) -> set[str]:

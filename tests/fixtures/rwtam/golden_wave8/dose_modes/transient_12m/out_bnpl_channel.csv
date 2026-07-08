@@ -1,0 +1,181 @@
+year,band,band_label,channel_id,rule_id,instrument_family,gross_flow_delta_bil,converted_net_bil,basis,dose_mode
+2026,low,low_sensitivity_corner,bnpl,bnpl_installment_penalty,bnpl_installment,0.02533333333333333333333333334,-0.01341146666666666666666666667,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2026,low,low_sensitivity_corner,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.076666666666666666666666667,-0.020026,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2026,low,low_sensitivity_corner,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.08312499999999999999999999998,0.04278443749999999973815624999,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2026,low,low_sensitivity_corner,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.4710416666666666666666666665,0.2493694583333333333333333333,BNPL household incremental MMF float,transient_12m
+2026,low,low_sensitivity_corner,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.06333333333333333333333333332,0.03352866666666666666666666666,Removed card-float counterfactual revolving balance,transient_12m
+2026,low,low_sensitivity_corner,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2027,low,low_sensitivity_corner,bnpl,bnpl_installment_penalty,bnpl_installment,0.02533333333333333333333333334,-0.01341146666666666666666666667,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2027,low,low_sensitivity_corner,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.076666666666666666666666667,-0.020026,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2027,low,low_sensitivity_corner,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.08312499999999999999999999998,0.04278443749999999973815624999,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2027,low,low_sensitivity_corner,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.4710416666666666666666666665,0.2493694583333333333333333333,BNPL household incremental MMF float,transient_12m
+2027,low,low_sensitivity_corner,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.06333333333333333333333333332,0.03352866666666666666666666666,Removed card-float counterfactual revolving balance,transient_12m
+2027,low,low_sensitivity_corner,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2028,low,low_sensitivity_corner,bnpl,bnpl_installment_penalty,bnpl_installment,0.02533333333333333333333333334,-0.01341146666666666666666666667,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2028,low,low_sensitivity_corner,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.076666666666666666666666667,-0.020026,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2028,low,low_sensitivity_corner,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.08312499999999999999999999998,0.04278443749999999973815624999,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2028,low,low_sensitivity_corner,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.4710416666666666666666666665,0.2493694583333333333333333333,BNPL household incremental MMF float,transient_12m
+2028,low,low_sensitivity_corner,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.06333333333333333333333333332,0.03352866666666666666666666666,Removed card-float counterfactual revolving balance,transient_12m
+2028,low,low_sensitivity_corner,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2029,low,low_sensitivity_corner,bnpl,bnpl_installment_penalty,bnpl_installment,0.02533333333333333333333333334,-0.01341146666666666666666666667,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2029,low,low_sensitivity_corner,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.076666666666666666666666667,-0.020026,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2029,low,low_sensitivity_corner,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.08312499999999999999999999998,0.04278443749999999973815624999,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2029,low,low_sensitivity_corner,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.4710416666666666666666666665,0.2493694583333333333333333333,BNPL household incremental MMF float,transient_12m
+2029,low,low_sensitivity_corner,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.06333333333333333333333333332,0.03352866666666666666666666666,Removed card-float counterfactual revolving balance,transient_12m
+2029,low,low_sensitivity_corner,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2030,low,low_sensitivity_corner,bnpl,bnpl_installment_penalty,bnpl_installment,0.02533333333333333333333333334,-0.01341146666666666666666666667,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2030,low,low_sensitivity_corner,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.076666666666666666666666667,-0.020026,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2030,low,low_sensitivity_corner,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.08312499999999999999999999998,0.04278443749999999973815624999,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2030,low,low_sensitivity_corner,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.4710416666666666666666666665,0.2493694583333333333333333333,BNPL household incremental MMF float,transient_12m
+2030,low,low_sensitivity_corner,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.06333333333333333333333333332,0.03352866666666666666666666666,Removed card-float counterfactual revolving balance,transient_12m
+2030,low,low_sensitivity_corner,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2031,low,low_sensitivity_corner,bnpl,bnpl_installment_penalty,bnpl_installment,0.02533333333333333333333333334,-0.01341146666666666666666666667,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2031,low,low_sensitivity_corner,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.076666666666666666666666667,-0.020026,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2031,low,low_sensitivity_corner,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.08312499999999999999999999998,0.04278443749999999973815624999,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2031,low,low_sensitivity_corner,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.4710416666666666666666666665,0.2493694583333333333333333333,BNPL household incremental MMF float,transient_12m
+2031,low,low_sensitivity_corner,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.06333333333333333333333333332,0.03352866666666666666666666666,Removed card-float counterfactual revolving balance,transient_12m
+2031,low,low_sensitivity_corner,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2032,low,low_sensitivity_corner,bnpl,bnpl_installment_penalty,bnpl_installment,0.02533333333333333333333333334,-0.01341146666666666666666666667,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2032,low,low_sensitivity_corner,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.076666666666666666666666667,-0.020026,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2032,low,low_sensitivity_corner,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.08312499999999999999999999998,0.04278443749999999973815624999,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2032,low,low_sensitivity_corner,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.4710416666666666666666666665,0.2493694583333333333333333333,BNPL household incremental MMF float,transient_12m
+2032,low,low_sensitivity_corner,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.06333333333333333333333333332,0.03352866666666666666666666666,Removed card-float counterfactual revolving balance,transient_12m
+2032,low,low_sensitivity_corner,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2033,low,low_sensitivity_corner,bnpl,bnpl_installment_penalty,bnpl_installment,0.02533333333333333333333333334,-0.01341146666666666666666666667,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2033,low,low_sensitivity_corner,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.076666666666666666666666667,-0.020026,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2033,low,low_sensitivity_corner,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.08312499999999999999999999998,0.04278443749999999973815624999,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2033,low,low_sensitivity_corner,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.4710416666666666666666666665,0.2493694583333333333333333333,BNPL household incremental MMF float,transient_12m
+2033,low,low_sensitivity_corner,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.06333333333333333333333333332,0.03352866666666666666666666666,Removed card-float counterfactual revolving balance,transient_12m
+2033,low,low_sensitivity_corner,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2034,low,low_sensitivity_corner,bnpl,bnpl_installment_penalty,bnpl_installment,0.02533333333333333333333333334,-0.01341146666666666666666666667,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2034,low,low_sensitivity_corner,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.076666666666666666666666667,-0.020026,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2034,low,low_sensitivity_corner,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.08312499999999999999999999998,0.04278443749999999973815624999,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2034,low,low_sensitivity_corner,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.4710416666666666666666666665,0.2493694583333333333333333333,BNPL household incremental MMF float,transient_12m
+2034,low,low_sensitivity_corner,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.06333333333333333333333333332,0.03352866666666666666666666666,Removed card-float counterfactual revolving balance,transient_12m
+2034,low,low_sensitivity_corner,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2035,low,low_sensitivity_corner,bnpl,bnpl_installment_penalty,bnpl_installment,0.02533333333333333333333333334,-0.01341146666666666666666666667,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2035,low,low_sensitivity_corner,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.076666666666666666666666667,-0.020026,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2035,low,low_sensitivity_corner,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.08312499999999999999999999998,0.04278443749999999973815624999,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2035,low,low_sensitivity_corner,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.4710416666666666666666666665,0.2493694583333333333333333333,BNPL household incremental MMF float,transient_12m
+2035,low,low_sensitivity_corner,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.06333333333333333333333333332,0.03352866666666666666666666666,Removed card-float counterfactual revolving balance,transient_12m
+2035,low,low_sensitivity_corner,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2026,base,base,bnpl,bnpl_installment_penalty,bnpl_installment,0.09500000000000000000000000002,-0.05029300000000000000000000001,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2026,base,base,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.203333333333333333333333334,-0.02238200000000000000000000002,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2026,base,base,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.1939583333333333333333333333,0.09436072916666666666666666664,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2026,base,base,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.5264583333333333333333333332,0.2787070416666666666666666666,BNPL household incremental MMF float,transient_12m
+2026,base,base,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.11875,0.06286625,Removed card-float counterfactual revolving balance,transient_12m
+2026,base,base,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2027,base,base,bnpl,bnpl_installment_penalty,bnpl_installment,0.09500000000000000000000000002,-0.05029300000000000000000000001,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2027,base,base,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.203333333333333333333333334,-0.02238200000000000000000000002,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2027,base,base,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.1939583333333333333333333333,0.09436072916666666666666666664,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2027,base,base,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.5264583333333333333333333332,0.2787070416666666666666666666,BNPL household incremental MMF float,transient_12m
+2027,base,base,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.11875,0.06286625,Removed card-float counterfactual revolving balance,transient_12m
+2027,base,base,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2028,base,base,bnpl,bnpl_installment_penalty,bnpl_installment,0.09500000000000000000000000002,-0.05029300000000000000000000001,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2028,base,base,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.203333333333333333333333334,-0.02238200000000000000000000002,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2028,base,base,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.1939583333333333333333333333,0.09436072916666666666666666664,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2028,base,base,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.5264583333333333333333333332,0.2787070416666666666666666666,BNPL household incremental MMF float,transient_12m
+2028,base,base,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.11875,0.06286625,Removed card-float counterfactual revolving balance,transient_12m
+2028,base,base,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2029,base,base,bnpl,bnpl_installment_penalty,bnpl_installment,0.09500000000000000000000000002,-0.05029300000000000000000000001,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2029,base,base,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.203333333333333333333333334,-0.02238200000000000000000000002,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2029,base,base,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.1939583333333333333333333333,0.09436072916666666666666666664,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2029,base,base,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.5264583333333333333333333332,0.2787070416666666666666666666,BNPL household incremental MMF float,transient_12m
+2029,base,base,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.11875,0.06286625,Removed card-float counterfactual revolving balance,transient_12m
+2029,base,base,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2030,base,base,bnpl,bnpl_installment_penalty,bnpl_installment,0.09500000000000000000000000002,-0.05029300000000000000000000001,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2030,base,base,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.203333333333333333333333334,-0.02238200000000000000000000002,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2030,base,base,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.1939583333333333333333333333,0.09436072916666666666666666664,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2030,base,base,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.5264583333333333333333333332,0.2787070416666666666666666666,BNPL household incremental MMF float,transient_12m
+2030,base,base,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.11875,0.06286625,Removed card-float counterfactual revolving balance,transient_12m
+2030,base,base,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2031,base,base,bnpl,bnpl_installment_penalty,bnpl_installment,0.09500000000000000000000000002,-0.05029300000000000000000000001,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2031,base,base,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.203333333333333333333333334,-0.02238200000000000000000000002,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2031,base,base,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.1939583333333333333333333333,0.09436072916666666666666666664,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2031,base,base,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.5264583333333333333333333332,0.2787070416666666666666666666,BNPL household incremental MMF float,transient_12m
+2031,base,base,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.11875,0.06286625,Removed card-float counterfactual revolving balance,transient_12m
+2031,base,base,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2032,base,base,bnpl,bnpl_installment_penalty,bnpl_installment,0.09500000000000000000000000002,-0.05029300000000000000000000001,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2032,base,base,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.203333333333333333333333334,-0.02238200000000000000000000002,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2032,base,base,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.1939583333333333333333333333,0.09436072916666666666666666664,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2032,base,base,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.5264583333333333333333333332,0.2787070416666666666666666666,BNPL household incremental MMF float,transient_12m
+2032,base,base,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.11875,0.06286625,Removed card-float counterfactual revolving balance,transient_12m
+2032,base,base,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2033,base,base,bnpl,bnpl_installment_penalty,bnpl_installment,0.09500000000000000000000000002,-0.05029300000000000000000000001,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2033,base,base,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.203333333333333333333333334,-0.02238200000000000000000000002,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2033,base,base,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.1939583333333333333333333333,0.09436072916666666666666666664,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2033,base,base,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.5264583333333333333333333332,0.2787070416666666666666666666,BNPL household incremental MMF float,transient_12m
+2033,base,base,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.11875,0.06286625,Removed card-float counterfactual revolving balance,transient_12m
+2033,base,base,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2034,base,base,bnpl,bnpl_installment_penalty,bnpl_installment,0.09500000000000000000000000002,-0.05029300000000000000000000001,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2034,base,base,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.203333333333333333333333334,-0.02238200000000000000000000002,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2034,base,base,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.1939583333333333333333333333,0.09436072916666666666666666664,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2034,base,base,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.5264583333333333333333333332,0.2787070416666666666666666666,BNPL household incremental MMF float,transient_12m
+2034,base,base,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.11875,0.06286625,Removed card-float counterfactual revolving balance,transient_12m
+2034,base,base,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2035,base,base,bnpl,bnpl_installment_penalty,bnpl_installment,0.09500000000000000000000000002,-0.05029300000000000000000000001,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2035,base,base,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.203333333333333333333333334,-0.02238200000000000000000000002,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2035,base,base,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.1939583333333333333333333333,0.09436072916666666666666666664,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2035,base,base,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.5264583333333333333333333332,0.2787070416666666666666666666,BNPL household incremental MMF float,transient_12m
+2035,base,base,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.11875,0.06286625,Removed card-float counterfactual revolving balance,transient_12m
+2035,base,base,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2026,high,stress_corner_envelope,bnpl,bnpl_installment_penalty,bnpl_installment,0.1995000000000000000000000001,-0.1056153000000000000000000001,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2026,high,stress_corner_envelope,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.266666666666666666666666667,-0.02356,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2026,high,stress_corner_envelope,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.3324999999999999999999999999,0.15158675,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2026,high,stress_corner_envelope,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.5541666666666666666666666665,0.2933758333333333333333333333,BNPL household incremental MMF float,transient_12m
+2026,high,stress_corner_envelope,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.16625,0.08801275,Removed card-float counterfactual revolving balance,transient_12m
+2026,high,stress_corner_envelope,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2027,high,stress_corner_envelope,bnpl,bnpl_installment_penalty,bnpl_installment,0.1995000000000000000000000001,-0.1056153000000000000000000001,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2027,high,stress_corner_envelope,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.266666666666666666666666667,-0.02356,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2027,high,stress_corner_envelope,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.3324999999999999999999999999,0.15158675,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2027,high,stress_corner_envelope,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.5541666666666666666666666665,0.2933758333333333333333333333,BNPL household incremental MMF float,transient_12m
+2027,high,stress_corner_envelope,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.16625,0.08801275,Removed card-float counterfactual revolving balance,transient_12m
+2027,high,stress_corner_envelope,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2028,high,stress_corner_envelope,bnpl,bnpl_installment_penalty,bnpl_installment,0.1995000000000000000000000001,-0.1056153000000000000000000001,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2028,high,stress_corner_envelope,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.266666666666666666666666667,-0.02356,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2028,high,stress_corner_envelope,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.3324999999999999999999999999,0.15158675,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2028,high,stress_corner_envelope,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.5541666666666666666666666665,0.2933758333333333333333333333,BNPL household incremental MMF float,transient_12m
+2028,high,stress_corner_envelope,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.16625,0.08801275,Removed card-float counterfactual revolving balance,transient_12m
+2028,high,stress_corner_envelope,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2029,high,stress_corner_envelope,bnpl,bnpl_installment_penalty,bnpl_installment,0.1995000000000000000000000001,-0.1056153000000000000000000001,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2029,high,stress_corner_envelope,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.266666666666666666666666667,-0.02356,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2029,high,stress_corner_envelope,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.3324999999999999999999999999,0.15158675,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2029,high,stress_corner_envelope,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.5541666666666666666666666665,0.2933758333333333333333333333,BNPL household incremental MMF float,transient_12m
+2029,high,stress_corner_envelope,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.16625,0.08801275,Removed card-float counterfactual revolving balance,transient_12m
+2029,high,stress_corner_envelope,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2030,high,stress_corner_envelope,bnpl,bnpl_installment_penalty,bnpl_installment,0.1995000000000000000000000001,-0.1056153000000000000000000001,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2030,high,stress_corner_envelope,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.266666666666666666666666667,-0.02356,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2030,high,stress_corner_envelope,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.3324999999999999999999999999,0.15158675,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2030,high,stress_corner_envelope,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.5541666666666666666666666665,0.2933758333333333333333333333,BNPL household incremental MMF float,transient_12m
+2030,high,stress_corner_envelope,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.16625,0.08801275,Removed card-float counterfactual revolving balance,transient_12m
+2030,high,stress_corner_envelope,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2031,high,stress_corner_envelope,bnpl,bnpl_installment_penalty,bnpl_installment,0.1995000000000000000000000001,-0.1056153000000000000000000001,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2031,high,stress_corner_envelope,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.266666666666666666666666667,-0.02356,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2031,high,stress_corner_envelope,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.3324999999999999999999999999,0.15158675,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2031,high,stress_corner_envelope,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.5541666666666666666666666665,0.2933758333333333333333333333,BNPL household incremental MMF float,transient_12m
+2031,high,stress_corner_envelope,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.16625,0.08801275,Removed card-float counterfactual revolving balance,transient_12m
+2031,high,stress_corner_envelope,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2032,high,stress_corner_envelope,bnpl,bnpl_installment_penalty,bnpl_installment,0.1995000000000000000000000001,-0.1056153000000000000000000001,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2032,high,stress_corner_envelope,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.266666666666666666666666667,-0.02356,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2032,high,stress_corner_envelope,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.3324999999999999999999999999,0.15158675,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2032,high,stress_corner_envelope,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.5541666666666666666666666665,0.2933758333333333333333333333,BNPL household incremental MMF float,transient_12m
+2032,high,stress_corner_envelope,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.16625,0.08801275,Removed card-float counterfactual revolving balance,transient_12m
+2032,high,stress_corner_envelope,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2033,high,stress_corner_envelope,bnpl,bnpl_installment_penalty,bnpl_installment,0.1995000000000000000000000001,-0.1056153000000000000000000001,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2033,high,stress_corner_envelope,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.266666666666666666666666667,-0.02356,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2033,high,stress_corner_envelope,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.3324999999999999999999999999,0.15158675,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2033,high,stress_corner_envelope,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.5541666666666666666666666665,0.2933758333333333333333333333,BNPL household incremental MMF float,transient_12m
+2033,high,stress_corner_envelope,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.16625,0.08801275,Removed card-float counterfactual revolving balance,transient_12m
+2033,high,stress_corner_envelope,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2034,high,stress_corner_envelope,bnpl,bnpl_installment_penalty,bnpl_installment,0.1995000000000000000000000001,-0.1056153000000000000000000001,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2034,high,stress_corner_envelope,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.266666666666666666666666667,-0.02356,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2034,high,stress_corner_envelope,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.3324999999999999999999999999,0.15158675,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2034,high,stress_corner_envelope,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.5541666666666666666666666665,0.2933758333333333333333333333,BNPL household incremental MMF float,transient_12m
+2034,high,stress_corner_envelope,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.16625,0.08801275,Removed card-float counterfactual revolving balance,transient_12m
+2034,high,stress_corner_envelope,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m
+2035,high,stress_corner_envelope,bnpl,bnpl_installment_penalty,bnpl_installment,0.1995000000000000000000000001,-0.1056153000000000000000000001,BNPL delinquent penalty-roll term over card-driver delta only,transient_12m
+2035,high,stress_corner_envelope,bnpl,bnpl_funding_liability_cost,bnpl_funding_liability,1.266666666666666666666666667,-0.02356,BNPL provider funding cost routed through provider/merchant/unallocated incidence only,transient_12m
+2035,high,stress_corner_envelope,bnpl,bnpl_float_deposit_yield,bnpl_float_deposits,0.3324999999999999999999999999,0.15158675,BNPL household incremental deposit float at A1 savings/MMDA blend,transient_12m
+2035,high,stress_corner_envelope,bnpl,bnpl_float_mmf_yield,bnpl_float_mmfs,0.5541666666666666666666666665,0.2933758333333333333333333333,BNPL household incremental MMF float,transient_12m
+2035,high,stress_corner_envelope,bnpl,bnpl_card_float_removed,bnpl_card_float_removed,0.16625,0.08801275,Removed card-float counterfactual revolving balance,transient_12m
+2035,high,stress_corner_envelope,bnpl,bnpl_rewards_zero_delta,bnpl_installment,0,0,BNPL counterfactual rewards term with rewards_policy_beta=0,transient_12m

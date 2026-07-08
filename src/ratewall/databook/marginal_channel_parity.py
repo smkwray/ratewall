@@ -94,7 +94,7 @@ def _parity_row(
         current_status = _selected_or_fail("current", selected_period_objects)
         forecast_status = _selected_or_fail("forecast", selected_period_objects)
         historical_status = "fail_closed_no_selected_historical_tdcsim_pair_route"
-        selected_allowed = "current_forecast_selected_after_tdc_pair_gate"
+        selected_allowed = "current_forecast_selected_as_income_addendum_or_fail_closed_zero"
     elif channel_id == "conventional_demand_drag":
         current_status = "selected_marginal_D"
         forecast_status = "selected_marginal_D"

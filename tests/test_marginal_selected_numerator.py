@@ -55,7 +55,7 @@ def test_selected_numerator_can_pass_when_all_delta_inputs_exist(tmp_path: Path)
     )
 
     assert rows[0]["selected_marginal_n_allowed"] == "true"
-    assert rows[0]["selected_marginal_n_bil"] == "6.5"
+    assert rows[0]["selected_marginal_n_bil"] == "5.5"
     assert rows[0]["demand_conversion_case"] == "central"
     assert rows[0]["missing_components"] == ""
     assert rows[0]["delta_safe_yield_bil"] == "2"
@@ -120,6 +120,8 @@ def test_selected_numerator_rejects_tdc_selected_formula_with_entry_flag_false(
     paths = _write_fixtures(tmp_path, include_inputs=True)
     tdc_rows = _read_csv(paths["tdc"])
     tdc_rows[0]["enters_selected_rw_m"] = "false"
+    tdc_rows[0]["marginal_tdc_support_bil"] = "1"
+    tdc_rows[0]["support_formula"] = "retired_chi_support_zero"
     _write_csv(paths["tdc"], tdc_rows)
 
     rows = marginal_selected_numerator_rows(
@@ -185,7 +187,7 @@ def test_selected_n_allows_explicit_fail_closed_zero_safe_yield(tmp_path: Path) 
     )
 
     assert rows[0]["selected_marginal_n_allowed"] == "true"
-    assert rows[0]["selected_marginal_n_bil"] == "4.5"
+    assert rows[0]["selected_marginal_n_bil"] == "3.5"
     assert rows[0]["safe_yield_component_status"] == "fail_closed_named_blocker_zero"
 
 
@@ -271,9 +273,14 @@ def _write_fixtures(tmp_path: Path, *, include_inputs: bool) -> dict[str, Path]:
                     "state_id": "forecast_state::2036::plus",
                     "shock_path_id": "plus_100bp_year",
                     "demand_conversion_case": "central",
-                    "selected_tdc_formula_pass": "true",
-                    "enters_selected_rw_m": "true",
-                    "marginal_tdc_support_bil": "1",
+                    "selected_tdc_formula_pass": "false",
+                    "enters_selected_rw_m": "false",
+                    "marginal_tdc_support_bil": "0",
+                    "support_formula": (
+                        "retired_chi_support_zero;"
+                        "income_addendum_parked_direct_treasury_mmf_interest_collision"
+                    ),
+                    "blocked_use": "selected_rw_m;income_addendum;chi_support",
                 }
             ],
         )

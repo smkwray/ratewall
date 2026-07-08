@@ -78,6 +78,7 @@ gather_files() {
     find "${roots[@]}" -type f 2>/dev/null \
       | while read -r f; do
           is_self_referential "$f" && continue
+          git check-ignore -q -- "$f" 2>/dev/null && continue
           for pat in "${SCAN_GLOBS[@]}"; do
             # shellcheck disable=SC2053
             if [[ "$f" == $pat ]]; then echo "$f"; break; fi

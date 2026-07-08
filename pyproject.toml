@@ -38,7 +38,7 @@ pythonpath = ["src"]
 addopts = "-q -p no:cacheprovider -m 'not full_surface'"
 markers = [
   "full_surface: tests that require the legacy/full generated output surface",
-  "audit_fast: fast RWTAS audit-polish subset suitable for serial -m audit_fast runs",
+  "audit_fast: fast RWTAM audit-polish subset suitable for serial -m audit_fast runs",
 ]
 
 [tool.ruff]

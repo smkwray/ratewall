@@ -13,10 +13,10 @@ The marginal empirical databook builds the current RateWall marginal surfaces:
 assumption sets, parameter packs, source ledgers, Treasury Deposit Channel
 inputs, public-interest terms, safe-yield terms, and claim-boundary audits.
 
-The RWTAS transmission model builds a sectoral accounting system for rate-wall
-transmission. It combines stock-flow accounting, rate-side mechanics, sector
-cells, conversion parameters, and scenario layers into auditable output tables
-and focused invariants.
+The Rate Wall Transmission Accounting Model (RWTAM) builds a sectoral accounting
+system for rate-wall transmission. It combines stock-flow accounting, rate-side
+mechanics, sector cells, conversion parameters, and scenario layers into
+auditable output tables and focused invariants.
 
 ## Install
 
@@ -44,14 +44,14 @@ Run the default test suite:
 python -m pytest
 ```
 
-Run focused RWTAS checks:
+Run focused RWTAM checks:
 
 ```bash
-python -m pytest tests/test_rwtas_v1.py -k 'invariant or t25'
+python -m pytest tests/test_rwtam_v1.py -k 'invariant or t25'
 ```
 
-Additional RWTAS builder scripts live under `scripts/build_rwtas_*.py`; they
-write generated tables under `var/rwtas/`.
+Additional RWTAM builder scripts live under `scripts/build_rwtam_*.py`; they
+write generated tables under `var/rwtam/`.
 
 ## Boundaries
 

@@ -31,7 +31,7 @@ def test_channel_parity_matrix_covers_complete_channel_inventory() -> None:
         "selected_same_state_plus_100bp_year_delta"
     )
     assert by_id["tdc_ex_overlap_beta_chi"]["selected_allowed_now"] == (
-        "current_forecast_selected_after_tdc_pair_gate"
+        "current_forecast_selected_as_income_addendum_or_fail_closed_zero"
     )
     assert "full_tdc_level" in by_id["tdc_ex_overlap_beta_chi"]["blocked_use"]
     assert by_id["deposit_safe_yield_payer_flow"]["selected_allowed_now"] == (

@@ -1,2 +1,0 @@
-run_pair_id,state_id,baseline_scenario_id,shock_scenario_id,shock_id,start_month,end_month,same_state_pair_flag
-rwtas_v0_fixture_pair,current_state_2026_01,baseline,plus_100bp_year,MP_100BPY_TIGHTENING,2026-01,2026-01,true

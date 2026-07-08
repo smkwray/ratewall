@@ -1,0 +1,3 @@
+scenario_axis_id,scenario_id,description,implementation_status,input_basis_label,dose_mode
+S1,treasury_wam_issuance_mix,Post-V1 baseline-state scenario for Treasury bill/coupon issuance mix and coupon-roll timing; V1 uses blended bills/coupons and constant roll rate.,configured_not_headline,owner_assumption_mode,persistent_level
+S2,treasury_holder_composition,Post-V1 baseline-state scenario for exogenous Treasury holder-matrix changes with balance-sheet closure; V1 holder composition remains current-state pack input.,configured_not_headline,owner_assumption_mode,persistent_level

@@ -1,0 +1,7 @@
+scenario_id,year,government_interest_delta_bil,bill_yield_move_bp,coupon_10y_yield_move_bp,old_minus_new_government_interest_delta_bil,basis,dose_mode
+expectations_consistent_term_premium,2026,68.6638134866871150487067667,100,16,-7.00173636832827397870349003,experiment_policy_path_mean_plus_term_premium,transient_12m
+superseded_impulse_beta_comparator,2026,61.66207711835884107000327667,98,20,-7.00173636832827397870349003,old_fixed_curve_beta_context_only,transient_12m
+parallel_100,2026,99.8662871517368,100,100,,parallel_100_theory_diagnostic,transient_12m
+impulse_beta_context,validation_context,,,,,2y: old=55.0; expectations_hl12m=54.1; tp=2.0; reconstructed=56.1,transient_12m
+impulse_beta_context,validation_context,,,,,10y: old=20.0; expectations_hl12m=14.41; tp=6.0; reconstructed=20.41,transient_12m
+impulse_beta_context,validation_context,,,,,30y: old=13.0; expectations_hl12m=4.81; tp=8.0; reconstructed=12.81,transient_12m

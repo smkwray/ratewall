@@ -1,0 +1,13 @@
+phase,channel,band,year1_D_bil,steady_or_year2_incremental_D_bil,headline_status,additivity_status,dose_mode
+6A,housing_quantity,low,2.945,3.77,headline_additive,additive_once_overlap_rules_pass,transient_12m
+6A,housing_quantity,base,37.275,46.9,headline_additive,additive_once_overlap_rules_pass,transient_12m
+6A,housing_quantity,high,148.028,183.09,headline_additive,additive_once_overlap_rules_pass,transient_12m
+6B,user_cost_investment,low,8.25,19.8,headline_additive,additive_once_overlap_rules_pass,transient_12m
+6B,user_cost_investment,base,26.4,52.8,headline_additive,additive_once_overlap_rules_pass,transient_12m
+6B,user_cost_investment,high,66,132,headline_additive,additive_once_overlap_rules_pass,transient_12m
+6C,wealth_valuation_ex_bonds,low,13.017,15.667,headline_additive,additive_once_overlap_rules_pass,transient_12m
+6C,wealth_valuation_ex_bonds,base,83.632,104.827,headline_additive,additive_once_overlap_rules_pass,transient_12m
+6C,wealth_valuation_ex_bonds,high,324.505,419.882,headline_additive,additive_once_overlap_rules_pass,transient_12m
+6E,fx_net_exports,low,23.899,9.56,headline_additive_year2_incremental,additive_once_overlap_rules_pass,transient_12m
+6E,fx_net_exports,base,55.765,22.306,headline_additive_year2_incremental,additive_once_overlap_rules_pass,transient_12m
+6E,fx_net_exports,high,79.664,31.866,headline_additive_year2_incremental,additive_once_overlap_rules_pass,transient_12m

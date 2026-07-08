@@ -83,6 +83,17 @@ FINAL_MARGINAL_READINESS_FIELDS = [
     "claim_boundary",
 ]
 
+SELECTED_RW_M_RWTAM_BLOCKED_USE = "comparison_or_summation_with_rwtam_headline_rw_full"
+SELECTED_RW_M_CLAIM_BOUNDARY = (
+    "RW_M uses the conventional-demand-drag threshold denominator "
+    "(0.776pp GDP owner band) and gated-delta numerator with safe-yield + "
+    "residual on owner assumption-mode bases; NOT comparable to RWTAM RW_full."
+)
+NONSELECTED_RW_M_BLOCKED_USE = "canonical_headline_promotion;selected_rw_m"
+FINAL_RW_M_REQUIREMENTS_CLAIM_BOUNDARY = (
+    "final_rw_m_requires_selected_marginal_n_and_selected_marginal_D"
+)
+
 EXPOSURE_DIAGNOSTICS_SNAPSHOT_FIELDS = [
     "exposure_diagnostic_snapshot_row_id",
     "diagnostic_surface_id",
@@ -152,9 +163,15 @@ def final_marginal_rw_ratio_rows(
                 "blocked_reason": blocked,
                 "allowed_use": "final_marginal_rw" if selected else "final_marginal_gap_surface",
                 "blocked_use": (
-                    "" if selected else "canonical_headline_promotion;selected_rw_m"
+                    SELECTED_RW_M_RWTAM_BLOCKED_USE
+                    if selected
+                    else NONSELECTED_RW_M_BLOCKED_USE
                 ),
-                "claim_boundary": "final_rw_m_requires_selected_marginal_n_and_selected_marginal_D",
+                "claim_boundary": (
+                    SELECTED_RW_M_CLAIM_BOUNDARY
+                    if selected
+                    else FINAL_RW_M_REQUIREMENTS_CLAIM_BOUNDARY
+                ),
             }
         )
     validate_final_marginal_rw_ratio_rows(rows)
@@ -303,15 +320,14 @@ def final_marginal_readiness_rows(
             "standalone_or_nonzero_remittance_without_owner_gate",
         ),
         _check(
-            "tdc_selected_flag_consistent_with_selected_n",
+            "tdc_term_present_as_income_addendum_or_fail_closed_zero",
             len(tdc_support) == len(selected)
-            and all(row.get("selected_tdc_formula_pass") == "true" for row in tdc_support)
-            and all(row.get("enters_selected_rw_m") == "true" for row in tdc_support),
+            and all(_tdc_term_available_for_selected_n(row) for row in tdc_support),
             len(tdc_support),
-            sum(1 for row in tdc_support if row.get("selected_tdc_formula_pass") == "true"),
-            "TDC rows consumed by selected N must have selected-entry flag true",
+            sum(1 for row in tdc_support if _tdc_term_available_for_selected_n(row)),
+            "TDC rows consumed by selected N must be admitted income addendum rows or retired fail-closed zero rows",
             f"rows={len(tdc_support)}",
-            "selected_tdc_formula_pass_with_enters_selected_rw_m_false",
+            "tdc_term_missing_or_old_chi_support_selected",
         ),
         _check(
             "tdcsim_source_pair_packaging_status",
@@ -444,6 +460,10 @@ def validate_final_marginal_rw_ratio_rows(
         if row["final_rw_m_selected"] == "true":
             if not row["selected_marginal_n_bil"] or not row["selected_marginal_D_bil"]:
                 raise FinalMarginalModelError("selected RW_M requires N and D")
+            if SELECTED_RW_M_RWTAM_BLOCKED_USE not in row["blocked_use"]:
+                raise FinalMarginalModelError("selected RW_M RWTAM comparison blocker missing")
+            if row["claim_boundary"] != SELECTED_RW_M_CLAIM_BOUNDARY:
+                raise FinalMarginalModelError("selected RW_M claim boundary missing")
             expected = Decimal(row["selected_marginal_n_bil"]) / Decimal(
                 row["selected_marginal_D_bil"]
             )
@@ -461,6 +481,21 @@ def _read_csv(path: Path) -> list[dict[str, str]]:
         return []
     with path.open(encoding="utf-8", newline="") as handle:
         return list(csv.DictReader(handle))
+
+
+def _tdc_term_available_for_selected_n(row: Mapping[str, str]) -> bool:
+    if (
+        row.get("selected_tdc_formula_pass") == "true"
+        and row.get("enters_selected_rw_m") == "true"
+    ):
+        return True
+    return (
+        row.get("selected_tdc_formula_pass") == "false"
+        and row.get("enters_selected_rw_m") == "false"
+        and row.get("marginal_tdc_support_bil") == "0"
+        and "retired_chi_support_zero" in row.get("support_formula", "")
+        and "income_addendum" in row.get("blocked_use", "")
+    )
 
 
 def _tdcsim_pair_dir_count(path: Path) -> int:

@@ -14,6 +14,8 @@ from ratewall.databook.final_marginal_model import (
     DEFAULT_SAFE_YIELD_PATH,
     DEFAULT_SELECTED_NUMERATOR_PATH,
     DEFAULT_TDC_SUPPORT_PATH,
+    SELECTED_RW_M_CLAIM_BOUNDARY,
+    SELECTED_RW_M_RWTAM_BLOCKED_USE,
 )
 from ratewall.databook.table_io import write_rows
 
@@ -85,6 +87,7 @@ def final_marginal_readout_rows(
     debt_replacements = [
         row for row in debt_audit if row.get("replacement_recommended") == "true"
     ]
+    tdc_available_count = sum(1 for row in tdc if _tdc_term_available_for_selected_n(row))
     rows = [
         _row(
             "final_rw_m_rows",
@@ -98,7 +101,8 @@ def final_marginal_readout_rows(
             str(selected_final_count),
             "pass" if selected_final_count == 11 else "fail",
             "selected_current_forecast_rw_m_count",
-            "historical_or_incomplete_selected_rw_m",
+            f"historical_or_incomplete_selected_rw_m;{SELECTED_RW_M_RWTAM_BLOCKED_USE}",
+            claim_boundary=SELECTED_RW_M_CLAIM_BOUNDARY,
         ),
         _row(
             "selected_n_rows",
@@ -119,13 +123,12 @@ def final_marginal_readout_rows(
         ),
         _row(
             "tdc_selected_support_rows",
-            str(sum(1 for row in tdc if row.get("enters_selected_rw_m") == "true")),
+            str(tdc_available_count),
             "pass"
-            if len(tdc) == 11
-            and all(row.get("enters_selected_rw_m") == "true" for row in tdc)
+            if len(tdc) == 11 and all(_tdc_term_available_for_selected_n(row) for row in tdc)
             else "fail",
-            "selected_tdc_ex_overlap_beta_chi",
-            "tdc_selected_flag_inconsistent",
+            "tdc_income_addendum_or_fail_closed_zero",
+            "tdc_term_missing_or_old_chi_support_selected",
         ),
         _row(
             "safe_yield_selected_nonzero_rows",
@@ -206,6 +209,8 @@ def _row(
     metric_status: str,
     allowed_use: str,
     blocked_use: str,
+    *,
+    claim_boundary: str = "marginal_only_final_readout_uses_no_legacy_ratio_inputs",
 ) -> dict[str, str]:
     return {
         "final_marginal_readout_row_id": f"final_marginal_readout::{metric_id}",
@@ -214,7 +219,7 @@ def _row(
         "metric_status": metric_status,
         "allowed_use": allowed_use,
         "blocked_use": blocked_use,
-        "claim_boundary": "marginal_only_final_readout_uses_no_legacy_ratio_inputs",
+        "claim_boundary": claim_boundary,
     }
 
 
@@ -223,3 +228,18 @@ def _read_csv(path: Path) -> list[dict[str, str]]:
         return []
     with path.open(encoding="utf-8", newline="") as handle:
         return list(csv.DictReader(handle))
+
+
+def _tdc_term_available_for_selected_n(row: Mapping[str, str]) -> bool:
+    if (
+        row.get("selected_tdc_formula_pass") == "true"
+        and row.get("enters_selected_rw_m") == "true"
+    ):
+        return True
+    return (
+        row.get("selected_tdc_formula_pass") == "false"
+        and row.get("enters_selected_rw_m") == "false"
+        and row.get("marginal_tdc_support_bil") == "0"
+        and "retired_chi_support_zero" in row.get("support_formula", "")
+        and "income_addendum" in row.get("blocked_use", "")
+    )

@@ -3,6 +3,10 @@ from __future__ import annotations
 import csv
 from pathlib import Path
 
+from ratewall.databook.final_marginal_model import (
+    SELECTED_RW_M_CLAIM_BOUNDARY,
+    SELECTED_RW_M_RWTAM_BLOCKED_USE,
+)
 from ratewall.databook.final_marginal_readout import (
     FINAL_MARGINAL_READOUT_FIELDS,
     final_marginal_readout_rows,
@@ -29,6 +33,14 @@ def test_final_marginal_readout_uses_only_marginal_outputs(tmp_path: Path) -> No
     assert {field for row in rows for field in row} == set(FINAL_MARGINAL_READOUT_FIELDS)
     by_metric = {row["metric_id"]: row for row in rows}
     assert by_metric["final_rw_m_selected_rows"]["metric_value"] == "1"
+    assert (
+        SELECTED_RW_M_RWTAM_BLOCKED_USE
+        in by_metric["final_rw_m_selected_rows"]["blocked_use"]
+    )
+    assert (
+        by_metric["final_rw_m_selected_rows"]["claim_boundary"]
+        == SELECTED_RW_M_CLAIM_BOUNDARY
+    )
     assert by_metric["tdc_selected_support_rows"]["metric_status"] == "pass"
     assert by_metric["channel_parity_rows"]["metric_status"] == "pass"
     assert outputs["final_marginal_readout_csv"].read_text(encoding="utf-8").startswith(
@@ -61,7 +73,19 @@ def _write_fixtures(tmp_path: Path) -> dict[str, Path]:
     )
     _write_csv(
         paths["tdc"],
-        [{"enters_selected_rw_m": "true"} for _ in range(11)],
+        [
+            {
+                "selected_tdc_formula_pass": "false",
+                "enters_selected_rw_m": "false",
+                "marginal_tdc_support_bil": "0",
+                "support_formula": (
+                    "retired_chi_support_zero;"
+                    "income_addendum_parked_direct_treasury_mmf_interest_collision"
+                ),
+                "blocked_use": "selected_rw_m;income_addendum;chi_support",
+            }
+            for _ in range(11)
+        ],
     )
     _write_csv(paths["debt"], [{"replacement_recommended": "false"}])
     _write_csv(paths["readiness"], [{"check_status": "pass"}])

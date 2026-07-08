@@ -32,9 +32,10 @@ def test_marginal_numerator_channels_fail_closed_until_deltas_exist() -> None:
     } <= set(by_id)
     assert {row["selected_marginal_n_allowed"] for row in rows} == {"false"}
     assert by_id["tdc_ex_overlap_beta_chi"]["delta_formula"] == (
-        "delta_tdc_ex_overlap_bil * beta * chi"
+        "delta_tdc_income_addendum_bil_or_fail_closed_zero"
     )
     assert "tdcsim_v0p3_output" in by_id["tdc_ex_overlap_beta_chi"]["blocked_use"]
+    assert "chi_support" in by_id["tdc_ex_overlap_beta_chi"]["blocked_use"]
     assert "stock_rate_fallback" in by_id["deposit_safe_yield_payer_flow"]["blocked_use"]
 
 

@@ -34,18 +34,21 @@ build/
 
 # Local tooling config
 [Cc][Ll][Aa][Uu][Dd][Ee].md
+[Aa][Gg][Ee][Nn][Tt][Ss].md
+.o[p]encode/
+paper-frontend/
 
-# RWTAS research-package prose and non-engine artifacts (not consumed by the
+# RWTAM research-package prose and non-engine artifacts (not consumed by the
 # engine; excluded from the public release). Parameter/provenance CSVs under
-# configs/rwtas/packs/ are tracked; the items below are research prose,
+# configs/rwtam/packs/ are tracked; the items below are research prose,
 # file-listing manifests, internal project-state copies, and raw third-party
 # source downloads.
-configs/rwtas/packs/**/*.md
-configs/rwtas/packs/**/*.txt
-configs/rwtas/packs/**/*.json
-configs/rwtas/packs/**/MANIFEST.csv
-configs/rwtas/packs/**/*_manifest.csv
-configs/rwtas/packs/**/project_state*/
-configs/rwtas/packs/**/project/
-configs/rwtas/packs/**/sources/
-configs/rwtas/packs/**/source_downloads/
+configs/rwtam/packs/**/*.md
+configs/rwtam/packs/**/*.txt
+configs/rwtam/packs/**/*.json
+configs/rwtam/packs/**/MANIFEST.csv
+configs/rwtam/packs/**/*_manifest.csv
+configs/rwtam/packs/**/project_state*/
+configs/rwtam/packs/**/project/
+configs/rwtam/packs/**/sources/
+configs/rwtam/packs/**/source_downloads/

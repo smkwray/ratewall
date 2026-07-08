@@ -21,16 +21,16 @@ channels:
     channel_family: tdc
     period_scope: historical,current,forecast
     final_role: candidate_marginal_replacement
-    numerator_formula: delta_tdc_ex_overlap_bil * beta * chi
+    numerator_formula: delta_tdc_income_addendum_bil_or_fail_closed_zero
     marginal_delta_required: true
     same_state_pair_required: true
-    source_status: requires_tdcsim_paired_baseline_shock_output;historical_blocked_until_same_state_replay_pair
-    viability_status: viable_after_tdcsim_agent_pair_assembler
-    promotion_status: blocked_until_tdcsim_marginal_pair
+    source_status: requires_tdcsim_paired_baseline_shock_output_and_direct_interest_disjointness;historical_blocked_until_same_state_replay_pair
+    viability_status: parked_direct_treasury_mmf_interest_collision
+    promotion_status: blocked_until_income_addendum_disjointness_gate
     fail_closed_label: fail_closed_non_marginal_selected_n
-    allowed_use: marginal_tdc_support_after_beta_chi_overlap_controls
-    blocked_use: full_tdc_level;observed_tdc_level;legacy_runtime_tdc_component;tdc_without_same_state_pair
-    claim_boundary: tdc_counts_only_as_extra_support_created_by_standardized_rate_shock
+    allowed_use: retired_chi_diagnostic_and_fail_closed_zero_tdc_term
+    blocked_use: full_tdc_level;observed_tdc_level;legacy_runtime_tdc_component;tdc_without_same_state_pair;chi_support;income_addendum_until_s1_passes
+    claim_boundary: tdc_counts_only_as_admitted_income_addendum_or_fail_closed_zero
 
   - channel_id: conventional_demand_drag
     channel_family: denominator

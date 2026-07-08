@@ -318,17 +318,17 @@ COMPLETE_CHANNEL_REQUIREMENTS = [
         "prior_source_surface": "marginal_tdcsim;core_support_parity;current_observed_overlay",
         "marginal_status": "selected_central_after_gate",
         "selected_role": "selected_marginal_n_candidate",
-        "theory_reason": "TDC belongs only to the extent the standardized rate shock creates extra non-overlapping support in the same state",
-        "required_formula": "delta_tdc_ex_overlap_bil * beta * chi",
+        "theory_reason": "TDC belongs only through an admitted income addendum after proving the TDCSim ex-overlap rows are disjoint from RWTAM direct interest",
+        "required_formula": "delta_tdc_income_addendum_bil_or_fail_closed_zero",
         "source_or_assumption_route": "tdcsim_same_state_baseline_shock_source_pair",
-        "overlap_policy": "subtract_overlap_before_beta_chi",
-        "demand_conversion_policy": "beta_times_chi_applied_after_ex_overlap_delta",
+        "overlap_policy": "park_income_addendum_if_tdcsim_ex_overlap_rows_collide_with_direct_interest",
+        "demand_conversion_policy": "created_deposit_income_addendum_if_admitted_otherwise_zero",
         "output_table": "ratewall_marginal_tdc_support_panel.csv",
-        "gate_id": "tdcsim_source_pair_gate",
-        "test_id": "test_selected_numerator_uses_delta_tdc_ex_overlap_beta_chi_only",
-        "promotion_rule": "selected_when_v0p4_pair_verifies_with_same_state_inputs_and_component_overlap_identity",
-        "blocked_use": "full_tdc_level;deposit_stock_level;legacy_runtime_tdc_support;current_overlay_support;core_support_parity_support;cross_state_subtraction",
-        "claim_boundary": "tdc_selected_only_as_marginal_ex_overlap_response_to_plus_100bp_year",
+        "gate_id": "tdcsim_income_disjointness_gate",
+        "test_id": "test_tdcsim_mmf_debt_service_collision_parks_income_addendum",
+        "promotion_rule": "selected_as_income_addendum_only_when_s1_disjointness_reconciliation_has_no_direct_interest_collision",
+        "blocked_use": "full_tdc_level;deposit_stock_level;legacy_runtime_tdc_support;current_overlay_support;core_support_parity_support;cross_state_subtraction;chi_support",
+        "claim_boundary": "tdc_selected_only_as_admitted_income_addendum_or_fail_closed_zero",
     },
     {
         "prior_channel_id": "tdcsim_rate25_derivative_proxy",
@@ -1028,8 +1028,8 @@ def validate_marginal_channel_status(
         if "selected_rw_m" not in row["blocked_use"]:
             raise MarginalObjectLedgerError("legacy exposure ratio selected_rw_m blocker missing")
     tdc = by_id["tdc_ex_overlap_beta_chi"]
-    if tdc["numerator_formula"] != "delta_tdc_ex_overlap_bil * beta * chi":
-        raise MarginalObjectLedgerError("TDC must use marginal ex-overlap beta chi formula")
+    if tdc["numerator_formula"] != "delta_tdc_income_addendum_bil_or_fail_closed_zero":
+        raise MarginalObjectLedgerError("TDC must use income addendum or fail-closed zero formula")
     if "full_tdc_level" not in tdc["blocked_use"]:
         raise MarginalObjectLedgerError("full TDC level blocker missing")
     d_row = by_id["conventional_demand_drag"]
@@ -1167,7 +1167,7 @@ def validate_complete_marginal_channel_inventory(
                     "selected central inventory rows must use marginal delta or D formula"
                 )
         if row["prior_channel_id"] == "tdc_ex_overlap_beta_chi":
-            if row["required_formula"] != "delta_tdc_ex_overlap_bil * beta * chi":
+            if row["required_formula"] != "delta_tdc_income_addendum_bil_or_fail_closed_zero":
                 raise MarginalObjectLedgerError("TDC inventory formula drift")
             for blocker in [
                 "full_tdc_level",
@@ -1176,6 +1176,7 @@ def validate_complete_marginal_channel_inventory(
                 "current_overlay_support",
                 "core_support_parity_support",
                 "cross_state_subtraction",
+                "chi_support",
             ]:
                 if blocker not in row["blocked_use"]:
                     raise MarginalObjectLedgerError(

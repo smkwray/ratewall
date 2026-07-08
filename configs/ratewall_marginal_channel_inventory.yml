@@ -56,10 +56,10 @@ channels:
     overlap_policy: never_domestic_support
   - channel_id: tdc_ex_overlap_beta_chi
     period_scope: [historical, current, forecast]
-    selected_role: selected_central_after_same_state_pair_gate
+    selected_role: selected_fail_closed_zero_after_s1_collision
     selected_slot: Delta_N_selected
-    formula_id: tdc_ex_overlap_beta_chi_v1
-    overlap_policy: subtract_overlap_before_beta_and_chi
+    formula_id: tdc_income_addendum_or_fail_closed_zero_v1
+    overlap_policy: park_income_addendum_when_tdcsim_ex_overlap_collides_with_direct_interest
   - channel_id: d1_safe_yield_payer_flow
     period_scope: [historical, current, forecast]
     selected_role: selected_candidate_fail_closed_zero_in_v1

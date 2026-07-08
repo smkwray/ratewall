@@ -1,0 +1,31 @@
+instrument_family,moneyness_weight,moneyness_weight_low,moneyness_weight_high,liquidity_bucket,input_basis_label,evidence_label,rationale
+reserves_iorb,1.00,1.00,1.00,H,market-calibrated_20260707,market-calibrated,Reserve balances are paid by Federal Reserve Banks and administered as a monetary-policy tool; treat as money for eligible bank holder surface.
+on_rrp_mmfs,0.99,0.98,1.00,H,market-calibrated_20260707,market-calibrated,"NY Fed states ON RRP uses Treasury securities, eligible counterparties include primary dealers, banks, MMFs and GSEs; eligibility is restricted and operationally gated."
+foreign_official_reverse_repos,0.98,0.96,0.99,H,market-calibrated_20260707,market-calibrated,"Close to ON RRP, but restricted to foreign/international monetary authority arrangements and not generally transferable to private holders."
+treasury_bills,0.99,0.97,1.00,H,market-calibrated_20260707,market-calibrated,Bills have minimal duration risk and very high funding convertibility; Treasury repo data and collateral schedules support near-cash treatment.
+treasury_notes_bonds_tips,0.90,0.82,0.95,H,market-calibrated_20260707,market-calibrated,"Treasury coupons are deeply repo-able but not price-invariant; upgrade from owner 0.65 because collateral schedules show 95-99% margins by duration, while duration volatility prevents bill-like weight."
+deposits_checkable,1.00,1.00,1.00,H,market-calibrated_20260707,market-calibrated,Checkable deposits are the anchor par claim in the diagnostic; no haircut applied.
+deposits_savings_mmda,0.97,0.93,0.99,H,literature_regulatory_20260707,literature/regulatory,"Reg D’s numeric transfer limit was deleted, but institutions are not required to suspend limits and reservation-of-right terms remain, so savings/MMDA are slightly below checkable."
+deposits_time_cds,0.78,0.65,0.90,M,still-assumption_20260707,still-assumption,"Evidence supports collateral eligibility for CDs, but household time-deposit access frictions vary by contract; remains assumption-grade."
+mmf_shares,0.97,0.93,0.99,H,regulatory_market_20260707,regulatory/market,"SEC removed temporary redemption gates and liquidity-threshold fee tie, raised daily/weekly liquidity requirements, but institutional prime/tax-exempt funds can face mandatory liquidity fees over 5% daily net redemptions."
+mmf_short_funding_assets,0.94,0.88,0.97,H,market-calibrated_20260707,market-calibrated,Short private money-market instruments are collateralizable and short-duration but carry issuer/rollover stress risk.
+mortgages_fixed,0.08,0.03,0.15,L,still-assumption_20260707,still-assumption,"Outstanding mortgage loans are not money for household borrowers; for lender assets, collateral value is institution-specific and not broadly repo-convertible."
+mortgages_arm,0.10,0.04,0.18,L,still-assumption_20260707,still-assumption,Lower duration does not make the outstanding loan balance a household liquid buffer.
+heloc,0.15,0.05,0.30,L,still-assumption_20260707,still-assumption,"If the future channel wants borrower liquidity from undrawn HELOC lines, that is a separate commitment object, not the balance stock."
+credit_card_revolving,0.06,0.02,0.12,L,still-assumption_20260707,still-assumption,A revolving balance is not money-like for the borrower; ABS/receivable financing is not enough to treat the balance as borrower buffer.
+auto_installment_debt,0.05,0.02,0.10,L,still-assumption_20260707,still-assumption,Low liquidity service; collateral schedules for ABS do not create household money.
+student_loans_federal,0.03,0.01,0.08,L,still-assumption_20260707,still-assumption,Federal student loan balance is not a liquid buffer; any pledge value is lender/institution specific.
+student_loans_private,0.03,0.01,0.08,L,still-assumption_20260707,still-assumption,Private student loan balance is not a liquid buffer; keep low.
+personal_installment_debt,0.05,0.02,0.10,L,still-assumption_20260707,still-assumption,No market moneyness; lender collateralization is not borrower convertibility.
+c_and_i_depository_loans,0.12,0.05,0.25,L,still-assumption_20260707,still-assumption,C&I loans can have collateral value to banks but are not generally a transferable money substitute.
+syndicated_loans,0.25,0.12,0.40,L,literature_assumption_20260707,literature/assumption,Syndicated loans have some marketability but do not have clean repo/deposit-like convertibility.
+corporate_bonds,0.55,0.40,0.70,M,market-calibrated_20260707,market-calibrated,"Official collateral margins are high for IG bonds, but corporate spread/convenience-yield literature shows Treasuries carry special liquidity/safety premia over corporates."
+municipal_securities,0.55,0.42,0.70,M,market-calibrated_20260707,market-calibrated,"Munis receive 90-98% margin by rating/duration in official schedules, but market depth/access is weaker than Treasuries; no direct repo universalization."
+agency_mbs,0.78,0.65,0.88,H,market-calibrated_20260707,market-calibrated,"Agency MBS have high official collateral margins and are eligible in Fed repo operations, but prepayment and duration risk make them less money-like than Treasuries."
+cre_mortgages_floating,0.08,0.03,0.15,L,still-assumption_20260707,still-assumption,CRE loans are nonmarketable credit, not money.
+cre_mortgages_fixed,0.06,0.02,0.12,L,still-assumption_20260707,still-assumption,Fixed CRE mortgages are even less money-like during rate stress.
+bnpl_installment,0.06,0.02,0.12,L,still-assumption_20260707,still-assumption,BNPL outstanding balance is not money-like; any securitization liquidity belongs to provider/funder balance sheet.
+bnpl_float_deposits,1.00,1.00,1.00,H,market-calibrated_20260707,market-calibrated,Deposit float is money-like in this diagnostic.
+bnpl_float_mmfs,0.97,0.93,0.99,H,regulatory_market_20260707,regulatory/market,MMF float inherits MMF redemption/access and liquidity-fee rules.
+bnpl_card_float_removed,0.06,0.02,0.12,L,still-assumption_20260707,still-assumption,Outstanding card float is not borrower liquidity; keep in low bucket.
+bnpl_funding_liability,0.10,0.03,0.20,L,still-assumption_20260707,still-assumption,Funding liability is a financing object, not a liquid buffer; small collateral/funding recognition only.

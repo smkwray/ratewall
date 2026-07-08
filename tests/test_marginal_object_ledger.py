@@ -80,9 +80,10 @@ def test_marginal_channel_registry_keeps_channels_but_demotes_old_forms() -> Non
         "fail_closed_denominator_drag_booked_as_n",
     }
     assert by_id["tdc_ex_overlap_beta_chi"]["numerator_formula"] == (
-        "delta_tdc_ex_overlap_bil * beta * chi"
+        "delta_tdc_income_addendum_bil_or_fail_closed_zero"
     )
     assert "full_tdc_level" in by_id["tdc_ex_overlap_beta_chi"]["blocked_use"]
+    assert "chi_support" in by_id["tdc_ex_overlap_beta_chi"]["blocked_use"]
     assert by_id["conventional_demand_drag"]["final_role"] == "selected_marginal_d"
     assert "numerator_support" in by_id["conventional_demand_drag"]["blocked_use"]
     assert by_id["legacy_current_benchmark"]["promotion_status"] == (
@@ -171,10 +172,11 @@ def test_complete_inventory_covers_required_marginal_channels(tmp_path: Path) ->
         "conventional_demand_drag",
     } <= set(by_id)
     assert by_id["tdc_ex_overlap_beta_chi"]["required_formula"] == (
-        "delta_tdc_ex_overlap_bil * beta * chi"
+        "delta_tdc_income_addendum_bil_or_fail_closed_zero"
     )
     assert "full_tdc_level" in by_id["tdc_ex_overlap_beta_chi"]["blocked_use"]
     assert "current_overlay_support" in by_id["tdc_ex_overlap_beta_chi"]["blocked_use"]
+    assert "chi_support" in by_id["tdc_ex_overlap_beta_chi"]["blocked_use"]
     assert by_id["tdcsim_rate25_derivative_proxy"]["marginal_status"] == (
         "sensitivity_only"
     )
@@ -195,7 +197,13 @@ def test_complete_inventory_covers_required_marginal_channels(tmp_path: Path) ->
 
 
 def test_marginal_ledger_outputs_are_written(tmp_path: Path) -> None:
-    tables = build_all()
+    paths = _write_row_reset_fixtures(tmp_path)
+    tables = build_all(
+        current_bridge_path=paths["current"],
+        forecast_surface_path=paths["forecast"],
+        historical_root_path=paths["historical_root"],
+        historical_denominator_path=paths["historical_denominator"],
+    )
 
     outputs = write_marginal_object_ledger_outputs(
         tmp_path / "out",
@@ -235,7 +243,7 @@ def test_bad_channel_rejects_full_tdc_formula() -> None:
         if row["channel_id"] == "tdc_ex_overlap_beta_chi":
             row["numerator_formula"] = "tdc_full_bil * beta * chi"
 
-    with pytest.raises(MarginalObjectLedgerError, match="TDC must use marginal"):
+    with pytest.raises(MarginalObjectLedgerError, match="TDC must use"):
         validate_marginal_channel_status(bad)
 
 

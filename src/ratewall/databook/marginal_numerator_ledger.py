@@ -67,17 +67,17 @@ def marginal_numerator_channel_rows() -> list[dict[str, str]]:
             "tdc_ex_overlap_beta_chi",
             "current,forecast",
             "candidate_marginal_replacement",
-            "delta_tdc_ex_overlap_bil * beta * chi",
+            "delta_tdc_income_addendum_bil_or_fail_closed_zero",
             "var/preliminary_scenario_results/marginal_tdcsim/ratewall_marginal_tdc_support_panel.csv",
             "fail_closed_missing_tdcsim_v0p4_marginal_pair",
-            "pass_tdcsim_pair_flow_basis_required_by_builder",
-            "pass_tdc_ex_overlap_identity_required_by_builder",
+            "pass_tdcsim_pair_flow_basis_required_by_builder_but_chi_retired",
+            "fail_closed_income_addendum_parked_direct_treasury_mmf_interest_collision",
             "pass_selected_marginal_D_required_by_builder",
             "fail_closed_selected_n_incomplete",
-            "fail_closed_tdcsim_marginal_pair_missing",
-            "marginal_tdc_candidate_after_contract_ingest",
-            "full_tdc_level;observed_tdc_level;tdcsim_v0p3_output;legacy_runtime_tdc_component;selected_marginal_n",
-            "tdc_selected_only_after_pair_delta_ex_overlap_beta_chi",
+            "fail_closed_tdc_income_addendum_parked",
+            "marginal_tdc_pair_diagnostic_income_addendum_parked",
+            "full_tdc_level;observed_tdc_level;tdcsim_v0p3_output;legacy_runtime_tdc_component;selected_marginal_n;chi_support",
+            "tdc_selected_only_as_income_addendum_or_fail_closed_zero_after_disjointness_gate",
         ),
         _channel(
             "deposit_safe_yield_payer_flow",
@@ -197,10 +197,10 @@ def validate_marginal_numerator_channel_rows(
             raise MarginalNumeratorLedgerError("selected marginal N must fail closed")
         if (
             row["channel_id"] == "tdc_ex_overlap_beta_chi"
-            and row["delta_formula"] != "delta_tdc_ex_overlap_bil * beta * chi"
+            and row["delta_formula"] != "delta_tdc_income_addendum_bil_or_fail_closed_zero"
         ):
             raise MarginalNumeratorLedgerError(
-                "TDC must use ex-overlap beta chi delta"
+                "TDC must use income addendum or fail-closed zero delta"
             )
         if not row["delta_formula"].startswith(("PI_net", "delta_", "Delta_")):
             raise MarginalNumeratorLedgerError("marginal numerator formula must be a delta")

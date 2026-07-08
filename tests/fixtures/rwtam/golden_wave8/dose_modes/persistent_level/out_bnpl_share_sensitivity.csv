@@ -1,0 +1,3 @@
+bnpl_share_of_purchases,scale_vs_base,gross_flow_delta_bil,N_bil,D_bil,net_bil,basis,dose_mode
+0.01,1,2.1375,0.4359340208333333333333333332,0.07267500000000000000000000003,0.3632590208333333333333333332,linear_config_sensitivity_from_generic_bnpl_rules,persistent_level
+0.1,10,21.375,4.359340208333333333333333332,0.7267500000000000000000000003,3.632590208333333333333333332,linear_config_sensitivity_from_generic_bnpl_rules,persistent_level

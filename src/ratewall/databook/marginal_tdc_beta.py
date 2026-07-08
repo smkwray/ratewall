@@ -39,8 +39,12 @@ DEFAULT_SENSITIVITY_OUTPUT_PATH = Path(
     "var/preliminary_scenario_results/marginal_tdcsim/"
     "ratewall_marginal_tdc_beta_sensitivity_panel.csv"
 )
+DEFAULT_FLOODED_BETA_ASSUMPTIONS_PATH = Path(
+    "configs/assumption_mode/ratewall_flooded_tdc_beta_assumptions.csv"
+)
 
 OBJECT_ID = "RW_M_PLUS_100BP_YEAR"
+FISCAL_INJECTION_OBJECT_ID = "TDC_FISCAL_INJECTION_2028"
 BETA_ANCHOR_ID = "beta_ea_tdc_rolling_h0_matched_total_deposits_v1"
 CHI_ASSUMPTION_ID = "chi_ratewall_default_20260630"
 SELECTED_OUTCOME = "matched_total_deposits"
@@ -93,6 +97,7 @@ BETA_SCHEDULE_FIELDS = [
     "chi_source_status",
     "beta_times_chi_selected",
     "claim_boundary",
+    "assumption_caveat",
 ]
 
 BETA_SENSITIVITY_FIELDS = [
@@ -148,6 +153,26 @@ class BetaEstimate:
     selected_source_grade_allowed: bool
 
 
+@dataclass(frozen=True)
+class FloodedBetaAssumption:
+    period: str
+    state_id: str
+    object_id: str
+    shock_path_id: str
+    shock_bps_year: str
+    demand_conversion_case: str
+    beta_assumption_id: str
+    beta_selected: Decimal
+    beta_low: Decimal
+    beta_high: Decimal
+    beta_source_status: str
+    beta_selection_status: str
+    beta_method: str
+    beta_projection_method: str
+    claim_boundary: str
+    assumption_caveat: str
+
+
 class MarginalTdcBetaError(ValueError):
     """Raised when the marginal TDC beta schedule is malformed."""
 
@@ -201,6 +226,7 @@ def build_beta_schedule(
     rolling_beta_path: str | Path = DEFAULT_EA_TDC_ROLLING_BETA_PATH,
     override_path: str | Path = DEFAULT_OVERRIDE_PATH,
     tdcest_proxy_path: str | Path = DEFAULT_TDCEST_PROXY_PATH,
+    flooded_assumptions_path: str | Path = DEFAULT_FLOODED_BETA_ASSUMPTIONS_PATH,
 ) -> list[dict[str, str]]:
     """Build one beta row for each selected marginal denominator state."""
 
@@ -284,8 +310,16 @@ def build_beta_schedule(
             "claim_boundary": (
                 "selected_tdc_beta_is_rolling_ea_tdc_estimate_bounded_0_1"
             ),
+            "assumption_caveat": "",
         }
         rows.append(row)
+    rows.extend(
+        _flooded_assumption_schedule_rows(
+            project_root / Path(flooded_assumptions_path),
+            anchor=anchor,
+            standard_beta=_standard_schedule_beta(anchor=anchor, rolling_rows=rolling),
+        )
+    )
     validate_beta_schedule(rows)
     return rows
 
@@ -302,6 +336,14 @@ def build_beta_sensitivity_panel(
             ("selected_central", schedule["beta_selected"], "true"),
             ("rolling_high", schedule["beta_high"], "false"),
         ]
+        if schedule["period_object"] == "scenario_state":
+            cases.append(
+                (
+                    "beta_legacy_scaffold_memo_only",
+                    schedule["beta_legacy_scaffold"],
+                    "false",
+                )
+            )
         for case_id, beta_text, selected in cases:
             beta = Decimal(str(beta_text))
             chi = Decimal(str(schedule["chi_selected"]))
@@ -322,6 +364,8 @@ def build_beta_sensitivity_panel(
                     "allowed_use": (
                         "selected_beta_case"
                         if selected == "true"
+                        else "excluded_legacy_scaffold_memo_only"
+                        if case_id == "beta_legacy_scaffold_memo_only"
                         else "nonselected_beta_sensitivity"
                     ),
                     "claim_boundary": "beta_sensitivity_does_not_replace_selected_schedule",
@@ -395,9 +439,9 @@ def validate_beta_schedule(rows: Sequence[Mapping[str, str]]) -> None:
         if row["beta_source_status"].startswith("source_grade_ea_tdc_rolling"):
             if beta != _bound_beta(raw_beta):
                 raise MarginalTdcBetaError("selected rolling beta must be bounded raw beta")
-        if row["object_id"] != OBJECT_ID:
+        if row["object_id"] not in {OBJECT_ID, FISCAL_INJECTION_OBJECT_ID}:
             raise MarginalTdcBetaError("unexpected beta schedule object")
-        if row["shock_path_id"] != "plus_100bp_year":
+        if row["shock_path_id"] not in {"plus_100bp_year", "fiscal_injection_2028_v1"}:
             raise MarginalTdcBetaError("unexpected beta schedule shock path")
         if row["beta_selection_status"].startswith("selected"):
             has_selected = True
@@ -412,6 +456,7 @@ def write_beta_schedule(
     historical_window_path: str | Path = DEFAULT_HISTORICAL_WINDOW_PATH,
     output_path: str | Path = DEFAULT_OUTPUT_PATH,
     sensitivity_output_path: str | Path = DEFAULT_SENSITIVITY_OUTPUT_PATH,
+    flooded_assumptions_path: str | Path = DEFAULT_FLOODED_BETA_ASSUMPTIONS_PATH,
 ) -> dict[str, Path]:
     denominator_rows = _read_csv(project_root / Path(denominator_path))
     historical_rows = _read_csv(project_root / Path(historical_window_path))
@@ -419,6 +464,7 @@ def write_beta_schedule(
         denominator_rows=denominator_rows,
         historical_window_rows=historical_rows,
         project_root=project_root,
+        flooded_assumptions_path=flooded_assumptions_path,
     )
     sensitivity = build_beta_sensitivity_panel(rows)
     out = project_root / Path(output_path)
@@ -460,6 +506,8 @@ def _selection_status(
             if selected_source_grade_allowed
             else "selected_assumption_mode_documented_anchor_flat_forecast"
         )
+    if period_object == "scenario_state":
+        return "selected_owner_assumption_exogenous_shock_sensitivity"
     return "fail_closed_unknown_period_object"
 
 
@@ -470,7 +518,117 @@ def _projection_method(period_object: str, period: str) -> str:
         return "carry_forward_from_2025Q4"
     if period_object == "forecast":
         return "flat_carry_forward_from_2025Q4"
+    if period_object == "scenario_state":
+        return "owner_assumption_flooded_window_then_revert"
     return "unknown"
+
+
+def _flooded_assumption_schedule_rows(
+    path: Path,
+    *,
+    anchor: BetaAnchor,
+    standard_beta: Decimal,
+) -> list[dict[str, str]]:
+    if not path.exists():
+        return []
+    assumptions = _load_flooded_assumptions(path)
+    rows: list[dict[str, str]] = []
+    for assumption in assumptions:
+        beta_selected = (
+            standard_beta
+            if assumption.beta_selected.is_nan()
+            else assumption.beta_selected
+        )
+        beta_low = beta_selected if assumption.beta_low.is_nan() else assumption.beta_low
+        beta_high = beta_selected if assumption.beta_high.is_nan() else assumption.beta_high
+        rows.append(
+            {
+                "beta_schedule_row_id": (
+                    "marginal_tdc_beta::scenario_state::"
+                    f"{assumption.period}::{assumption.state_id}::"
+                    f"{assumption.demand_conversion_case}"
+                ),
+                "object_id": assumption.object_id,
+                "period_object": "scenario_state",
+                "period": assumption.period,
+                "state_id": assumption.state_id,
+                "state_kind": "scenario_state",
+                "horizon": "annual_h1_100bp_year",
+                "shock_path_id": assumption.shock_path_id,
+                "shock_bps_year": assumption.shock_bps_year,
+                "demand_conversion_case": assumption.demand_conversion_case,
+                "beta_assumption_id": assumption.beta_assumption_id,
+                "beta_selected": _fmt(beta_selected),
+                "beta_low": _fmt(beta_low),
+                "beta_high": _fmt(beta_high),
+                "beta_legacy_scaffold": _fmt(anchor.beta_legacy_scaffold),
+                "beta_source_artifact": str(DEFAULT_FLOODED_BETA_ASSUMPTIONS_PATH),
+                "beta_source_field": "beta_selected",
+                "beta_source_sample_start": "2020",
+                "beta_source_sample_end": "2021",
+                "beta_raw_estimate": _fmt(beta_selected),
+                "beta_raw_lower95": _fmt(beta_low),
+                "beta_raw_upper95": _fmt(beta_high),
+                "beta_window_start_quarter": "",
+                "beta_window_end_quarter": "",
+                "beta_window_quarters": "",
+                "beta_method": assumption.beta_method,
+                "beta_projection_method": assumption.beta_projection_method,
+                "beta_source_status": assumption.beta_source_status,
+                "beta_selection_status": assumption.beta_selection_status,
+                "time_varying_proxy_available": "false",
+                "time_varying_proxy_central": "",
+                "time_varying_proxy_low": "",
+                "time_varying_proxy_high": "",
+                "time_varying_proxy_source_artifact": "",
+                "chi_assumption_id": CHI_ASSUMPTION_ID,
+                "chi_selected": _fmt(anchor.chi_selected),
+                "chi_low": _fmt(anchor.chi_low),
+                "chi_high": _fmt(anchor.chi_high),
+                "chi_source_status": "assumption_mode",
+                "beta_times_chi_selected": _fmt(beta_selected * anchor.chi_selected),
+                "claim_boundary": assumption.claim_boundary,
+                "assumption_caveat": assumption.assumption_caveat,
+            }
+        )
+    return rows
+
+
+def _load_flooded_assumptions(path: Path) -> list[FloodedBetaAssumption]:
+    rows = _read_csv(path)
+    assumptions: list[FloodedBetaAssumption] = []
+    for row in rows:
+        assumptions.append(
+            FloodedBetaAssumption(
+                period=row["period"],
+                state_id=row["state_id"],
+                object_id=row["object_id"],
+                shock_path_id=row["shock_path_id"],
+                shock_bps_year=row["shock_bps_year"],
+                demand_conversion_case=row["demand_conversion_case"],
+                beta_assumption_id=row["beta_assumption_id"],
+                beta_selected=_decimal_or_nan(row["beta_selected"]),
+                beta_low=_decimal_or_nan(row["beta_low"]),
+                beta_high=_decimal_or_nan(row["beta_high"]),
+                beta_source_status=row["beta_source_status"],
+                beta_selection_status=row["beta_selection_status"],
+                beta_method=row["beta_method"],
+                beta_projection_method=row["beta_projection_method"],
+                claim_boundary=row["claim_boundary"],
+                assumption_caveat=row["assumption_caveat"],
+            )
+        )
+    return assumptions
+
+
+def _standard_schedule_beta(
+    *,
+    anchor: BetaAnchor,
+    rolling_rows: Sequence[Mapping[str, str]],
+) -> Decimal:
+    if not rolling_rows:
+        return anchor.beta_selected
+    return _bound_beta(Decimal(str(rolling_rows[-1]["normalized_beta"])))
 
 
 def _load_rolling_beta_rows(path: Path) -> list[dict[str, str]]:
@@ -599,6 +757,8 @@ def _state_kind(period_object: str) -> str:
         return "current_state"
     if period_object == "forecast":
         return "forecast_state"
+    if period_object == "scenario_state":
+        return "scenario_state"
     return period_object
 
 
@@ -634,6 +794,12 @@ def _fmt_or_blank(value: object) -> str:
     if value in (None, ""):
         return ""
     return _fmt(Decimal(str(value)))
+
+
+def _decimal_or_nan(value: str) -> Decimal:
+    if value == "STANDARD_ANCHOR":
+        return Decimal("NaN")
+    return Decimal(value)
 
 
 def _bound_beta(value: Decimal) -> Decimal:

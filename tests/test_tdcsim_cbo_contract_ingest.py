@@ -32,6 +32,7 @@ from ratewall.databook.tdcsim_cbo_contracts import (
     CBO_SCENARIO_EFFECT_FIELDS,
     CBO_SCENARIO_LEVER_DIAGNOSTIC_FIELDS,
     CBO_SETTLEMENT_ACCRUAL_BRIDGE_FIELDS,
+    TDCSIM_CBO_SCENARIO_RUNS_DIR,
     TDCSIM_CBO_CBO_GDP_SCALED_DENOMINATOR_SCOPE,
     COMMON_METADATA_FIELDS,
     EXPECTED_TDC_AMOUNT_BASIS,
@@ -811,6 +812,10 @@ def test_tdcsim_cbo_canonical_entry_decision_admits_only_forward_baseline(
 
 
 def test_tdcsim_cbo_canonical_entry_decision_reads_manifest_backed_default_suite() -> None:
+    runs_dir = TDCSIM_CBO_SCENARIO_RUNS_DIR / "runs"
+    if not runs_dir.exists():
+        pytest.skip(f"missing default TDCSim/CBO suite runs dir: {runs_dir}")
+
     rows = tdcsim_cbo_canonical_entry_decision_rows_from_directory()
 
     assert len(rows) == 1
