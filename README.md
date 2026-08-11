@@ -47,8 +47,13 @@ python -m pytest
 Run focused RWTAM checks:
 
 ```bash
-python -m pytest tests/test_rwtam_v1.py -k 'invariant or t25'
+python -m pytest tests/test_rwtam_accounting_primitives.py
 ```
+
+This focused test exercises the reusable, channel-neutral primitive ledger:
+units, ownership, overlap resolution, feasibility, measurement provenance, and
+generic outcome aggregation. Applications supply their own inputs; this
+contract governs how those inputs enter accounting outcomes.
 
 Additional RWTAM builder scripts live under `scripts/build_rwtam_*.py`; they
 write generated tables under `var/rwtam/`.
@@ -59,5 +64,3 @@ RateWall outputs are labeled accounting and scenario objects. They should not be
 read as pricing, welfare, incidence, MPC, holder-allocation, empirical
 probability, or policy-failure claims unless a table explicitly says that claim
 is enabled.
-
-License: see CITATION.cff (private research release) in this snapshot.
