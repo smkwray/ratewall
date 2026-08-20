@@ -1,8 +1,8 @@
 check_id,status,message,dose_mode
 T25_files,pass,all required pack CSVs load,persistent_level
-T25_tdc_beta_authority_default,pass,tdcest beta authority has exactly one forward default,persistent_level
-T25_tdc_flow_size_override_enabled,pass,"flow-size beta override slot exists, is enabled, and carries tdcest L/B/H thresholds",persistent_level
-T25_beta_state_indicator_default_off,pass,"state-indicator slot exists, is default off, and keeps runtime selector disallowed",persistent_level
+T25_tdc_beta_equal_status_sensitivity_set,pass,four exact equal-status beta sensitivities; 0.342 visibly legacy,persistent_level
+T25_tdc_beta_no_selector,pass,"no default, state, transition, quiet/large-shock, flow-size, or forward beta selector",persistent_level
+T25_tdc_beta_noncanonical,pass,beta sensitivities remain noncanonical with Evidence Mode false,persistent_level
 T25_bounds,pass,all pack rows satisfy low<=base<=high,persistent_level
 T25_labels,pass,all parameter rows carry input_basis_label,persistent_level
 T25_phase6_files,pass,Phase 6 pack CSVs load,persistent_level

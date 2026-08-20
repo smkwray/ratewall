@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import csv
 from functools import lru_cache
 from decimal import Decimal, localcontext
@@ -98,8 +99,8 @@ def test_rwtam_headline_byte_exact(default_v1_result) -> None:
         and row["ricardian_offset"] == "0"
     ][0]
 
-    assert annual["RW_ratio"] == "0.05008250294428628472237505189"
-    assert cumulative["RW_ratio"] == "0.05926472473321265409138702249"
+    assert annual["RW_ratio"] == "0.04998743127077140250725423303"
+    assert cumulative["RW_ratio"] == "0.05821291586424109293357621483"
 
 
 def test_round7_switches_false_reproduce_wave7_headline() -> None:
@@ -126,8 +127,8 @@ def test_round7_switches_false_reproduce_wave7_headline() -> None:
         and row["ricardian_offset"] == "0"
     ][0]
 
-    assert annual["RW_ratio"] == "0.05014703055022719947779221253"
-    assert cumulative["RW_ratio"] == "0.05911318334820240668326411104"
+    assert annual["RW_ratio"] == "0.05007759304057134174016063453"
+    assert cumulative["RW_ratio"] == "0.05831903370124703618722353693"
 
 
 def test_t25_to_t34_v1_invariants_all_pass(default_v1_result) -> None:
@@ -140,7 +141,7 @@ def test_t25_to_t34_v1_invariants_all_pass(default_v1_result) -> None:
 
 
 def test_t45_wave8_refreeze_preserves_tax_on_surface(default_v1_result) -> None:
-    """golden_wave8 admits split TDC income and promotes combined sinks."""
+    """golden_wave8 preserves the suspended-split, structural-beta surface."""
     result = default_v1_result
     frozen_tables = [
         "out_ratewall_rollup",
@@ -157,8 +158,6 @@ def test_t45_wave8_refreeze_preserves_tax_on_surface(default_v1_result) -> None:
         "out_tax_layer_attribution",
         "out_scenario_axes_config",
         "out_tdc_beta_authority",
-        "out_tdc_flow_size_beta_override",
-        "out_beta_state_indicator",
         "out_invariant_check",
     ]
 
@@ -344,7 +343,7 @@ def test_tax_off_new_construction_is_rebaselined_and_tax_layer_is_pure_extension
     tax_off_paths = write_v1_outputs(tax_off, tmp_path / "tax_off_wave8")
 
     assert tax_off.rows("out_ratewall_rollup")[0]["object_version_stamp"].startswith(
-        "current_default_wave8_combined_sinks_tdc_split"
+        "current_default_wave8_combined_sinks_tdc_split_suspended"
     )
     frozen = sorted(GOLDEN_WAVE8_TAX_OFF_DIR.glob("*.csv"))
     assert frozen
@@ -389,8 +388,8 @@ def test_t59_receipt_identity_fails_when_stored_receipt_flow_is_mutated() -> Non
         pack,
         phase6_pack=phase6_pack,
         include_tdc_settlement=True,
-        include_tdc_split_addendum=True,
-        tdc_split_addendum=v1_module._tdc_split_addendum_schedule(),
+        include_tdc_split_addendum=False,
+        tdc_split_addendum=v1_module._tdc_split_suspended(),
         include_combined_sinks=True,
         shock_start_month="2026-01",
         dose_mode="persistent_level",
@@ -1109,14 +1108,31 @@ def test_tdc_mode_mix_sensitivity_includes_all_a_all_b_and_base() -> None:
     result = _session_default_v1_result()
     rows = result.rows("out_tdc_mode_sensitivity")
 
-    assert {row["scenario_id"] for row in rows} == {
+    scenario_rows = [row for row in rows if row["scenario_id"]]
+    sensitivity_rows = [row for row in rows if not row["scenario_id"]]
+    assert {row["scenario_id"] for row in scenario_rows} == {
         "all_A_domestic_nonbank_swap",
         "all_B_bank_expansion",
         "base_mix",
     }
-    all_a = [row for row in rows if row["scenario_id"] == "all_A_domestic_nonbank_swap"][0]
-    all_b = [row for row in rows if row["scenario_id"] == "all_B_bank_expansion"][0]
-    base = [row for row in rows if row["scenario_id"] == "base_mix"][0]
+    assert {row["sensitivity_id"] for row in sensitivity_rows} == {
+        "tdc_beta_sensitivity_minus_0p005",
+        "tdc_beta_sensitivity_legacy_0p342",
+        "tdc_beta_sensitivity_0p516",
+        "tdc_beta_sensitivity_1p038",
+    }
+    for row in sensitivity_rows:
+        assert row["authority_status"] == "equal_status_sensitivity"
+        assert row["canonical_status"] == "noncanonical_sensitivity_only"
+    legacy = [
+        row
+        for row in sensitivity_rows
+        if row["sensitivity_id"] == "tdc_beta_sensitivity_legacy_0p342"
+    ][0]
+    assert legacy["legacy_status"] == "visibly_legacy"
+    all_a = [row for row in scenario_rows if row["scenario_id"] == "all_A_domestic_nonbank_swap"][0]
+    all_b = [row for row in scenario_rows if row["scenario_id"] == "all_B_bank_expansion"][0]
+    base = [row for row in scenario_rows if row["scenario_id"] == "base_mix"][0]
     assert Decimal(all_a["year1_tdc_N_bil"]) == 0
     assert Decimal(all_b["year1_tdc_N_bil"]) > Decimal(base["year1_tdc_N_bil"]) > 0
 
@@ -1522,8 +1538,6 @@ def test_build_rwtam_v1_writes_required_outputs(tmp_path: Path) -> None:
         "out_moneyness_liquid_buffers",
         "out_absorption_modes",
         "out_tdc_beta_authority",
-        "out_tdc_flow_size_beta_override",
-        "out_beta_state_indicator",
         "out_tdc_channel",
         "out_tdc_beta_implied",
         "out_tdc_mode_sensitivity",
@@ -1547,76 +1561,109 @@ def test_build_rwtam_v1_writes_required_outputs(tmp_path: Path) -> None:
         assert paths[name].read_text(encoding="utf-8").splitlines()[0]
 
 
-def test_tdc_flow_size_override_is_on_with_tdcest_threshold_and_sanity() -> None:
+def test_tdc_beta_authority_is_equal_status_and_has_no_selectors() -> None:
     pack = v1_module._effective_pack(v1_module._load_pack(PACK_DIR), True, True)
-    row = pack["tdc_flow_size_beta_override"][0]
+    authority = pack["tdc_beta_authority"]
 
-    assert v1_module._tdc_implied_beta(pack, "base") == Decimal("0.342")
-    assert row["enabled"] == "1"
-    assert row["threshold_variable"] == "tdc_tier2_regression_mmf_rrp_prop_bank_only_qoq_abs"
-    assert row["threshold_flow_bil_low"] == "28.5"
-    assert row["threshold_flow_bil_base"] == "52.3"
-    assert row["threshold_flow_bil_high"] == "71.2"
-    assert row["override_beta_base"] == "0"
-    assert row["post2022_binding_quarters_base_threshold"] == "2"
-    assert row["post2022_quarters"] == "16"
-    assert row["sanity_label"] == "quiet_quarter_guard_not_regime"
-    assert (
-        v1_module._tdc_flow_size_adjusted_beta(
-            pack,
-            Decimal("0.342"),
-            Decimal("1"),
-            band="base",
+    assert {row["beta"] for row in authority} == {"-0.005", "0.342", "0.516", "1.038"}
+    assert all(row["authority_status"] == "equal_status_sensitivity" for row in authority)
+    assert next(
+        row for row in authority if row["beta"] == "0.342"
+    )["legacy_status"] == "visibly_legacy"
+    assert "tdc_flow_size_beta_override" not in pack
+    assert "beta_state_indicator" not in pack
+    assert v1_module._tdc_implied_beta(pack, "base") == Decimal("0.2")
+    assert all(row["status"] == "pass" for row in v1_module._validate_tdc_beta_authority(pack))
+
+
+def test_suspended_tdcsim_split_cannot_enter_v1() -> None:
+    with pytest.raises(ValueError, match="suspended TDCSim split input"):
+        build_v1(PACK_DIR, include_tdc_split_addendum=True)
+    with pytest.raises(ValueError, match="suspended TDCSim split input"):
+        _monthly_records(
+            v1_module._effective_pack(v1_module._load_pack(PACK_DIR), True, True),
+            include_tdc_settlement=True,
+            include_tdc_split_addendum=True,
+            shock_start_month="2026-01",
+            dose_mode="persistent_level",
+            include_tax_layer=True,
         )
-        == Decimal("0")
-    )
-    assert (
-        v1_module._tdc_flow_size_adjusted_beta(
-            pack,
-            Decimal("0.342"),
-            Decimal("100"),
-            band="base",
-        )
-        == Decimal("0.342")
-    )
 
 
-def test_beta_state_indicator_is_dormant_but_scenario_selectable() -> None:
+def test_tdc_validator_rejects_defaults_and_all_selector_surfaces() -> None:
     pack = v1_module._effective_pack(v1_module._load_pack(PACK_DIR), True, True)
-    indicator = pack["beta_state_indicator"][0]
+    checks = {
+        row["check_id"]: row["status"]
+        for row in v1_module._validate_tdc_beta_authority(pack)
+    }
+    assert checks == {
+        "T25_tdc_beta_equal_status_sensitivity_set": "pass",
+        "T25_tdc_beta_no_selector": "pass",
+        "T25_tdc_beta_noncanonical": "pass",
+    }
 
-    assert indicator["enabled"] == "0"
-    assert indicator["runtime_selector_allowed"] == "false"
-    assert indicator["threshold_rrpontsyd_bil_low"] == "25"
-    assert indicator["threshold_rrpontsyd_bil_base"] == "50"
-    assert indicator["threshold_rrpontsyd_bil_high"] == "100"
-    assert v1_module._tdc_implied_beta(pack, "base") == Decimal("0.342")
-    assert (
-        v1_module._tdc_implied_beta(
+    mutations: list[dict[str, list[dict[str, str]]]] = []
+    singleton_default = copy.deepcopy(pack)
+    singleton_default["tdc_beta_authority"][1]["is_default"] = "1"
+    mutations.append(singleton_default)
+    state_mapping = copy.deepcopy(pack)
+    state_mapping["tdc_beta_authority"][1]["state_family"] = "plumbing_active"
+    state_mapping["tdc_beta_authority"][1]["transition_direction"] = "toward_offset"
+    mutations.append(state_mapping)
+    flow_size = copy.deepcopy(pack)
+    flow_size["tdc_flow_size_beta_override"] = [{"enabled": "1"}]
+    mutations.append(flow_size)
+    quiet_or_large_shock = copy.deepcopy(pack)
+    quiet_or_large_shock["beta_state_indicator"] = [
+        {"selection_scope": "quiet_or_large_shock"}
+    ]
+    mutations.append(quiet_or_large_shock)
+    forward = copy.deepcopy(pack)
+    forward["tdc_empirical_beta_path"].append(
+        {
+            "period": "2026",
+            "beta": "0.342",
+            "regime_label": "forward",
+            "input_basis_label": "forbidden_forward_mapping",
+            "rationale": "test mutation",
+        }
+    )
+    mutations.append(forward)
+    for mutated in mutations:
+        selector_check = next(
+            row
+            for row in v1_module._validate_tdc_beta_authority(mutated)
+            if row["check_id"] == "T25_tdc_beta_no_selector"
+        )
+        assert selector_check["status"] == "fail"
+
+    missing_empirical = copy.deepcopy(pack)
+    del missing_empirical["tdc_empirical_beta_path"]
+    required_check = next(
+        row for row in v1_module.validate_pack(missing_empirical) if row["check_id"] == "T25_files"
+    )
+    assert required_check["status"] == "fail"
+
+
+def test_tdc_beta_is_structural_and_invariant_to_flow_size() -> None:
+    pack = v1_module._effective_pack(v1_module._load_pack(PACK_DIR), True, True)
+    expected = Decimal("0.20")
+
+    assert v1_module._tdc_implied_beta(pack, "base") == expected
+    for flow in (Decimal("1"), Decimal("52.3"), Decimal("1000"), Decimal("-1000")):
+        metrics = v1_module._tdc_metrics_for_period(
             pack,
             "base",
-            use_beta_state_indicator=True,
+            1,
+            flow,
+            Decimal("0"),
+            True,
         )
-        == Decimal("0.5")
-    )
-
-    default_metrics = v1_module._tdc_metrics_for_period(
-        pack,
-        "base",
-        1,
-        Decimal("100"),
-        Decimal("0"),
-        True,
-    )
-    scenario_metrics = v1_module._tdc_metrics_for_period(
-        pack,
-        "base",
-        1,
-        Decimal("100"),
-        Decimal("0"),
-        True,
-        use_beta_state_indicator=True,
-    )
-
-    assert default_metrics["implied_beta"] == Decimal("0.342")
-    assert scenario_metrics["implied_beta"] == Decimal("0.5")
+        assert metrics["implied_beta"] == expected
+        assert metrics["full_level_deposit_rate"] == Decimal("0.035")
+        assert metrics["new_created_deposits_bil"] == flow * expected
+        assert metrics["created_deposit_stock_bil"] == flow * expected
+        assert metrics["created_deposit_income_bil"] == (
+            metrics["created_deposit_stock_bil"]
+            * metrics["full_level_deposit_rate"]
+        )

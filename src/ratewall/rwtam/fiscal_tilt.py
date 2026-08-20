@@ -27,6 +27,7 @@ from ratewall.rwtam.v1 import (
     _nonbank_market_complex_absorption_share,
     _opening_by_family,
     _read_csv_rows,
+    _tdc_implied_beta,
     _write_rows,
     build_v1,
 )
@@ -185,7 +186,7 @@ def run_fiscal_tilt_records(
 ) -> FiscalTiltRun:
     """Run the monthly engine with fiscal tilt wired into the migrated-stock state."""
 
-    pack = _offset_pack(_effective_pack(_load_pack(pack_dir), True, True))
+    pack = _effective_pack(_load_pack(pack_dir), True, True)
     gross_by_month = _monthly_primary_deficit_path(deficit_multiplier)
     state_mechanisms = state_enabled_mechanisms or enabled_mechanisms
     hysteresis_config = _fiscal_hysteresis_config(pack, state_mechanisms)
@@ -276,7 +277,6 @@ def export_fiscal_tilt_state_pack(
     if out_dir.exists():
         shutil.rmtree(out_dir)
     shutil.copytree(run.source_pack_dir, out_dir)
-    _set_offset_beta(out_dir / "tdc_beta_authority.csv")
     state = _state_row(run.state_rows, month_T)
     rows = _read_csv_rows(out_dir / "opening_stocks.csv")
     opening = _opening_by_family({"opening_stocks": rows})
@@ -341,7 +341,7 @@ def write_fiscal_tilt_report(
         "| item | disposition |",
         "| --- | --- |",
         "| fiscal_tilt mechanism | wired default-off through V1 `fiscal_tilt_config`; enabled runs add reabsorbed nonbank issuance to the existing migrated-stock state |",
-        "| offset state | done: experiment pack selects `tdc_beta_authority.offset_state`; current default 0.342 remains untouched |",
+        "| TDC beta selection | removed: experiment uses the structural absorption-mode calculation shared with V1 |",
         "| issuance twins | done: existing `PRIMARY_DEFICIT_BASE_PATH` CBO-shape owner assumption, base and +50% multipliers |",
         "| ablations | done: full, migration-only, and beta-only engine runs measured independently; residual computed as full - migration_only - beta_only |",
         "| labels/caveats | done: `scenario_only;assumption_directional_support`, capacity-margin caveat, and tdc-hf validation path carried |",
@@ -376,20 +376,6 @@ def _clear_output_subdirs(output_root: Path) -> None:
         path = output_root / name
         if path.exists():
             shutil.rmtree(path)
-
-
-def _offset_pack(pack: dict[str, list[dict[str, str]]]) -> dict[str, list[dict[str, str]]]:
-    out = {name: [dict(row) for row in rows] for name, rows in pack.items()}
-    for row in out.get("tdc_beta_authority", []):
-        row["is_default"] = "1" if row.get("state_id") == "offset_state" else "0"
-    return out
-
-
-def _set_offset_beta(path: Path) -> None:
-    rows = _read_csv_rows(path)
-    for row in rows:
-        row["is_default"] = "1" if row.get("state_id") == "offset_state" else "0"
-    _write_rows(path, rows)
 
 
 def _fiscal_hysteresis_config(
@@ -475,7 +461,7 @@ def _state_rows(
                 "month": str(record["month"]),
                 "deficit_path": deficit_path,
                 "deficit_multiplier": _fmt(deficit_multiplier),
-                "offset_state_beta_base": _fmt(_offset_beta(pack, "base")),
+                "structural_absorption_beta_base": _fmt(_tdc_implied_beta(pack, "base")),
                 "fiscal_tilt_enabled": str(tilt_enabled).lower(),
                 "enabled_mechanisms": ";".join(sorted(enabled_mechanisms)),
                 "gross_issuance_month_bil": _fmt(gross_by_month[month_index - 1]),
@@ -517,7 +503,7 @@ def _state_zero_row(
         "month": "2026-01_opening",
         "deficit_path": deficit_path,
         "deficit_multiplier": _fmt(deficit_multiplier),
-        "offset_state_beta_base": "",
+        "structural_absorption_beta_base": "",
         "fiscal_tilt_enabled": str(tilt_enabled).lower(),
         "enabled_mechanisms": ";".join(sorted(enabled_mechanisms)),
         "gross_issuance_month_bil": "0",
@@ -591,7 +577,6 @@ def _grid_rows(
                         "deficit_path": deficit_path,
                         "deficit_multiplier": _fmt(DEFICIT_PATHS[deficit_path]),
                         "fiscal_tilt": tilt,
-                        "offset_state_beta_base": "0.1",
                         "remeasure_month_index": str(month),
                         "RW_ratio": measure["RW_ratio"],
                         "delta_RW_vs_cbo_base_tilt_off": _fmt(_d(measure["RW_ratio"]) - base_off[month]),
@@ -624,7 +609,7 @@ def _grid_rows(
 
 
 def _parameter_rows(pack_dir: Path) -> list[dict[str, str]]:
-    pack = _offset_pack(_effective_pack(_load_pack(pack_dir), True, True))
+    pack = _effective_pack(_load_pack(pack_dir), True, True)
     return [
         {
             "parameter_id": "reabsorption_tilt_share",
@@ -647,14 +632,14 @@ def _parameter_rows(pack_dir: Path) -> list[dict[str, str]]:
             "definition_pin": "gross issuance share routed through domestic nonbank / RRP-like market-complex modes",
         },
         {
-            "parameter_id": "offset_state_beta",
-            "low": _fmt(_offset_beta(pack, "low")),
-            "base": _fmt(_offset_beta(pack, "base")),
-            "high": _fmt(_offset_beta(pack, "high")),
+            "parameter_id": "structural_absorption_beta",
+            "low": _fmt(_tdc_implied_beta(pack, "low")),
+            "base": _fmt(_tdc_implied_beta(pack, "base")),
+            "high": _fmt(_tdc_implied_beta(pack, "high")),
             "units": "beta",
-            "input_basis_label": "scenario_use_only",
-            "evidence_anchor": "tdc_beta_authority.offset_state",
-            "definition_pin": "offset state selected for all cells; default 0.342 remains current-default outside this experiment",
+            "input_basis_label": "absorption_mode_mix_pack_forward_LBH_20260702",
+            "evidence_anchor": "absorption_modes deposit_creation_per_issuance",
+            "definition_pin": "structural absorption-mode mix; no state-conditioned beta selection",
         },
     ]
 
@@ -753,11 +738,6 @@ def _caveat_rows() -> list[dict[str, str]]:
     ]
 
 
-def _offset_beta(pack: dict[str, list[dict[str, str]]], band: str) -> Decimal:
-    for row in pack.get("tdc_beta_authority", []):
-        if row.get("state_id") == "offset_state":
-            return _d(row[band])
-    return Decimal("0")
 
 
 def _state_row(rows: list[dict[str, str]], month_T: int) -> dict[str, str]:

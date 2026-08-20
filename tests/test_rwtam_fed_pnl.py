@@ -127,10 +127,10 @@ def test_fed_pnl_treasury_funded_regime_and_overdraft_pins(tmp_path: Path) -> No
         and row["financing_mode"] == "overdraft_indemnity"
     )
     assert Decimal(overdraft["off_RW_ratio"]) == Decimal(
-        "0.05926472473321265409138702249"
+        "0.05821291586424109293357621483"
     )
     assert Decimal(overdraft["treasury_funded_on_RW_ratio"]) == Decimal(
-        "0.05926472473321265409138702249"
+        "0.05821291586424109293357621483"
     )
     assert Decimal(overdraft["funded_minus_self_cure_delta_RW_ratio"]) == Decimal(
         "-0.00002056090412601559319312388"
@@ -163,7 +163,7 @@ def test_fed_pnl_overdraft_variant_is_engine_loop_off_funded_run(tmp_path: Path)
     assert cumulative["loop_on_RW_ratio"] == cumulative["off_RW_ratio"]
     assert cumulative["on_RW_ratio"] == cumulative["off_RW_ratio"]
     assert Decimal(cumulative["off_RW_ratio"]) == Decimal(
-        "0.05926472473321265409138702249"
+        "0.05821291586424109293357621483"
     )
     assert Decimal(cumulative["funded_minus_self_cure_delta_RW_ratio"]) == Decimal(
         "-0.00002056090412601559319312388"

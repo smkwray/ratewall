@@ -52,6 +52,10 @@ ABSORPTION_REGIMES = {
     "normal_0342": Decimal("0.342"),
     "rrp_active_045_060": Decimal("0.50"),
 }
+SLR_TDC_BETA_SELECTOR_SUSPENSION = (
+    "slr_conditions is suspended: unrepaired state-conditioned TDC beta selector "
+    "ABSORPTION_REGIMES/_set_absorption_beta cannot enter the application"
+)
 DEFICIT_PATHS = {"cbo_base": Decimal("1"), "cbo_plus_50pct": Decimal("1.5")}
 FINANCIALIZATION_STATES = ("base", "F-asset-25")
 SLR_DELTAS = {"slr_shift_10pp": Decimal("0.10"), "slr_shift_25pp": Decimal("0.25")}
@@ -97,6 +101,8 @@ def build_slr_conditions_experiment(
     output_root: Path = OUTPUT_DIR,
 ) -> SlrConditionsResult:
     """Build the SLR conditions grid and quarantined fiat exhibits."""
+
+    raise RuntimeError(SLR_TDC_BETA_SELECTOR_SUSPENSION)
 
     with localcontext() as context:
         context.prec = 28

@@ -25,18 +25,10 @@ TREASURY_BILL_TARGET = Decimal("6819")
 TREASURY_COUPON_TARGET = Decimal("23822")
 MARKETABLE_TREASURY_TARGET = Decimal("30641")
 CURRENT_DEFAULT_OBJECT_STAMP = (
-    "current_default_wave8_combined_sinks_tdc_split:"
+    "current_default_wave8_combined_sinks_tdc_split_suspended:"
     "dose_mode=persistent_level,basis=tax_layer_calibration_20260702"
 )
-TDCSIM_SPLIT_PAIR_ROOT = Path("../tdcsim/output/ratewall_split_pairs_20260707")
-TDCSIM_CUMULATIVE_SPLIT_INPUT = (
-    TDCSIM_SPLIT_PAIR_ROOT / "tdcsim_ratewall_cumulative_split_input.csv"
-)
-TDCSIM_CURRENT_SPLIT_SUMMARY = (
-    TDCSIM_SPLIT_PAIR_ROOT
-    / "current_state_2026_plus_100bp_year_source_grade"
-    / "tdcsim_ratewall_marginal_tdc_summary.csv"
-)
+TDC_SPLIT_SUSPENSION_REASON = "suspended_tdcsim_input_nonfeeding"
 TDC_SPLIT_ROUTE_FAMILY = "tdc_income_from_tdcsim_marginal_deposit_stock"
 COMBINED_SINK_LABEL = (
     "default_baseline;combined_sinks;bank_retention_sink;"
@@ -79,6 +71,37 @@ COMBINED_SINK_BANK_EARNING_RECEIPT_FAMILIES = {
 BACKCAST_FORBIDDEN_COMPARISONS = (
     "forbidden:headline_RW_full,scalar,P0/P1_bands,claim_ratios"
 )
+TDC_BETA_SENSITIVITY_VALUES = {
+    "tdc_beta_sensitivity_minus_0p005": Decimal("-0.005"),
+    "tdc_beta_sensitivity_legacy_0p342": Decimal("0.342"),
+    "tdc_beta_sensitivity_0p516": Decimal("0.516"),
+    "tdc_beta_sensitivity_1p038": Decimal("1.038"),
+}
+TDC_BETA_SENSITIVITY_FIELDS = {
+    "parameter_id",
+    "sensitivity_id",
+    "beta",
+    "legacy_status",
+    "authority_status",
+    "evidence_mode_enabled",
+    "canonical_status",
+    "input_basis_label",
+    "rationale",
+}
+TDC_BETA_SELECTOR_FIELDS = {
+    "is_default",
+    "state_id",
+    "state_family",
+    "transition_direction",
+    "enabled",
+    "threshold_variable",
+    "threshold_flow_bil_low",
+    "threshold_flow_bil_base",
+    "threshold_flow_bil_high",
+    "override_beta_base",
+    "runtime_selector_allowed",
+    "selection_scope",
+}
 
 HH_CELLS = (
     "hh_constrained_net_borrower",
@@ -113,7 +136,7 @@ def build_v1(
     *,
     include_scenario_adjustments: bool = True,
     include_tdc_settlement: bool | None = None,
-    include_tdc_split_addendum: bool = True,
+    include_tdc_split_addendum: bool = False,
     include_combined_sinks: bool = True,
     include_tax_layer: bool = True,
     qt_supply_stress: bool | Decimal | str = False,
@@ -124,7 +147,6 @@ def build_v1(
     include_impulse_beta_comparator: bool = True,
     hysteresis_state_config: dict[str, object] | None = None,
     fiscal_tilt_config: dict[str, object] | None = None,
-    use_beta_state_indicator: bool = False,
 ) -> V1Result:
     with localcontext() as context:
         context.prec = 28
@@ -143,7 +165,6 @@ def build_v1(
             include_impulse_beta_comparator=include_impulse_beta_comparator,
             hysteresis_state_config=hysteresis_state_config,
             fiscal_tilt_config=fiscal_tilt_config,
-            use_beta_state_indicator=use_beta_state_indicator,
         )
 
 
@@ -163,7 +184,6 @@ def _build_v1_impl(
     include_impulse_beta_comparator: bool,
     hysteresis_state_config: dict[str, object] | None,
     fiscal_tilt_config: dict[str, object] | None,
-    use_beta_state_indicator: bool,
 ) -> V1Result:
     _validate_dose_mode(dose_mode)
     if include_tdc_settlement is None:
@@ -176,11 +196,9 @@ def _build_v1_impl(
     pack = _pack_with_qt_deposit_leg(pack, qt_supply_stress)
     phase6_pack = _load_pack(pack_dir / "phase6")
     validation = validate_pack(pack, phase6_pack)
-    tdc_split_addendum = (
-        _tdc_split_addendum_schedule()
-        if include_tdc_split_addendum
-        else _empty_tdc_split_addendum_schedule("disabled")
-    )
+    if include_tdc_split_addendum:
+        raise ValueError("suspended TDCSim split input is nonfeeding and cannot enter V1")
+    tdc_split_addendum = _tdc_split_suspended()
     monthly_records = _monthly_records(
         pack,
         phase6_pack=phase6_pack,
@@ -196,7 +214,6 @@ def _build_v1_impl(
         shock_size_bp=shock_size_bp,
         hysteresis_state_config=hysteresis_state_config,
         fiscal_tilt_config=fiscal_tilt_config,
-        use_beta_state_indicator=use_beta_state_indicator,
     )
     records = _annual_records_from_monthly(monthly_records)
     impulse_beta_records: list[dict[str, Decimal | str]] | None = None
@@ -216,7 +233,6 @@ def _build_v1_impl(
             shock_size_bp=shock_size_bp,
             hysteresis_state_config=hysteresis_state_config,
             fiscal_tilt_config=fiscal_tilt_config,
-            use_beta_state_indicator=use_beta_state_indicator,
         )
         impulse_beta_records = _annual_records_from_monthly(impulse_beta_monthly)
     bnpl_scenario_pack = _pack_with_bnpl_opening_rows(pack)
@@ -236,7 +252,6 @@ def _build_v1_impl(
             shock_size_bp=shock_size_bp,
             hysteresis_state_config=hysteresis_state_config,
             fiscal_tilt_config=fiscal_tilt_config,
-            use_beta_state_indicator=use_beta_state_indicator,
         )
     )
     tables = _output_tables(
@@ -327,6 +342,8 @@ def validate_pack(
         "mortgage_holder_decomposition",
         "treasury_holder_matrix",
         "structural_assumptions",
+        "tdc_beta_authority",
+        "tdc_empirical_beta_path",
     }
     checks.append(_check("T25_files", required <= set(pack), "all required pack CSVs load"))
     checks.extend(_validate_tdc_beta_authority(pack))
@@ -342,8 +359,6 @@ def validate_pack(
             "term_premium_validation_decomposition",
             "tdc_empirical_beta_path",
             "tdc_beta_authority",
-            "tdc_flow_size_beta_override",
-            "beta_state_indicator",
             "absorption_mode_mix_summary_annual_and_2010_2019_avg",
         } or name.startswith("tax_layer_") or name.startswith("mmf_targets_v2_"):
             continue
@@ -409,45 +424,81 @@ def validate_pack(
 
 
 def _validate_tdc_beta_authority(pack: dict[str, list[dict[str, str]]]) -> list[dict[str, str]]:
-    authority = pack.get("tdc_beta_authority", [])
-    flow_override = pack.get("tdc_flow_size_beta_override", [])
-    state_indicator = pack.get("beta_state_indicator", [])
-    default_rows = [row for row in authority if row.get("is_default") == "1"]
-    default_on_override = all(row.get("enabled") == "1" for row in flow_override)
-    default_off_indicator = all(row.get("enabled") == "0" for row in state_indicator)
-    thresholds_ok = any(
-        row.get("threshold_variable") == "tdc_tier2_regression_mmf_rrp_prop_bank_only_qoq_abs"
-        and row.get("threshold_flow_bil_low") == "28.5"
-        and row.get("threshold_flow_bil_base") == "52.3"
-        and row.get("threshold_flow_bil_high") == "71.2"
-        and row.get("override_beta_base") == "0"
-        and row.get("post2022_binding_quarters_base_threshold") == "2"
-        and row.get("post2022_quarters") == "16"
-        for row in flow_override
+    sensitivities = pack.get("tdc_beta_authority", [])
+    empirical = pack.get("tdc_empirical_beta_path", [])
+    by_id = {row.get("sensitivity_id", ""): row for row in sensitivities}
+    exact_set = (
+        len(sensitivities) == len(TDC_BETA_SENSITIVITY_VALUES)
+        and set(by_id) == set(TDC_BETA_SENSITIVITY_VALUES)
+        and all(
+            by_id[sensitivity_id].get("parameter_id") == sensitivity_id
+            and _d(by_id[sensitivity_id].get("beta", "nan")) == beta
+            for sensitivity_id, beta in TDC_BETA_SENSITIVITY_VALUES.items()
+        )
     )
-    state_indicator_ok = any(
-        row.get("enabled") == "0"
-        and row.get("runtime_selector_allowed") == "false"
-        and row.get("threshold_rrpontsyd_bil_low") == "25"
-        and row.get("threshold_rrpontsyd_bil_base") == "50"
-        and row.get("threshold_rrpontsyd_bil_high") == "100"
-        for row in state_indicator
+    equal_status = exact_set and all(
+        row.get("authority_status") == "equal_status_sensitivity"
+        for row in sensitivities
+    )
+    legacy_visible = exact_set and all(
+        row.get("legacy_status")
+        == (
+            "visibly_legacy"
+            if row.get("sensitivity_id") == "tdc_beta_sensitivity_legacy_0p342"
+            else "current_sensitivity_member"
+        )
+        for row in sensitivities
+    )
+    schema_exact = all(set(row) == TDC_BETA_SENSITIVITY_FIELDS for row in sensitivities)
+    beta_related_rows = [
+        row
+        for name, rows in pack.items()
+        if "tdc" in name and "beta" in name
+        for row in rows
+    ]
+    no_selector_fields = all(
+        not (set(row) & TDC_BETA_SELECTOR_FIELDS) for row in beta_related_rows
+    )
+    no_selector_surfaces = (
+        "tdc_flow_size_beta_override" not in pack
+        and "beta_state_indicator" not in pack
+    )
+    historical_only = bool(empirical) and all(
+        row.get("period") == "2010_2019_avg"
+        or (row.get("period", "").isdigit() and int(row["period"]) <= 2025)
+        for row in empirical
+    )
+    serialized_pack = "\n".join(
+        str(value)
+        for rows in pack.values()
+        for row in rows
+        for value in row.values()
+    )
+    prohibited_labels_absent = "tdcest_" not in serialized_pack
+    noncanonical = exact_set and all(
+        row.get("evidence_mode_enabled") == "false"
+        and row.get("canonical_status") == "noncanonical_sensitivity_only"
+        for row in sensitivities
     )
     return [
         _check(
-            "T25_tdc_beta_authority_default",
-            len(default_rows) == 1 and default_rows[0].get("state_id") == "tdcest_current_point_estimate_mid_transition",
-            "tdcest beta authority has exactly one forward default",
+            "T25_tdc_beta_equal_status_sensitivity_set",
+            exact_set and equal_status and legacy_visible,
+            "four exact equal-status beta sensitivities; 0.342 visibly legacy",
         ),
         _check(
-            "T25_tdc_flow_size_override_enabled",
-            bool(flow_override) and default_on_override and thresholds_ok,
-            "flow-size beta override slot exists, is enabled, and carries tdcest L/B/H thresholds",
+            "T25_tdc_beta_no_selector",
+            schema_exact
+            and no_selector_fields
+            and no_selector_surfaces
+            and historical_only
+            and prohibited_labels_absent,
+            "no default, state, transition, quiet/large-shock, flow-size, or forward beta selector",
         ),
         _check(
-            "T25_beta_state_indicator_default_off",
-            bool(state_indicator) and default_off_indicator and state_indicator_ok,
-            "state-indicator slot exists, is default off, and keeps runtime selector disallowed",
+            "T25_tdc_beta_noncanonical",
+            noncanonical,
+            "beta sensitivities remain noncanonical with Evidence Mode false",
         ),
     ]
 
@@ -708,7 +759,7 @@ def _monthly_records(
     *,
     phase6_pack: dict[str, list[dict[str, str]]] | None = None,
     include_tdc_settlement: bool,
-    include_tdc_split_addendum: bool = True,
+    include_tdc_split_addendum: bool = False,
     tdc_split_addendum: dict[str, object] | None = None,
     include_combined_sinks: bool = True,
     shock_start_month: str,
@@ -719,18 +770,15 @@ def _monthly_records(
     shock_size_bp: Decimal = Decimal("100"),
     hysteresis_state_config: dict[str, object] | None = None,
     fiscal_tilt_config: dict[str, object] | None = None,
-    use_beta_state_indicator: bool = False,
     issuance_loop_extra_public_net_by_month: dict[tuple[str, str], Decimal] | None = None,
 ) -> list[dict[str, Decimal | str]]:
+    if include_tdc_split_addendum:
+        raise ValueError("suspended TDCSim split input is nonfeeding and cannot enter V1")
     records: list[dict[str, Decimal | str]] = []
     if phase6_pack is None:
         phase6_pack = _load_pack(Path("configs/rwtam/packs/phase6"))
     if tdc_split_addendum is None:
-        tdc_split_addendum = (
-            _tdc_split_addendum_schedule()
-            if include_tdc_split_addendum
-            else _empty_tdc_split_addendum_schedule("disabled")
-        )
+        tdc_split_addendum = _tdc_split_suspended()
     assumptions = _assumptions(pack)
     opening = _opening_by_family(pack)
     conversion = _conversion(pack)
@@ -1018,7 +1066,6 @@ def _monthly_records(
                 ),
             )
             cashflow_routes = _merge_routes(public_effect_routes, private_routes)
-            pre_addendum_family_routes = _copy_family_routes(family_routes)
             if include_combined_sinks:
                 nii_delta = _combined_sink_monthly_earning_asset_nii_delta(
                     pack,
@@ -1055,8 +1102,6 @@ def _monthly_records(
                 gov_delta,
                 tdc_created_deposit_stock,
                 include_tdc_settlement,
-                use_beta_state_indicator=use_beta_state_indicator,
-                flow_period_scale=Decimal("12"),
             )
             tdc_metrics = {
                 **tdc_metrics,
@@ -2496,14 +2541,14 @@ def _object_version_stamp(dose_mode: str, include_tax_layer: bool = True) -> str
     if not include_tax_layer:
         if dose_mode == "transient_12m":
             return (
-                "current_default_wave8_combined_sinks_tdc_split_tax_off:"
+                "current_default_wave8_combined_sinks_tdc_split_suspended_tax_off:"
                 "dose_mode=transient_12m,"
                 "basis=expectations_consistent_term_premium"
             )
-        return f"current_default_wave8_combined_sinks_tdc_split_tax_off:dose_mode={dose_mode}"
+        return f"current_default_wave8_combined_sinks_tdc_split_suspended_tax_off:dose_mode={dose_mode}"
     if dose_mode == DEFAULT_DOSE_MODE:
         return CURRENT_DEFAULT_OBJECT_STAMP
-    return f"current_default_wave8_combined_sinks_tdc_split:dose_mode={dose_mode},named_comparator"
+    return f"current_default_wave8_combined_sinks_tdc_split_suspended:dose_mode={dose_mode},named_comparator"
 
 
 def _output_tables(
@@ -2605,10 +2650,7 @@ def _output_tables(
         "out_moneyness_liquid_buffers": _moneyness_liquid_buffers(pack),
         "out_absorption_modes": _absorption_modes_table(pack),
         "out_tdc_beta_authority": _tdc_beta_authority_table(pack),
-        "out_tdc_flow_size_beta_override": _tdc_flow_size_beta_override_table(pack),
-        "out_beta_state_indicator": _beta_state_indicator_table(pack),
         "out_tdc_channel": _tdc_channel_table(pack, records),
-        "out_tdc_income_addendum": _tdc_income_addendum_table(monthly_records or []),
         "out_tdc_beta_implied": _tdc_beta_implied_table(pack, records),
         "out_tdc_mode_sensitivity": _tdc_mode_sensitivity_table(pack, records),
         "out_tdc_chi_diagnostic": _tdc_chi_diagnostic_table(pack),
@@ -3487,44 +3529,6 @@ def _tdc_channel_table(
     return rows
 
 
-def _tdc_income_addendum_table(
-    monthly_records: list[dict[str, Decimal | str]],
-) -> list[dict[str, str]]:
-    rows: list[dict[str, str]] = []
-    for record in monthly_records:
-        if record["ricardian_offset"] != Decimal("0"):
-            continue
-        income = _d(record.get("tdc_split_created_deposit_income_bil", Decimal("0")))
-        new_stock = _d(record.get("tdc_split_new_created_deposits_bil", Decimal("0")))
-        stock = _d(record.get("tdc_split_created_deposit_stock_bil", Decimal("0")))
-        if income == 0 and new_stock == 0 and stock == 0:
-            continue
-        rows.append(
-            {
-                "period_type": "monthly",
-                "month": str(record["month"]),
-                "year": str(record["year"]),
-                "band": str(record["band"]),
-                "route_family": TDC_SPLIT_ROUTE_FAMILY,
-                "new_admissible_deposit_stock_bil": _fmt(new_stock),
-                "created_deposit_stock_bil": _fmt(stock),
-                "gross_interest_bil": _fmt(income),
-                "admission_status": str(record.get("tdc_split_admission_status", "")),
-                "reconciliation_status": str(
-                    record.get("tdc_split_reconciliation_status", "")
-                ),
-                "source": str(record.get("tdc_split_source", "")),
-                "selected_support_formula": (
-                    "admissible_non_interest_stock * 0.035 * sfc_route_coefficients"
-                ),
-                "stock_leakage_status": (
-                    "not_in_opening_stocks_not_in_deposit_claim_rules_not_in_moneyness_distress_D_chi"
-                ),
-            }
-        )
-    return rows
-
-
 def _combined_sink_trace_table(
     monthly_records: list[dict[str, Decimal | str]],
 ) -> list[dict[str, str]]:
@@ -3583,13 +3587,17 @@ def _tdc_beta_implied_table(
         if record["band"] != "base" or record["ricardian_offset"] != Decimal("0"):
             continue
         year = str(record["year"])
-        peer = empirical.get(year, empirical.get("forward_default", {}))
+        peer = empirical.get(year, {})
         rows.append(
             {
                 "year": year,
                 "implied_beta": _fmt(record["tdc_implied_beta"]),
+                "implied_beta_basis": "structural_absorption_mode_mix",
                 "empirical_beta_validation_target": peer.get("beta", ""),
                 "empirical_regime_label": peer.get("regime_label", ""),
+                "empirical_status": (
+                    "historical_diagnostic_available" if peer else "no_forward_beta_target"
+                ),
                 "calibration_policy": "diagnostic_validation_target_never_calibration",
             }
         )
@@ -3617,11 +3625,17 @@ def _tdc_mode_sensitivity_table(
         Decimal("0"),
     )
     rows: list[dict[str, str]] = []
-    for scenario_id, beta in [
-        ("all_A_domestic_nonbank_swap", Decimal("0")),
-        ("all_B_bank_expansion", Decimal("1")),
-        ("base_mix", _tdc_implied_beta(pack, "base")),
-    ]:
+    def append_row(
+        beta: Decimal,
+        *,
+        scenario_id: str = "",
+        sensitivity_id: str = "",
+        legacy_status: str,
+        authority_status: str,
+        basis: str,
+        evidence_mode_enabled: str,
+        canonical_status: str,
+    ) -> None:
         stock = Decimal("0")
         year1_n = Decimal("0")
         cumulative_n = Decimal("0")
@@ -3634,41 +3648,47 @@ def _tdc_mode_sensitivity_table(
         rows.append(
             {
                 "scenario_id": scenario_id,
+                "sensitivity_id": sensitivity_id,
                 "implied_beta": _fmt(beta),
+                "legacy_status": legacy_status,
+                "authority_status": authority_status,
+                "deposit_rate_assumption": _fmt(full_rate),
                 "year1_tdc_N_bil": _fmt(year1_n),
                 "cumulative_2026_2035_tdc_N_bil": _fmt(cumulative_n),
-                "basis": "mode_mix_sensitivity_not_headline_calibration",
+                "basis": basis,
+                "evidence_mode_enabled": evidence_mode_enabled,
+                "canonical_status": canonical_status,
             }
+        )
+    for scenario_id, beta in (
+        ("all_A_domestic_nonbank_swap", Decimal("0")),
+        ("all_B_bank_expansion", Decimal("1")),
+        ("base_mix", _tdc_implied_beta(pack, "base")),
+    ):
+        append_row(
+            beta,
+            scenario_id=scenario_id,
+            legacy_status="not_applicable",
+            authority_status="structural_mode_mix_diagnostic",
+            basis="mode_mix_sensitivity_not_headline_calibration",
+            evidence_mode_enabled="false",
+            canonical_status="noncanonical_diagnostic",
+        )
+    for sensitivity in pack.get("tdc_beta_authority", []):
+        append_row(
+            _d(sensitivity["beta"]),
+            sensitivity_id=sensitivity["sensitivity_id"],
+            legacy_status=sensitivity["legacy_status"],
+            authority_status=sensitivity["authority_status"],
+            basis="equal_status_noncanonical_sensitivity_never_headline_selection",
+            evidence_mode_enabled=sensitivity["evidence_mode_enabled"],
+            canonical_status=sensitivity["canonical_status"],
         )
     return rows
 
 
 def _tdc_beta_authority_table(pack: dict[str, list[dict[str, str]]]) -> list[dict[str, str]]:
-    rows: list[dict[str, str]] = []
-    for row in pack.get("tdc_beta_authority", []):
-        rows.append(
-            {
-                "state_id": row["state_id"],
-                "low": row["low"],
-                "base": row["base"],
-                "high": row["high"],
-                "is_default": row["is_default"],
-                "authority": row["authority"],
-                "state_family": row["state_family"],
-                "transition_direction": row.get("transition_direction", ""),
-                "input_basis_label": row["input_basis_label"],
-                "rationale": row["rationale"],
-            }
-        )
-    return rows
-
-
-def _tdc_flow_size_beta_override_table(pack: dict[str, list[dict[str, str]]]) -> list[dict[str, str]]:
-    return [dict(row) for row in pack.get("tdc_flow_size_beta_override", [])]
-
-
-def _beta_state_indicator_table(pack: dict[str, list[dict[str, str]]]) -> list[dict[str, str]]:
-    return [dict(row) for row in pack.get("beta_state_indicator", [])]
+    return [dict(row) for row in pack.get("tdc_beta_authority", [])]
 
 
 def _tdc_chi_diagnostic_table(pack: dict[str, list[dict[str, str]]]) -> list[dict[str, str]]:
@@ -4070,9 +4090,6 @@ def _tdc_metrics_for_period(
     issuance_divergence: Decimal,
     prior_created_deposit_stock: Decimal,
     include_tdc_settlement: bool,
-    *,
-    use_beta_state_indicator: bool = False,
-    flow_period_scale: Decimal = Decimal("1"),
 ) -> dict[str, Decimal]:
     if not include_tdc_settlement or not pack.get("absorption_modes"):
         return {
@@ -4082,18 +4099,7 @@ def _tdc_metrics_for_period(
             "full_level_deposit_rate": Decimal("0"),
             "created_deposit_income_bil": Decimal("0"),
         }
-    beta = _tdc_implied_beta(
-        pack,
-        band,
-        use_beta_state_indicator=use_beta_state_indicator,
-    )
-    beta = _tdc_flow_size_adjusted_beta(
-        pack,
-        beta,
-        issuance_divergence,
-        band=band,
-        flow_period_scale=flow_period_scale,
-    )
+    beta = _tdc_implied_beta(pack, band)
     full_rate = _assumptions(pack).get("tdc_created_deposit_full_level_rate", {}).get(
         band, Decimal("0.035")
     )
@@ -4108,76 +4114,12 @@ def _tdc_metrics_for_period(
     }
 
 
-def _empty_tdc_split_addendum_schedule(reason: str) -> dict[str, object]:
+def _tdc_split_suspended() -> dict[str, object]:
     return {
-        "status": "parked",
-        "reason": reason,
+        "status": "suspended",
+        "reason": TDC_SPLIT_SUSPENSION_REASON,
+        "cumulative_status": TDC_SPLIT_SUSPENSION_REASON,
         "rows_by_year": {},
-    }
-
-
-def _tdc_split_addendum_schedule() -> dict[str, object]:
-    rows_by_year: dict[str, dict[str, Decimal | str]] = {}
-    cumulative_status = "missing_cumulative_split_input"
-    cumulative_rows = (
-        _read_csv_rows(TDCSIM_CUMULATIVE_SPLIT_INPUT)
-        if TDCSIM_CUMULATIVE_SPLIT_INPUT.exists()
-        else []
-    )
-    if cumulative_rows:
-        cumulative_status = "pass"
-        for row in cumulative_rows:
-            if row.get("aggregation_reconciliation_status") != "pass":
-                cumulative_status = "fail_reconciliation"
-                continue
-            if _d(row.get("delta_tdc_ex_overlap_split_remainder_bil", "0")) != 0:
-                cumulative_status = "fail_nonzero_remainder"
-                continue
-            if row.get("demand_conversion_case") != "central":
-                continue
-            rows_by_year[str(row["period"])] = {
-                "stock": _d(row["tdc_materialized_deposit_stock_admissible_bil"]),
-                "rate": _d(row["tdc_income_addendum_full_level_rate"]),
-                "admissible": _d(row["delta_tdc_ex_overlap_non_interest_admissible_bil"]),
-                "excluded": _d(row["delta_tdc_ex_overlap_interest_driven_excluded_bil"]),
-                "source": "tdcsim_cumulative_split_input",
-                "reconciliation_status": row["aggregation_reconciliation_status"],
-                "admission_status": "admitted_split_non_interest_bucket",
-            }
-        if len(rows_by_year) != 11:
-            cumulative_status = "fail_missing_11_source_grade_years"
-    if "2026" not in rows_by_year:
-        current_rows = (
-            _read_csv_rows(TDCSIM_CURRENT_SPLIT_SUMMARY)
-            if TDCSIM_CURRENT_SPLIT_SUMMARY.exists()
-            else []
-        )
-        for row in current_rows:
-            if row.get("tdc_deposit_creation_split_schema_version") != "tdc_deposit_creation_split_v1":
-                continue
-            if row.get("tdc_income_addendum_admission_status") != "admitted_split_non_interest_bucket":
-                continue
-            if row.get("tdc_income_addendum_collision_status") != "pass_split_collision_excluded":
-                continue
-            if _d(row.get("delta_tdc_ex_overlap_split_remainder_bil", "0")) != 0:
-                continue
-            rows_by_year["2026"] = {
-                "stock": _d(row["tdc_materialized_deposit_stock_admissible_bil"]),
-                "rate": _d(row["tdc_income_addendum_full_level_rate"]),
-                "admissible": _d(row["delta_tdc_ex_overlap_non_interest_admissible_bil"]),
-                "excluded": _d(row["delta_tdc_ex_overlap_interest_driven_excluded_bil"]),
-                "source": "tdcsim_current_split_summary",
-                "reconciliation_status": "pass",
-                "admission_status": row["tdc_income_addendum_admission_status"],
-            }
-            break
-    return {
-        "status": "pass" if rows_by_year else "parked",
-        "reason": "" if rows_by_year else cumulative_status,
-        "cumulative_status": cumulative_status,
-        "rows_by_year": rows_by_year if cumulative_status == "pass" else {
-            year: value for year, value in rows_by_year.items() if year == "2026"
-        },
     }
 
 
@@ -4198,7 +4140,7 @@ def _tdc_split_metrics_for_month(
             "created_deposit_income_bil": Decimal("0"),
             "admission_status": str(schedule.get("reason", "disabled")),
             "reconciliation_status": str(schedule.get("cumulative_status", "disabled")),
-            "source": "tdcsim_split_addendum_parked",
+            "source": "tdcsim_split_addendum_suspended",
         }
     rows_by_year = schedule.get("rows_by_year", {})
     if not isinstance(rows_by_year, dict):
@@ -4315,59 +4257,11 @@ def _combined_sink_monthly_earning_asset_nii_delta(
 def _tdc_implied_beta(
     pack: dict[str, list[dict[str, str]]],
     band: str,
-    *,
-    use_beta_state_indicator: bool = False,
 ) -> Decimal:
-    if use_beta_state_indicator:
-        state_beta = _tdc_state_indicator_beta(pack, band)
-        if state_beta is not None:
-            return state_beta
-    authority_beta = _tdc_default_authority_beta(pack, band)
-    if authority_beta is not None:
-        return authority_beta
     return sum(
         _d(row[band]) * _d(row["deposit_creation_per_issuance"])
         for row in pack.get("absorption_modes", [])
     )
-
-
-def _tdc_default_authority_beta(
-    pack: dict[str, list[dict[str, str]]],
-    band: str,
-) -> Decimal | None:
-    for row in pack.get("tdc_beta_authority", []):
-        if row.get("is_default") == "1":
-            return _d(row[band])
-    return None
-
-
-def _tdc_state_indicator_beta(
-    pack: dict[str, list[dict[str, str]]],
-    band: str,
-) -> Decimal | None:
-    if not any(row.get("selection_scope") == "scenario_use_only" for row in pack.get("beta_state_indicator", [])):
-        return None
-    for row in pack.get("tdc_beta_authority", []):
-        if row.get("state_id") == "plumbing_active" and row.get("input_basis_label") == "scenario_use_only":
-            return _d(row[band])
-    return None
-
-
-def _tdc_flow_size_adjusted_beta(
-    pack: dict[str, list[dict[str, str]]],
-    beta: Decimal,
-    issuance_divergence: Decimal,
-    *,
-    band: str = "base",
-    flow_period_scale: Decimal = Decimal("1"),
-) -> Decimal:
-    for row in pack.get("tdc_flow_size_beta_override", []):
-        if row.get("enabled") != "1":
-            continue
-        threshold = _d(row[f"threshold_flow_bil_{band}"])
-        if abs(issuance_divergence) * flow_period_scale <= threshold:
-            return _d(row["override_beta_base"])
-    return beta
 
 
 def _tdc_routes_from_metrics(
