@@ -8,7 +8,11 @@ from pathlib import Path
 
 import pytest
 
-from ratewall.rwtam.derived_metrics import build_derived_metrics
+from ratewall.rwtam.derived_metrics import (
+    _fiscal_cost_rows,
+    build_derived_metrics,
+    validate_fiscal_cost_rows,
+)
 
 
 SOURCE_DIR = Path("var/rwtam/v1")
@@ -31,7 +35,7 @@ def test_derived_metrics_attenuation_is_exact_source_arithmetic() -> None:
     rows = result.rows("out_attenuation_multiplier")
 
     base_year = next(row for row in rows if row["horizon"] == "year_1" and row["band"] == "base")
-    assert Decimal(base_year["attenuation_multiplier"]).quantize(Decimal("0.0001")) == Decimal("1.0527")
+    assert Decimal(base_year["attenuation_multiplier"]).quantize(Decimal("0.0001")) == Decimal("1.0526")
     for row in rows:
         source = next(
             item
@@ -80,8 +84,12 @@ def test_wall_incidence_regroups_ledger_and_sums_to_rollup_n() -> None:
     )
 
     assert Decimal(identity["demand_converted_N_bil"]) == positive_converted
-    assert Decimal(identity["demand_converted_N_bil"]) == Decimal(source_n)
-    assert Decimal(identity["demand_converted_share_of_ledger_N"]) == Decimal("1")
+    assert abs(
+        Decimal(identity["demand_converted_N_bil"]) - Decimal(source_n)
+    ) <= Decimal("1e-24")
+    assert abs(
+        Decimal(identity["demand_converted_share_of_ledger_N"]) - Decimal("1")
+    ) <= Decimal("1e-24")
     groups = {
         row["receiving_group"]
         for row in incidence
@@ -122,11 +130,54 @@ def test_fiscal_cost_ratio_uses_public_interest_rows_and_is_labeled() -> None:
             and item["ricardian_offset"] == "0"
             and item["dose_mode"] == "persistent_level"
         )
-        compression = Decimal(source["D_bil"]) - Decimal(source["N_bil"])
+        drag_minus_support = Decimal(source["D_bil"]) - Decimal(source["N_bil"])
         assert Decimal(row["public_interest_expense_bil"]) == expense
-        assert Decimal(row["net_demand_compression_bil"]) == compression
-        assert Decimal(row["fiscal_cost_per_unit_compression"]) == expense / compression
+        assert Decimal(row["drag_minus_support_bil"]) == drag_minus_support
+        assert Decimal(row["fiscal_cost_per_unit_compression"]) == (
+            expense / drag_minus_support
+        )
+        assert row["compression_ratio_status"] == (
+            "available_positive_drag_minus_support"
+        )
         assert row["interpretation_label"] == "diagnostic_ratio_not_welfare_claim"
+
+    assert not validate_fiscal_cost_rows(fiscal)
+
+    sign_mutation = [dict(row) for row in fiscal]
+    sign_mutation[0]["drag_minus_support_bil"] = str(
+        -Decimal(sign_mutation[0]["drag_minus_support_bil"])
+    )
+    assert validate_fiscal_cost_rows(sign_mutation)
+
+
+def test_fiscal_cost_ratio_is_unavailable_when_support_exceeds_drag(
+    tmp_path: Path,
+) -> None:
+    rollup_rows = [
+        {
+            "period_type": period_type,
+            "period": period,
+            "band": "base",
+            "ricardian_offset": "0",
+            "dose_mode": "persistent_level",
+            "N_bil": "2",
+            "D_bil": "1",
+        }
+        for period_type, period in (
+            ("annual", "2026"),
+            ("cumulative_120_month", "2026-2035"),
+        )
+    ]
+    public_rows = [{"year": "2026", "cashflow_delta_bil": "5"}]
+
+    rows = _fiscal_cost_rows(public_rows, rollup_rows, tmp_path)
+
+    assert {row["drag_minus_support_bil"] for row in rows} == {"-1"}
+    assert {row["fiscal_cost_per_unit_compression"] for row in rows} == {""}
+    assert {row["compression_ratio_status"] for row in rows} == {
+        "unavailable_nonpositive_drag_minus_support"
+    }
+    assert not validate_fiscal_cost_rows(rows)
 
 
 def test_timing_profile_surfaces_monthly_rows_without_rebuild() -> None:

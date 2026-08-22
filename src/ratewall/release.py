@@ -3402,7 +3402,13 @@ def _final_paper_quarto_text(
     claim_pass = all(row["audit_status"] == "pass" for row in claim_rows)
     one_year = _row_by(context, "impulse", "horizon", "1y")
     impulse_value = one_year.get("annualized_public_interest_impulse_bil", "")
-    impulse_gdp = one_year.get("public_interest_impulse_gdp_pct", "")
+    impulse_gdp_pct = format(
+        (
+            Decimal(one_year["annualized_public_interest_impulse_gdp_share"])
+            * Decimal("100")
+        ).normalize(),
+        "f",
+    )
     return "\n".join(
         [
             "---",
@@ -3451,7 +3457,7 @@ def _final_paper_quarto_text(
             f"The generated 100 bps impulse table includes {len(impulse_rows)} "
             "horizons: 1q, 1y, 3y, and 10y. In the current release, the one-year "
             f"annualized public-interest impulse is `{impulse_value}` billion "
-            f"dollars, or `{impulse_gdp}` percent of GDP in the generated table. "
+            f"dollars, or `{impulse_gdp_pct}` percent of GDP in the generated table. "
             "This is accounting arithmetic, not an inflation-effect estimate.",
             "",
             "## RateWall Dashboard",

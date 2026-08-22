@@ -59,6 +59,7 @@ T43,pass,cashflow leg-gross net reconciles to headline net,transient_12m
 T44,pass,CRE cashflow routing closes payer and holder legs,transient_12m
 T53,pass,TDCSim measured coupon-roll schedule is intact and steepens base path,transient_12m
 T55,pass,diagnostic/scenario tables are isolated from headline additive rows,transient_12m
+T63,pass,headline net is N-D and GDP-normalized values are fraction shares,transient_12m
 T47,pass,constant spread/level terms do not enter pair deltas,transient_12m
 T48,pass,cost legs do not route positive converted income to household cells,transient_12m
 T49,pass,scenario delta-set balance identities close by sector,transient_12m

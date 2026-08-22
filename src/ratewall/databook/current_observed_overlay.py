@@ -24,7 +24,7 @@ CURRENT_BENCHMARK_FIELDS = [
     "reference_runtime_support_offset_row_id",
     "nominal_gdp_bil",
     "benchmark_numerator_bil",
-    "benchmark_support_pct_of_gdp",
+    "benchmark_support_gdp_pct",
     "fixed_D_pp_gdp",
     "fixed_D_bil",
     "benchmark_ratewall_ratio",
@@ -185,7 +185,7 @@ def current_assumption_benchmark_rows(
                 "reference_runtime_support_offset_row_id": reference_row_id,
                 "nominal_gdp_bil": scenario["nominal_gdp_bil"],
                 "benchmark_numerator_bil": scenario["numerator_total_bil"],
-                "benchmark_support_pct_of_gdp": scenario["support_pct_of_gdp"],
+                "benchmark_support_gdp_pct": scenario["support_gdp_pct"],
                 "fixed_D_pp_gdp": row[
                     "default_runtime_reference_denominator_center_pp_gdp"
                 ],

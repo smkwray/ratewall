@@ -59,6 +59,7 @@ T43,pass,cashflow leg-gross net reconciles to headline net,persistent_level
 T44,pass,CRE cashflow routing closes payer and holder legs,persistent_level
 T53,pass,TDCSim measured coupon-roll schedule is intact and steepens base path,persistent_level
 T55,pass,diagnostic/scenario tables are isolated from headline additive rows,persistent_level
+T63,pass,headline net is N-D and GDP-normalized values are fraction shares,persistent_level
 T58,pass,tax layer taxes only current/taxable wrapper slices once,persistent_level
 T59,pass,independent tax-flow recomputation equals stored Treasury receipt flow,persistent_level
 T60,pass,higher 163(j) stress weakly lowers effective shield,persistent_level

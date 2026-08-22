@@ -13,10 +13,9 @@ The marginal empirical databook builds the current RateWall marginal surfaces:
 assumption sets, parameter packs, source ledgers, Treasury Deposit Channel
 inputs, public-interest terms, safe-yield terms, and claim-boundary audits.
 
-The Rate Wall Transmission Accounting Model (RWTAM) builds a sectoral accounting
-system for rate-wall transmission. It combines stock-flow accounting, rate-side
-mechanics, sector cells, conversion parameters, and scenario layers into
-auditable output tables and focused invariants.
+The Rate Wall Transmission Accounting Model (RWTAM) is a monthly
+structural-accounting model of monetary-policy transmission through selected
+financial claims and fiscal channels.
 
 ## Install
 

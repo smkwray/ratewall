@@ -161,7 +161,7 @@ SCENARIO_DENOMINATOR_ANCHOR_LINEAGE_FIELDS = [
     "denominator_source_class",
     "denominator_source_artifact",
     "denominator_timing_class",
-    "support_pct_of_gdp",
+    "support_gdp_pct",
     "denominator_anchor_pp_gdp",
     "implied_support_offset_100bp_year_equivalent",
     "scenario_runtime_allowed",
@@ -204,7 +204,7 @@ SCENARIO_DENOMINATOR_STACK_COMPARISON_FIELDS = [
     "mpc_scenario",
     "maturity_scenario",
     "holder_scenario",
-    "support_pct_of_gdp",
+    "support_gdp_pct",
     "denominator_source_id",
     "denominator_source_class",
     "denominator_source_artifact",
@@ -472,7 +472,7 @@ ANNUAL_SUPPORT_NUMERATOR_CONTRACT_FIELDS = [
     "split_runtime_numerator_bil",
     "direct_component_sum_bil",
     "memo_component_sum_bil",
-    "support_pct_of_gdp",
+    "support_gdp_pct",
     "direct_component_count",
     "memo_component_count",
     "timing_class",
@@ -527,10 +527,10 @@ ANNUAL_SUPPORT_NUMERATOR_UNCERTAINTY_ENVELOPE_FIELDS = [
     "numerator_lower_bound_bil",
     "numerator_base_case_bil",
     "numerator_upper_bound_bil",
-    "support_pct_current_gdp",
-    "support_pct_lower_bound_gdp",
-    "support_pct_base_case_gdp",
-    "support_pct_upper_bound_gdp",
+    "support_current_gdp_pct",
+    "support_lower_bound_gdp_pct",
+    "support_base_case_gdp_pct",
+    "support_upper_bound_gdp_pct",
     "lower_contract_row_id",
     "base_contract_row_id",
     "upper_contract_row_id",
@@ -624,7 +624,7 @@ RUNTIME_ANNUAL_FLOW_SUPPORT_OFFSET_SCENARIO_FIELDS = [
     "holder_scenario",
     "nominal_gdp_bil",
     "numerator_total_bil",
-    "support_pct_of_gdp",
+    "support_gdp_pct",
     "numerator_timing_class",
     "numerator_uncertainty_status",
     "numerator_reconciliation_status",
@@ -635,9 +635,9 @@ RUNTIME_ANNUAL_FLOW_SUPPORT_OFFSET_SCENARIO_FIELDS = [
     "numerator_uncertainty_lower_bound_bil",
     "numerator_uncertainty_base_case_bil",
     "numerator_uncertainty_upper_bound_bil",
-    "support_pct_of_gdp_numerator_lower_bound",
-    "support_pct_of_gdp_numerator_base_case",
-    "support_pct_of_gdp_numerator_upper_bound",
+    "support_numerator_lower_bound_gdp_pct",
+    "support_numerator_base_case_gdp_pct",
+    "support_numerator_upper_bound_gdp_pct",
     "denominator_source_id",
     "denominator_source_class",
     "denominator_role",
@@ -770,7 +770,7 @@ RUNTIME_ANNUAL_FLOW_SUPPORT_OFFSET_ADOPTION_MATRIX_FIELDS = [
     "numerator_source_gate_status",
     "numerator_uncertainty_artifact",
     "numerator_total_bil",
-    "support_pct_of_gdp",
+    "support_gdp_pct",
     "numerator_uncertainty_lower_bound_bil",
     "numerator_uncertainty_base_case_bil",
     "numerator_uncertainty_upper_bound_bil",
@@ -3014,10 +3014,10 @@ def _annual_support_numerator_uncertainty_envelope_rows(
                     "numerator_upper_bound_bil": upper_row[
                         "runtime_current_window_numerator_bil"
                     ],
-                    "support_pct_current_gdp": contract_row["support_pct_of_gdp"],
-                    "support_pct_lower_bound_gdp": lower_row["support_pct_of_gdp"],
-                    "support_pct_base_case_gdp": base_row["support_pct_of_gdp"],
-                    "support_pct_upper_bound_gdp": upper_row["support_pct_of_gdp"],
+                    "support_current_gdp_pct": contract_row["support_gdp_pct"],
+                    "support_lower_bound_gdp_pct": lower_row["support_gdp_pct"],
+                    "support_base_case_gdp_pct": base_row["support_gdp_pct"],
+                    "support_upper_bound_gdp_pct": upper_row["support_gdp_pct"],
                     "lower_contract_row_id": lower_row["contract_row_id"],
                     "base_contract_row_id": base_row["contract_row_id"],
                     "upper_contract_row_id": upper_row["contract_row_id"],
@@ -3141,7 +3141,7 @@ def _annual_support_numerator_contract_rows(
                 "split_runtime_numerator_bil": _format_decimal(total_support),
                 "direct_component_sum_bil": _format_decimal(direct_sum),
                 "memo_component_sum_bil": _format_decimal(memo_sum),
-                "support_pct_of_gdp": _format_decimal(support_pct),
+                "support_gdp_pct": _format_decimal(support_pct),
                 "direct_component_count": str(len(direct_rows)),
                 "memo_component_count": str(len(memo_rows)),
                 "timing_class": "annual_flow_current_window",
@@ -3353,13 +3353,13 @@ def _runtime_annual_flow_support_offset_scenario_rows(
                 else None
             )
             numerator_support_low = _decimal_or_none(
-                uncertainty_envelope["support_pct_lower_bound_gdp"]
+                uncertainty_envelope["support_lower_bound_gdp_pct"]
             )
             numerator_support_base = _decimal_or_none(
-                uncertainty_envelope["support_pct_base_case_gdp"]
+                uncertainty_envelope["support_base_case_gdp_pct"]
             )
             numerator_support_high = _decimal_or_none(
-                uncertainty_envelope["support_pct_upper_bound_gdp"]
+                uncertainty_envelope["support_upper_bound_gdp_pct"]
             )
             support_offset_numerator_low = (
                 _safe_ratio(numerator_support_low, center)
@@ -3451,7 +3451,7 @@ def _runtime_annual_flow_support_offset_scenario_rows(
                     "numerator_total_bil": contract_row[
                         "runtime_current_window_numerator_bil"
                     ],
-                    "support_pct_of_gdp": _format_decimal(support_pct),
+                    "support_gdp_pct": _format_decimal(support_pct),
                     "numerator_timing_class": contract_row["timing_class"],
                     "numerator_uncertainty_status": contract_row[
                         "uncertainty_status"
@@ -3478,14 +3478,14 @@ def _runtime_annual_flow_support_offset_scenario_rows(
                     "numerator_uncertainty_upper_bound_bil": uncertainty_envelope[
                         "numerator_upper_bound_bil"
                     ],
-                    "support_pct_of_gdp_numerator_lower_bound": uncertainty_envelope[
-                        "support_pct_lower_bound_gdp"
+                    "support_numerator_lower_bound_gdp_pct": uncertainty_envelope[
+                        "support_lower_bound_gdp_pct"
                     ],
-                    "support_pct_of_gdp_numerator_base_case": uncertainty_envelope[
-                        "support_pct_base_case_gdp"
+                    "support_numerator_base_case_gdp_pct": uncertainty_envelope[
+                        "support_base_case_gdp_pct"
                     ],
-                    "support_pct_of_gdp_numerator_upper_bound": uncertainty_envelope[
-                        "support_pct_upper_bound_gdp"
+                    "support_numerator_upper_bound_gdp_pct": uncertainty_envelope[
+                        "support_upper_bound_gdp_pct"
                     ],
                     "denominator_source_id": source_id,
                     "denominator_source_class": anchor["denominator_source_class"],
@@ -3767,7 +3767,7 @@ def _runtime_annual_flow_support_offset_adoption_matrix_rows(
                     "numerator_uncertainty_artifact"
                 ],
                 "numerator_total_bil": template_row["numerator_total_bil"],
-                "support_pct_of_gdp": template_row["support_pct_of_gdp"],
+                "support_gdp_pct": template_row["support_gdp_pct"],
                 "numerator_uncertainty_lower_bound_bil": template_row[
                     "numerator_uncertainty_lower_bound_bil"
                 ],
@@ -4485,7 +4485,7 @@ def _scenario_denominator_anchor_lineage_rows(
         )
         consumer_row = consumer_by_key.get(key)
         support_pct = (
-            _decimal_or_none(consumer_row["support_pct_of_gdp"]) if consumer_row else None
+            _decimal_or_none(consumer_row["support_gdp_pct"]) if consumer_row else None
         )
         for anchor_id in runtime_anchor_ids:
             anchor = anchors_by_id[anchor_id]
@@ -4521,7 +4521,7 @@ def _scenario_denominator_anchor_lineage_rows(
                         else "ratewall_annual_flow_runtime_family_registry.csv"
                     ),
                     "denominator_timing_class": anchor["timing_alignment_class"],
-                    "support_pct_of_gdp": _format_decimal(support_pct),
+                    "support_gdp_pct": _format_decimal(support_pct),
                     "denominator_anchor_pp_gdp": anchor["anchor_value_pp_gdp"],
                     "implied_support_offset_100bp_year_equivalent": _format_decimal(
                         implied
@@ -4582,7 +4582,7 @@ def _scenario_denominator_stack_comparison_rows(
                 "mpc_scenario": lineage_row["mpc_scenario"],
                 "maturity_scenario": lineage_row["maturity_scenario"],
                 "holder_scenario": lineage_row["holder_scenario"],
-                "support_pct_of_gdp": lineage_row["support_pct_of_gdp"],
+                "support_gdp_pct": lineage_row["support_gdp_pct"],
                 "denominator_source_id": anchor_id,
                 "denominator_source_class": lineage_row["denominator_source_class"],
                 "denominator_source_artifact": lineage_row[
@@ -5678,9 +5678,9 @@ def _augmented_noncanonical_current_demand_support_ratio_consumer_rows(
             }
         )
         rows.append(base_row)
-        support_pct_of_gdp = _decimal_or_none(consumer_row["support_pct_of_gdp"])
+        support_gdp_pct = _decimal_or_none(consumer_row["support_gdp_pct"])
         literature_support_offset = _safe_ratio(
-            support_pct_of_gdp, literature_anchor_pp_gdp
+            support_gdp_pct, literature_anchor_pp_gdp
         )
         literature_bp_year_offset = (
             None

@@ -202,7 +202,7 @@ def write_rwpi_report(result: RwpiResult, output_path: Path = RWPI_REPORT_PATH) 
         "| demand/Phillips | retained M5 net-demand-with-wall first stage and replaced placeholder slopes with memo L/B/H bands |",
         "| FX/import | wired Phase 6 broad-dollar scenario path x memo pass-through bands |",
         "| cost channel | wired from real engine firm/provider interest rows through allocation vector; grade D and `sensitivity_only` |",
-        "| ND_pi disclosure | window rows split demand, FX, and cost columns; the demand-only-after-wall hypothesis row is labeled in attribution |",
+        "| ND_pi disclosure | window rows split demand, FX, and cost columns; the drag-minus-support-after-wall hypothesis row is labeled in attribution |",
         "| rent/housing supply | emitted companion path only; not summed into headline because starts-to-rent elasticity is absent |",
         "| carry and regulated utilities | absent-with-reason until coefficients exist |",
         "| exclusions | expectations, wages, COLA, direct mortgage-interest CPI, and asset-price channels documented as exclusion rows |",
@@ -226,7 +226,7 @@ def write_rwpi_report(result: RwpiResult, output_path: Path = RWPI_REPORT_PATH) 
     )
     for row in windows:
         lines.append(
-            f"| {row['horizon_window']} | {row['demand_only_after_wall_base_pp']} | {row['fx_import_base_pp']} | {row['cost_channel_base_pp']} | {row['ND_pi_base_pp']} | {row['base_verdict']} |"
+            f"| {row['horizon_window']} | {row['demand_drag_minus_support_after_wall_base_pp']} | {row['fx_import_base_pp']} | {row['cost_channel_base_pp']} | {row['ND_pi_base_pp']} | {row['base_verdict']} |"
         )
     lines.extend(
         [
@@ -351,7 +351,9 @@ def _monthly_rows(
     factor = PCE_IMPORT_CROSSWALK if index_target == "PCE" else Decimal("1")
     for slack_state in SLACK_STATES:
         for band in BANDS:
-            demand_total = _demand_total_pp(result, slack_state, band, index_target)
+            demand_total = _demand_drag_minus_support_total_pp(
+                result, slack_state, band, index_target
+            )
             fx_total = _fx_total_pp(phase6_pack, band) * factor
             cost_total = _cost_total_pp(result, allocation, band, dose_mode)
             for month, mass in _kernel("demand").items():
@@ -502,9 +504,9 @@ def _window_rows(monthly: list[dict[str, str]]) -> list[dict[str, str]]:
                     "inflation_raising_low_pp": _fmt(raisings["low"]),
                     "inflation_raising_base_pp": _fmt(raisings["base"]),
                     "inflation_raising_high_pp": _fmt(raisings["high"]),
-                    "demand_only_after_wall_low_pp": _fmt(demand["low"]),
-                    "demand_only_after_wall_base_pp": _fmt(demand["base"]),
-                    "demand_only_after_wall_high_pp": _fmt(demand["high"]),
+                    "demand_drag_minus_support_after_wall_low_pp": _fmt(demand["low"]),
+                    "demand_drag_minus_support_after_wall_base_pp": _fmt(demand["base"]),
+                    "demand_drag_minus_support_after_wall_high_pp": _fmt(demand["high"]),
                     "fx_import_low_pp": _fmt(fx["low"]),
                     "fx_import_base_pp": _fmt(fx["base"]),
                     "fx_import_high_pp": _fmt(fx["high"]),
@@ -551,7 +553,7 @@ def _attribution_rows(monthly: list[dict[str, str]], windows: list[dict[str, str
                 rows.append(
                     _attribution_row(
                         window,
-                        "demand_only_after_wall",
+                        "demand_drag_minus_support_after_wall",
                         values,
                         "lowering",
                         _grade(channel_id),
@@ -696,7 +698,12 @@ def _cost_total_pp(
     return (interest / Decimal("100")) * COST_PASS_THROUGH_PP_PER_100BN[band]
 
 
-def _demand_total_pp(result: ScenarioResult, slack_state: str, band: str, index_target: str = "CPI_U") -> Decimal:
+def _demand_drag_minus_support_total_pp(
+    result: ScenarioResult,
+    slack_state: str,
+    band: str,
+    index_target: str = "CPI_U",
+) -> Decimal:
     row = next(
         r for r in result.rows("out_ratewall_rollup")
         if r["period_type"] == "annual"
@@ -705,7 +712,7 @@ def _demand_total_pp(result: ScenarioResult, slack_state: str, band: str, index_
         and r["ricardian_offset"] == "0"
     )
     if index_target == "PCE":
-        net_demand_with_wall = (
+        drag_minus_support_with_wall = (
             (Decimal("1") - PCE_M_D_IMPORT_LEAKAGE[band]) * _d(row["D_bil"])
             - (Decimal("1") - PCE_M_N_IMPORT_LEAKAGE[band]) * _d(row["N_bil"])
         )
@@ -715,9 +722,9 @@ def _demand_total_pp(result: ScenarioResult, slack_state: str, band: str, index_
             / OKUN_DIVISOR
         )
     else:
-        net_demand_with_wall = _d(row["D_bil"]) - _d(row["N_bil"])
+        drag_minus_support_with_wall = _d(row["D_bil"]) - _d(row["N_bil"])
         output_slope = PHILLIPS_SLOPE_U_GAP[slack_state][band] / OKUN_DIVISOR
-    return output_slope * (net_demand_with_wall / GDP_BIL * Decimal("100"))
+    return output_slope * (drag_minus_support_with_wall / GDP_BIL * Decimal("100"))
 
 
 def _fx_total_pp(phase6_pack: dict[str, list[dict[str, str]]], band: str) -> Decimal:
@@ -982,13 +989,15 @@ def _pce_level_path_rows(windows: list[dict[str, str]]) -> list[dict[str, str]]:
                     "horizon_window": row["horizon_window"],
                     "band": band,
                     "ND_pi_PCE_pp": row[f"ND_pi_{band}_pp"],
-                    "demand_phillips_PCE_pp": row[f"demand_only_after_wall_{band}_pp"],
+                    "demand_drag_minus_support_phillips_PCE_pp": row[
+                        f"demand_drag_minus_support_after_wall_{band}_pp"
+                    ],
                     "fx_import_PCE_pp": row[f"fx_import_{band}_pp"],
                     "cost_channel_pp": row[f"cost_channel_{band}_pp"],
                     "m_D": _fmt(PCE_M_D_IMPORT_LEAKAGE[band]),
                     "m_N": _fmt(PCE_M_N_IMPORT_LEAKAGE[band]),
                     "cpi_to_pce_slope_wedge": _fmt(PCE_CPI_TO_PCE_SLOPE_WEDGE[band]),
-                    "demand_leg_label": "PCE_basis_level_path_wedge_applied_to_demand_phillips_leg",
+                    "demand_leg_label": "PCE_basis_level_path_wedge_applied_to_drag_minus_support_phillips_leg",
                     "headline_status": "separate_PCE_surface_not_RW_full",
                 }
             )
@@ -1114,7 +1123,8 @@ def _invariant_rows(
     )
     pce_ratio_ok = abs(_d(pce_base_year1["RW_pi_PCE_ratio_basis"]) - Decimal("0.048")) <= Decimal("0.001")
     pce_level_ok = bool(pce_level) and all(
-        row["demand_leg_label"] == "PCE_basis_level_path_wedge_applied_to_demand_phillips_leg"
+        row["demand_leg_label"]
+        == "PCE_basis_level_path_wedge_applied_to_drag_minus_support_phillips_leg"
         for row in pce_level
     )
     caveat_ids = {row["caveat_id"] for row in pce_caveats}
@@ -1223,7 +1233,7 @@ def _index_component(channel_id: str) -> str:
 
 def _intermediate_variable(channel_id: str) -> str:
     return {
-        "D_PHILLIPS_WALL": "net_demand_gap_with_wall",
+        "D_PHILLIPS_WALL": "drag_minus_support_with_wall",
         "FX_IMPORT": "broad_dollar_appreciation",
         "FIRM_WORKING_CAPITAL_COST": "allocated_firm_interest_expense",
         "CARRY_COSTS": "inventory_distribution_carry_cost",

@@ -103,6 +103,33 @@ def test_rwtam_headline_byte_exact(default_v1_result) -> None:
     assert cumulative["RW_ratio"] == "0.05821291586424109293357621483"
 
 
+def test_headline_sign_and_gdp_share_contract_rejects_mutations(
+    default_v1_result,
+) -> None:
+    tables = {
+        name: copy.deepcopy(default_v1_result.rows(name))
+        for name in (
+            "out_ratewall_rollup",
+            "out_ratewall_monthly",
+            "out_cashflow_core_rollup",
+        )
+    }
+
+    assert v1_module._t63(tables)
+
+    sign_mutation = copy.deepcopy(tables)
+    sign_row = sign_mutation["out_ratewall_rollup"][0]
+    sign_row["net_bil"] = str(-Decimal(sign_row["net_bil"]))
+    assert not v1_module._t63(sign_mutation)
+
+    scale_mutation = copy.deepcopy(tables)
+    scale_row = scale_mutation["out_ratewall_rollup"][0]
+    scale_row["net_gdp_share"] = str(
+        Decimal(scale_row["net_gdp_share"]) * Decimal("100")
+    )
+    assert not v1_module._t63(scale_mutation)
+
+
 def test_round7_switches_false_reproduce_wave7_headline() -> None:
     result = build_v1(
         PACK_DIR,

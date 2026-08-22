@@ -2712,7 +2712,7 @@ def _headline_row(record: dict[str, Decimal | str], period_type: str) -> dict[st
         "N_bil": _fmt(record["N"]),
         "D_bil": _fmt(record["D"]),
         "net_bil": _fmt(record["net"]),
-        "net_pct_gdp": _fmt(record["net"] / record["nominal_gdp_bil"]),
+        "net_gdp_share": _fmt(record["net"] / record["nominal_gdp_bil"]),
         "RW_ratio": _fmt(record["RW"]),
         "legacy_D_comparator_bil": _fmt(record["nominal_gdp_bil"] * Decimal("0.00776")),
         "bottom_up_D_to_legacy_D": _fmt(record["bottom_up_D_to_legacy_D"]),
@@ -2786,7 +2786,7 @@ def _cumulative_row(
         "N_bil": _fmt(n),
         "D_bil": _fmt(d),
         "net_bil": _fmt(net),
-        "net_pct_gdp": _fmt(net / gdp),
+        "net_gdp_share": _fmt(net / gdp),
         "RW_ratio": _fmt(n / d),
         "legacy_D_comparator_bil": _fmt(gdp * Decimal("0.00776")),
         "bottom_up_D_to_legacy_D": _fmt(d / (gdp * Decimal("0.00776"))),
@@ -5037,7 +5037,7 @@ def _rw_full_headline_from_waterfall(waterfall_rows: list[dict[str, str]]) -> li
             "N_bil": _fmt(n_value),
             "D_bil": _fmt(d_value),
             "net_bil": _fmt(net_value),
-            "net_pct_gdp": _fmt(net_value / _nominal_gdp_for_band(row["band"])),
+            "net_gdp_share": _fmt(net_value / _nominal_gdp_for_band(row["band"])),
             "RW_ratio": _fmt(n_value / d_value) if d_value != 0 else "0",
             "legacy_D_comparator_bil": _fmt(_nominal_gdp_for_band(row["band"]) * Decimal("0.00776")),
             "bottom_up_D_to_legacy_D": _fmt(
@@ -5577,6 +5577,11 @@ def _invariant_table(
         _check("T44", _t44(pack, tables), "CRE cashflow routing closes payer and holder legs"),
         _check("T53", _t53(pack, records), "TDCSim measured coupon-roll schedule is intact and steepens base path"),
         _check("T55", _t55(tables), "diagnostic/scenario tables are isolated from headline additive rows"),
+        _check(
+            "T63",
+            _t63(tables),
+            "headline net is N-D and GDP-normalized values are fraction shares",
+        ),
     ]
     if include_tax_layer:
         invariant_checks.extend(
@@ -6937,6 +6942,31 @@ def _t43(tables: dict[str, list[dict[str, str]]]) -> bool:
             continue
         key = (row["period"], row["band"], row["ricardian_offset"])
         if abs(by_key.get(key, Decimal("0")) - _d(row["net_bil"])) > Decimal("0.000001"):
+                return False
+    return True
+
+
+def _t63(tables: dict[str, list[dict[str, str]]]) -> bool:
+    numeric_tolerance = Decimal("1e-24")
+    share_tolerance = Decimal("1e-27")
+    for table_name in (
+        "out_ratewall_rollup",
+        "out_ratewall_monthly",
+        "out_cashflow_core_rollup",
+    ):
+        for row in tables[table_name]:
+            if "net_pct_gdp" in row or "net_gdp_share" not in row:
+                return False
+            net = _d(row["N_bil"]) - _d(row["D_bil"])
+            if abs(_d(row["net_bil"]) - net) > numeric_tolerance:
+                return False
+            if (
+                abs(
+                    _d(row["net_gdp_share"])
+                    - net / _nominal_gdp_for_band(row["band"])
+                )
+                > share_tolerance
+            ):
                 return False
     return True
 

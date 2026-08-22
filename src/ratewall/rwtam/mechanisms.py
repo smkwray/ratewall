@@ -87,6 +87,7 @@ def build_mechanism_wave(pack_dir: Path = Path("configs/rwtam/packs")) -> Mechan
         base_v1,
         holder,
         bond_rows,
+        inflation,
         placeholders,
     )
     return MechanismWaveResult(
@@ -964,12 +965,12 @@ def _inflation_overlay(base_v1: ScenarioResult) -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
     for shock_bp in (Decimal("100"), Decimal("300")):
         scale = shock_bp / Decimal("100")
-        no_wall_drag = base_d * scale
-        with_wall_drag = (base_d - base_n) * scale
+        net_support_no_wall = -base_d * scale
+        net_support_with_wall = (base_n - base_d) * scale
         for state, slope in INFLATION_SLOPES.items():
             price_share = PRICE_SHARES[state]
-            no_wall = slope * (no_wall_drag / GDP_BIL * Decimal("100"))
-            with_wall = slope * (with_wall_drag / GDP_BIL * Decimal("100"))
+            no_wall = slope * (-net_support_no_wall / GDP_BIL * Decimal("100"))
+            with_wall = slope * (-net_support_with_wall / GDP_BIL * Decimal("100"))
             rows.append(
                 {
                     "shock_bp": _fmt(shock_bp),
@@ -977,8 +978,8 @@ def _inflation_overlay(base_v1: ScenarioResult) -> list[dict[str, str]]:
                     "slope_pp_inflation_per_1pct_gdp_gap": _fmt(slope),
                     "price_share": _fmt(price_share),
                     "real_output_share": _fmt(Decimal("1") - price_share),
-                    "net_demand_gap_no_wall_bil": _fmt(-no_wall_drag),
-                    "net_demand_gap_with_wall_bil": _fmt(-with_wall_drag),
+                    "net_support_no_wall_bil": _fmt(net_support_no_wall),
+                    "net_support_with_wall_bil": _fmt(net_support_with_wall),
                     "inflation_reduction_no_wall_pp": _fmt(no_wall),
                     "inflation_reduction_with_wall_pp": _fmt(with_wall),
                     "inflation_reduction_no_wall_pp_per_100bp": _fmt(no_wall / scale),
@@ -1057,6 +1058,7 @@ def _mechanism_invariants(
     base_v1: ScenarioResult,
     holder_rows: list[dict[str, str]],
     bond_rows: list[dict[str, str]],
+    inflation_rows: list[dict[str, str]],
     placeholders: list[dict[str, str]],
 ) -> list[dict[str, str]]:
     base_again = build_v1(Path("configs/rwtam/packs"))
@@ -1065,13 +1067,63 @@ def _mechanism_invariants(
     overlap_errors = validate_holder_stress_overlap_rows(holder_rows, bond_rows)
     probe = [dict(holder_rows[0], mtm_overlap_key=bond_rows[0]["exposure_id"])]
     probe_errors = validate_holder_stress_overlap_rows(probe, bond_rows)
+    orientation_errors = validate_inflation_overlay_orientation_rows(
+        inflation_rows, base_v1
+    )
+    orientation_probe = [dict(row) for row in inflation_rows]
+    orientation_probe[0]["net_support_with_wall_bil"] = _fmt(
+        -_d(orientation_probe[0]["net_support_with_wall_bil"])
+    )
+    orientation_probe_errors = validate_inflation_overlay_orientation_rows(
+        orientation_probe, base_v1
+    )
     headline_unchanged = base_v1.rows("out_ratewall_rollup") == base_again.rows("out_ratewall_rollup")
     return [
         _check("T55_mechanism_outputs_isolated", diagnostic_rows and include_zero, "all mechanism rows are diagnostic/scenario-only with include_flag=0"),
         _check("T45_base_headline_byte_unchanged", headline_unchanged, "mechanism wave does not mutate default V1 headline"),
         _check("M1_holder_mtm_overlap_actual_rows", not overlap_errors, ";".join(overlap_errors) or "holder stress uses distinct overlap keys"),
         _check("M1_holder_mtm_overlap_probe_fails", bool(probe_errors), ";".join(probe_errors) or "probe did not fail"),
+        _check(
+            "M5_net_support_orientation_actual_rows",
+            not orientation_errors,
+            ";".join(orientation_errors) or "inflation overlay uses canonical N-D support",
+        ),
+        _check(
+            "M5_net_support_sign_flip_probe_fails",
+            bool(orientation_probe_errors),
+            ";".join(orientation_probe_errors) or "sign-flip probe did not fail",
+        ),
     ]
+
+
+def validate_inflation_overlay_orientation_rows(
+    rows: list[dict[str, str]],
+    base_v1: ScenarioResult,
+) -> list[str]:
+    base = next(
+        row
+        for row in base_v1.rows("out_ratewall_rollup")
+        if row["period_type"] == "annual"
+        and row["period"] == str(START_YEAR)
+        and row["band"] == "base"
+        and row["ricardian_offset"] == "0"
+    )
+    base_n = _d(base["N_bil"])
+    base_d = _d(base["D_bil"])
+    errors: list[str] = []
+    for row in rows:
+        scale = _d(row["shock_bp"]) / Decimal("100")
+        expected_no_wall = -base_d * scale
+        expected_with_wall = (base_n - base_d) * scale
+        if _d(row["net_support_no_wall_bil"]) != expected_no_wall:
+            errors.append(
+                f"{row['shock_bp']}:{row['slack_state']}: no-wall net support is not N-D"
+            )
+        if _d(row["net_support_with_wall_bil"]) != expected_with_wall:
+            errors.append(
+                f"{row['shock_bp']}:{row['slack_state']}: with-wall net support is not N-D"
+            )
+    return errors
 
 
 def _check(check_id: str, ok: bool, message: str) -> dict[str, str]:

@@ -854,7 +854,9 @@ def _headline_row_from_values(row: dict[str, str], n_value: Decimal, d_value: De
     out["net_bil"] = _fmt(net)
     out["RW_ratio"] = _fmt(n_value / d_value) if d_value else "0"
     out["bottom_up_D_to_legacy_D"] = _fmt(_d(out["D_bil"]) / _d(out["legacy_D_comparator_bil"]))
-    out["net_pct_gdp"] = _fmt(net / (_d(out["legacy_D_comparator_bil"]) / Decimal("0.00776")))
+    out["net_gdp_share"] = _fmt(
+        net / (_d(out["legacy_D_comparator_bil"]) / Decimal("0.00776"))
+    )
     out["object_version_stamp"] = CURRENT_DEFAULT_OBJECT_STAMP
     return out
 

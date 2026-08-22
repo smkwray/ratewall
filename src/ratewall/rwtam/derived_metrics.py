@@ -139,13 +139,13 @@ def write_derived_metrics_report(
             "",
             "### Fiscal diagnostic ratio",
             "",
-            "| horizon | public interest expense | net demand compression | ratio | label |",
-            "| --- | ---: | ---: | ---: | --- |",
+            "| horizon | public interest expense | drag minus support | ratio | status | label |",
+            "| --- | ---: | ---: | ---: | --- | --- |",
         ]
     )
     for row in fiscal:
         lines.append(
-            f"| {row['horizon']} | {row['public_interest_expense_bil']} | {row['net_demand_compression_bil']} | {row['fiscal_cost_per_unit_compression']} | {row['interpretation_label']} |"
+            f"| {row['horizon']} | {row['public_interest_expense_bil']} | {row['drag_minus_support_bil']} | {row['fiscal_cost_per_unit_compression']} | {row['compression_ratio_status']} | {row['interpretation_label']} |"
         )
     lines.extend(
         [
@@ -325,7 +325,8 @@ def _fiscal_cost_rows(
     for horizon in ("year_1", "cum_120m"):
         period_type, period = period_by_horizon[horizon]
         rollup = _rollup_row(rollup_rows, period_type, period, "base")
-        compression = _d(rollup["D_bil"]) - _d(rollup["N_bil"])
+        drag_minus_support = _d(rollup["D_bil"]) - _d(rollup["N_bil"])
+        ratio_available = drag_minus_support > 0
         public_expense = sum(
             (_d(row["cashflow_delta_bil"]) for row in public_rows if row["year"] in years_by_horizon[horizon]),
             Decimal("0"),
@@ -336,8 +337,17 @@ def _fiscal_cost_rows(
                 "horizon": horizon,
                 "band": "base",
                 "public_interest_expense_bil": _fmt(public_expense),
-                "net_demand_compression_bil": _fmt(compression),
-                "fiscal_cost_per_unit_compression": _fmt(public_expense / compression),
+                "drag_minus_support_bil": _fmt(drag_minus_support),
+                "fiscal_cost_per_unit_compression": (
+                    _fmt(public_expense / drag_minus_support)
+                    if ratio_available
+                    else ""
+                ),
+                "compression_ratio_status": (
+                    "available_positive_drag_minus_support"
+                    if ratio_available
+                    else "unavailable_nonpositive_drag_minus_support"
+                ),
                 "interpretation_label": "diagnostic_ratio_not_welfare_claim",
                 "source_public_interest_path": str(source_dir / REQUIRED_SOURCE_FILES["public_interest"]),
                 "source_rollup_path": str(source_dir / REQUIRED_SOURCE_FILES["rollup"]),
@@ -399,12 +409,12 @@ def _invariant_rows(
         == Decimal("1") / (Decimal("1") - _d(row["source_RW_ratio"]))
         for row in attenuation
     )
-    fiscal_ok = all(row["interpretation_label"] == "diagnostic_ratio_not_welfare_claim" for row in fiscal)
+    fiscal_errors = validate_fiscal_cost_rows(fiscal)
     timing_ok = bool(timing) and all(row["RW_ratio"] for row in timing)
     return [
         {"check_id": "DM1_attenuation_arithmetic_exact", "status": "pass" if attenuation_ok else "fail", "message": "multiplier equals 1/(1-RW) from source rows"},
         {"check_id": "DM2_incidence_converted_sum_equals_ledger_N", "status": "pass" if incidence_ok else "fail", "message": "positive converted incidence regrouping equals rollup N"},
-        {"check_id": "DM3_fiscal_ratio_labeled_diagnostic", "status": "pass" if fiscal_ok else "fail", "message": "ratio is labeled diagnostic, not welfare"},
+        {"check_id": "DM3_fiscal_ratio_labeled_diagnostic", "status": "pass" if not fiscal_errors else "fail", "message": ";".join(fiscal_errors) or "ratio is labeled diagnostic, sign-guarded, and not welfare"},
         {"check_id": "DM4_timing_profile_monthly_source_rows", "status": "pass" if timing_ok else "fail", "message": "monthly RW rows surfaced with max and crossover fields"},
     ]
 
@@ -475,6 +485,32 @@ def _safe_ratio(numerator: Decimal, denominator: Decimal) -> Decimal:
     if denominator == 0:
         return Decimal("0")
     return numerator / denominator
+
+
+def validate_fiscal_cost_rows(rows: list[dict[str, str]]) -> list[str]:
+    errors: list[str] = []
+    for row in rows:
+        drag_minus_support = _d(row["drag_minus_support_bil"])
+        ratio = row["fiscal_cost_per_unit_compression"]
+        status = row["compression_ratio_status"]
+        if row["interpretation_label"] != "diagnostic_ratio_not_welfare_claim":
+            errors.append(f"{row['horizon']}: ratio is not labeled diagnostic")
+        if drag_minus_support <= 0:
+            if ratio:
+                errors.append(
+                    f"{row['horizon']}: nonpositive drag-minus-support must not emit a compression ratio"
+                )
+            if status != "unavailable_nonpositive_drag_minus_support":
+                errors.append(
+                    f"{row['horizon']}: nonpositive drag-minus-support status is invalid"
+                )
+            continue
+        expected = _d(row["public_interest_expense_bil"]) / drag_minus_support
+        if not ratio or _d(ratio) != expected:
+            errors.append(f"{row['horizon']}: compression ratio arithmetic is invalid")
+        if status != "available_positive_drag_minus_support":
+            errors.append(f"{row['horizon']}: positive drag-minus-support status is invalid")
+    return errors
 
 
 def _read(path: Path) -> list[dict[str, str]]:

@@ -312,7 +312,9 @@ def _rwpi_fx_off_rows(pack_dir: Path) -> list[dict[str, str]]:
         values: dict[str, Decimal] = {}
         residuals: dict[str, Decimal] = {}
         for band in BANDS:
-            values[band] = _d(row[f"demand_only_after_wall_{band}_pp"]) - _d(row[f"cost_channel_{band}_pp"])
+            values[band] = _d(
+                row[f"demand_drag_minus_support_after_wall_{band}_pp"]
+            ) - _d(row[f"cost_channel_{band}_pp"])
             residuals[band] = _zero_decimal_dust(values[band] - (_d(row[f"ND_pi_{band}_pp"]) - _d(row[f"fx_import_{band}_pp"])))
         rows.append(
             {
@@ -323,9 +325,15 @@ def _rwpi_fx_off_rows(pack_dir: Path) -> list[dict[str, str]]:
                 "slack_state": row["slack_state"],
                 "horizon_window": row["horizon_window"],
                 "band": "all",
-                "demand_only_after_wall_low_pp": row["demand_only_after_wall_low_pp"],
-                "demand_only_after_wall_base_pp": row["demand_only_after_wall_base_pp"],
-                "demand_only_after_wall_high_pp": row["demand_only_after_wall_high_pp"],
+                "demand_drag_minus_support_after_wall_low_pp": row[
+                    "demand_drag_minus_support_after_wall_low_pp"
+                ],
+                "demand_drag_minus_support_after_wall_base_pp": row[
+                    "demand_drag_minus_support_after_wall_base_pp"
+                ],
+                "demand_drag_minus_support_after_wall_high_pp": row[
+                    "demand_drag_minus_support_after_wall_high_pp"
+                ],
                 "cost_channel_low_pp": row["cost_channel_low_pp"],
                 "cost_channel_base_pp": row["cost_channel_base_pp"],
                 "cost_channel_high_pp": row["cost_channel_high_pp"],

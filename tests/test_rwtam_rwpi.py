@@ -42,7 +42,9 @@ def test_rwpi_emits_path_windows_and_preserves_scenario_fence(tmp_path: Path) ->
     assert {row["dose_mode"] for row in windows} == {"persistent_level", "transient_12m"}
     assert {row["index_target"] for row in windows} == {"CPI_U", "PCE"}
     assert all(row["headline_status"] == "scenario_diagnostic_only_not_RW_full" for row in windows)
-    assert all("demand_only_after_wall_base_pp" in row for row in windows)
+    assert all(
+        "demand_drag_minus_support_after_wall_base_pp" in row for row in windows
+    )
     assert all("fx_import_base_pp" in row for row in windows)
     assert all("cost_channel_base_pp" in row for row in windows)
 
@@ -58,9 +60,11 @@ def test_rwpi_emits_path_windows_and_preserves_scenario_fence(tmp_path: Path) ->
         Decimal(base["0_36m_cumulative_sum_pp"]["ND_pi_base_pp"]) / Decimal("3")
         - Decimal(base["0_36m_cumulative_average"]["ND_pi_base_pp"])
     ) <= Decimal("1e-24")
-    assert Decimal(base["0_12m"]["demand_only_after_wall_base_pp"]).quantize(
+    assert Decimal(
+        base["0_12m"]["demand_drag_minus_support_after_wall_base_pp"]
+    ).quantize(
         Decimal("0.0001")
-    ) == Decimal("0.0254")
+    ) == Decimal("0.0255")
 
     paths = write_rwpi_outputs(result, tmp_path)
     assert paths["out_rwpi_window_path"].exists()
@@ -83,7 +87,7 @@ def test_rwpi_attribution_sums_exactly_with_residual_row() -> None:
     disclosures = [
         row
         for row in result.rows("out_rwpi_channel_attribution")
-        if row["channel_id"] == "demand_only_after_wall"
+        if row["channel_id"] == "demand_drag_minus_support_after_wall"
     ]
     assert disclosures
     assert {row["row_role"] for row in disclosures} == {"disclosure"}
@@ -243,12 +247,18 @@ def test_rwpi_pce_level_path_applies_wedge_to_demand_leg_not_only_fx() -> None:
         and row["horizon_window"] == "0_36m_cumulative_sum_pp"
     )
 
-    assert pce["demand_leg_label"] == "PCE_basis_level_path_wedge_applied_to_demand_phillips_leg"
+    assert pce["demand_leg_label"] == (
+        "PCE_basis_level_path_wedge_applied_to_drag_minus_support_phillips_leg"
+    )
     assert pce["cpi_to_pce_slope_wedge"] == "0.88"
     assert pce["m_D"] == "0.09"
     assert pce["m_N"] == "0.13"
-    assert Decimal(pce["demand_phillips_PCE_pp"]) == Decimal(pce_window["demand_only_after_wall_base_pp"])
-    assert Decimal(pce["demand_phillips_PCE_pp"]) != Decimal(cpi_window["demand_only_after_wall_base_pp"])
+    assert Decimal(pce["demand_drag_minus_support_phillips_PCE_pp"]) == Decimal(
+        pce_window["demand_drag_minus_support_after_wall_base_pp"]
+    )
+    assert Decimal(pce["demand_drag_minus_support_phillips_PCE_pp"]) != Decimal(
+        cpi_window["demand_drag_minus_support_after_wall_base_pp"]
+    )
     assert Decimal(pce_window["fx_import_base_pp"]) == Decimal(cpi_window["fx_import_base_pp"]) * Decimal("0.85")
 
 
@@ -263,10 +273,12 @@ def test_rwpi_cpi_basis_window_values_stay_exact_after_pce_crosswalk() -> None:
         and item["horizon_window"] == "0_36m_cumulative_sum_pp"
     )
 
-    assert row["demand_only_after_wall_base_pp"] == "0.04726101904188957067498136778"
+    assert row["demand_drag_minus_support_after_wall_base_pp"] == (
+        "0.04727403360729484192282214495"
+    )
     assert row["fx_import_base_pp"] == "0.3500000000000000000000000003"
     assert row["cost_channel_base_pp"] == "0.03483003"
-    assert row["ND_pi_base_pp"] == "0.3624309890418895706749813681"
+    assert row["ND_pi_base_pp"] == "0.3624440036072948419228221453"
 
 
 def test_rwpi_plug_validation_uses_independent_literal_oracles() -> None:

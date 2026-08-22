@@ -393,7 +393,7 @@ NONCANONICAL_CURRENT_DEMAND_SUPPORT_RATIO_CONSUMER_FIELDS = [
     "holder_scenario",
     "nominal_gdp_bil",
     "combined_current_demand_support_bil",
-    "support_pct_of_gdp",
+    "support_gdp_pct",
     "denominator_source_id",
     "denominator_source_class",
     "denominator_timing_class",
@@ -4826,19 +4826,19 @@ def _noncanonical_current_demand_support_ratio_consumer_rows(
         combined_support = _decimal_or_none(
             bridge_row.get("combined_current_demand_support_bil")
         )
-        support_pct_of_gdp = (
+        support_gdp_pct = (
             Decimal("100") * combined_support / nominal_gdp
             if nominal_gdp not in {None, Decimal("0")} and combined_support is not None
             else None
         )
         support_offset_100bp_year_equivalent = _safe_ratio(
-            support_pct_of_gdp, review_center_d_y
+            support_gdp_pct, review_center_d_y
         )
         support_offset_100bp_year_equivalent_lower_bound = _safe_ratio(
-            support_pct_of_gdp, bounded_ci_high_d_y
+            support_gdp_pct, bounded_ci_high_d_y
         )
         support_offset_100bp_year_equivalent_upper_bound = _safe_ratio(
-            support_pct_of_gdp, bounded_ci_low_d_y
+            support_gdp_pct, bounded_ci_low_d_y
         )
         support_offset_bp_year_equivalent = (
             None
@@ -4886,7 +4886,7 @@ def _noncanonical_current_demand_support_ratio_consumer_rows(
                 "combined_current_demand_support_bil": bridge_row[
                     "combined_current_demand_support_bil"
                 ],
-                "support_pct_of_gdp": _format_decimal(support_pct_of_gdp),
+                "support_gdp_pct": _format_decimal(support_gdp_pct),
                 "denominator_source_id": "bounded_h8_overlay_review_center",
                 "denominator_source_class": "bounded_h8_overlay_review_only",
                 "denominator_timing_class": "h8_cumulative_equivalent_overlay",

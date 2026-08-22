@@ -50,7 +50,7 @@ def test_runtime_support_offset_surface_uses_literature_default_and_keeps_h8_fam
         and row["holder_scenario"] == "current_holder_distribution"
         and row["denominator_source_id"] == "literature_annual_flow_bridge_candidate"
     )
-    support_pct = Decimal(target_default["support_pct_of_gdp"])
+    support_pct = Decimal(target_default["support_gdp_pct"])
     center = Decimal(target_default["denominator_center_pp_gdp"])
     ci_low = Decimal(target_default["denominator_ci95_low_pp_gdp"])
     ci_high = Decimal(target_default["denominator_ci95_high_pp_gdp"])

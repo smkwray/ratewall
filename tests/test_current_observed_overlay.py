@@ -257,7 +257,7 @@ def _scenario_row(
         "forecast_year": year,
         "nominal_gdp_bil": "10000",
         "numerator_total_bil": numerator_bil,
-        "support_pct_of_gdp": support_pct_gdp,
+        "support_gdp_pct": support_pct_gdp,
         "numerator_source_gate_status": "pass_fixture_source_gate",
     }
 

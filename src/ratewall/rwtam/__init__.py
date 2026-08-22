@@ -1,4 +1,4 @@
-"""Monthly stock-flow-consistent Rate Wall Transmission Accounting Model."""
+"""A monthly structural-accounting model of monetary-policy transmission through selected financial claims and fiscal channels."""
 
 from ratewall.rwtam.engine import RwtamResult, run_rwtam
 from ratewall.rwtam.schemas import RwtamConfig, RwtamConfigError, load_config

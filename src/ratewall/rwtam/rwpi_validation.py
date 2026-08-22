@@ -143,11 +143,15 @@ def _score_demand_m5(
     fed = observed.monthly("FEDFUNDS")
     cpi_yoy = _yoy(observed.monthly("CPIAUCNS"))
     pce_yoy = _yoy(observed.monthly("PCEPI"))
-    start, end = "2022-03", "2025-12"
+    start = "2022-03"
     fed_change = _delta(fed, start, "2023-07")
     cpi_disinflation = _delta(cpi_yoy, _peak_month(cpi_yoy, "2022-01", "2022-12"), "2025-12") * Decimal("-1")
     pce_disinflation = _delta(pce_yoy, _peak_month(pce_yoy, "2022-01", "2022-12"), "2025-12") * Decimal("-1")
-    demand_base = _window_value(window_rows, "demand_only_after_wall_base_pp", "0_36m_cumulative_sum_pp")
+    demand_base = _window_value(
+        window_rows,
+        "demand_drag_minus_support_after_wall_base_pp",
+        "0_36m_cumulative_sum_pp",
+    )
     timing = "pass" if fed_change > 0 and cpi_disinflation > 0 and pce_disinflation > 0 else "fail"
     sign = timing
     ratio = _ratio(demand_base, cpi_disinflation)
@@ -342,7 +346,11 @@ def _score_net_price_traction(
     cpi_disinflation = (cpi_yoy[cpi_peak] - cpi_yoy["2025-12"])
     pce_disinflation = (pce_yoy[pce_peak] - pce_yoy["2025-12"])
     ndpi = _window_value(window_rows, "ND_pi_base_pp", "0_36m_cumulative_sum_pp")
-    demand = _window_value(window_rows, "demand_only_after_wall_base_pp", "0_36m_cumulative_sum_pp")
+    demand = _window_value(
+        window_rows,
+        "demand_drag_minus_support_after_wall_base_pp",
+        "0_36m_cumulative_sum_pp",
+    )
     timing = "pass" if cpi_disinflation > 0 and pce_disinflation > 0 else "fail"
     sign = "pass" if ndpi > demand > 0 else "fail"
     score = _score_row(

@@ -52,6 +52,8 @@ def test_mechanism_wave_isolated_placeholders_and_overlap_probe(tmp_path: Path) 
     assert checks["T55_mechanism_outputs_isolated"] == "pass"
     assert checks["T45_base_headline_byte_unchanged"] == "pass"
     assert checks["M1_holder_mtm_overlap_probe_fails"] == "pass"
+    assert checks["M5_net_support_orientation_actual_rows"] == "pass"
+    assert checks["M5_net_support_sign_flip_probe_fails"] == "pass"
 
     placeholders = result.rows("out_mechanism_placeholder_rows")
     assert placeholders
@@ -129,6 +131,22 @@ def test_dsr_dispersion_desynchronizes_crossings_and_inflation_overlay_emits_pol
     inflation = result.rows("out_inflation_overlay_diagnostic")
     assert {row["shock_bp"] for row in inflation} == {"100", "300"}
     assert all(Decimal(row["wall_attenuation_pp_per_100bp"]) > Decimal("0") for row in inflation)
+    base = next(
+        row
+        for row in build_v1(PACK_DIR).rows("out_ratewall_rollup")
+        if row["period_type"] == "annual"
+        and row["period"] == "2026"
+        and row["band"] == "base"
+        and row["ricardian_offset"] == "0"
+    )
+    for row in inflation:
+        scale = Decimal(row["shock_bp"]) / Decimal("100")
+        assert Decimal(row["net_support_no_wall_bil"]) == -Decimal(
+            base["D_bil"]
+        ) * scale
+        assert Decimal(row["net_support_with_wall_bil"]) == (
+            Decimal(base["N_bil"]) - Decimal(base["D_bil"])
+        ) * scale
 
 
 def test_distress_crossing_sweep_exposes_incremental_shares_and_10bp_label() -> None:
